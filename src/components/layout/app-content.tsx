@@ -12,15 +12,10 @@ export function AppContent({
     return (
         <div
             className={
-                'w-full grow min-h-[calc(100dvh-64px)] overflow-x-hidden overflow-y-auto [scrollbar-gutter:stable]'
+                'w-full grow min-h-[calc(100dvh-96px)] overflow-x-hidden overflow-y-auto [scrollbar-gutter:stable]'
             }
         >
-            <main
-                className={cn(
-                    'w-full max-w-7xl mx-auto flex min-h-full flex-col',
-                    className
-                )}
-            >
+            <main className={cn('w-full flex min-h-full flex-col', className)}>
                 <AppContent.commandBar />
                 {children}
             </main>

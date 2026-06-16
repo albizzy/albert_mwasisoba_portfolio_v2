@@ -9,22 +9,22 @@ export type MainNavLink = {
 
 export const mainNavigation: ReadonlyArray<MainNavLink> = [
     {
-        labelKey: 'Solutions',
-        href: '/solutions',
+        labelKey: 'About',
+        href: '/about',
         description:
             'How I solve complex architectural and business challenges.',
         icon: LayoutGrid,
     },
     {
-        labelKey: 'Expertise',
-        href: '/expertise',
+        labelKey: 'Works',
+        href: '/works',
         description:
             'Deep dives into my technical specializations and systems.',
         icon: Briefcase,
     },
     {
-        labelKey: 'Insights',
-        href: '/insights',
+        labelKey: 'Expertise',
+        href: '/expertise',
         description: 'Technical writing and thought leadership on modern web.',
         icon: FileText,
     },

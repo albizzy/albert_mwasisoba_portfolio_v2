@@ -10,6 +10,8 @@ gsap.registerPlugin(useGSAP)
 
 export function HeroSection() {
     const containerRef = useRef<HTMLDivElement>(null)
+    const spanRef = useRef<HTMLSpanElement>(null)
+    const prevWidthRef = useRef<number>(0)
     const [index, setIndex] = useState(0)
     const [isInitial, setIsInitial] = useState(true)
     const { roles } = siteConfig
@@ -42,24 +44,43 @@ export function HeroSection() {
         () => {
             if (isInitial) return
 
+            if (spanRef.current && prevWidthRef.current > 0) {
+                const newWidth = spanRef.current.getBoundingClientRect().width
+
+                gsap.fromTo(
+                    spanRef.current,
+                    { width: prevWidthRef.current },
+                    {
+                        width: newWidth,
+                        duration: 0.5,
+                        ease: 'power3.out',
+                        clearProps: 'width',
+                    }
+                )
+            }
+
             gsap.fromTo(
                 '.role-char',
                 { y: 20, opacity: 0 },
                 {
                     y: 0,
                     opacity: 1,
-                    stagger: 0.05,
-                    ease: 'back.out(3)',
-                    duration: 0.5,
+                    stagger: 0.04,
+                    ease: 'back.out(2.5)',
+                    duration: 0.4,
                     onComplete: () => {
                         gsap.delayedCall(3, () => {
                             gsap.to('.role-char', {
                                 y: 20,
                                 opacity: 0,
-                                stagger: 0.03,
-                                ease: 'back.in(2)',
-                                duration: 0.4,
+                                stagger: 0.01,
+                                ease: 'back.in(1.5)',
+                                duration: 0.3,
                                 onComplete: () => {
+                                    if (spanRef.current) {
+                                        prevWidthRef.current =
+                                            spanRef.current.getBoundingClientRect().width
+                                    }
                                     setIndex(
                                         (prev) => (prev + 1) % roles.length
                                     )
@@ -95,7 +116,10 @@ export function HeroSection() {
                     className="hero-desc-static max-w-2xl leading-relaxed"
                 >
                     I am {article}{' '}
-                    <span className="relative inline-flex items-center px-4 py-1 mx-1 bg-primary text-primary-foreground overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]">
+                    <span
+                        ref={spanRef}
+                        className="text-span relative inline-flex items-center px-4 py-1 mx-1 bg-primary rounded-full text-primary-foreground overflow-hidden whitespace-nowrap"
+                    >
                         <span className="flex">
                             {currentRole.split('').map((char, i) => (
                                 <span

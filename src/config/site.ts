@@ -6,4 +6,12 @@ export const siteConfig = {
         'Open Source Author',
         'Interface Strategist',
     ],
+    defaultValues: {
+        header: {
+            height: 'h-24',
+        },
+        theme: {
+            colorScheme: 'light',
+        },
+    },
 }

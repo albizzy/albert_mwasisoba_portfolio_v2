@@ -73,7 +73,7 @@ export function ProblemsSection() {
         <section
             id="solutions"
             ref={containerRef}
-            className="w-full py-24 md:py-32 relative bg-accent/20"
+            className="w-full py-24 md:py-32 relative"
         >
             <div className="max-w-7xl mx-auto px-6">
                 <div className="problem-header mb-16 max-w-2xl">

@@ -78,10 +78,7 @@ export function SelectedWorkSection() {
     )
 
     return (
-        <section
-            ref={containerRef}
-            className="w-full py-24 md:py-32 relative bg-accent/20"
-        >
+        <section ref={containerRef} className="w-full py-24 md:py-32 relative">
             <div className="max-w-7xl mx-auto px-6">
                 <div className="work-header mb-16 max-w-2xl">
                     <Typography

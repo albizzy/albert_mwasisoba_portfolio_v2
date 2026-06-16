@@ -3,6 +3,7 @@ import { Unbounded } from 'next/font/google'
 import './globals.css'
 import { SmoothScrolling, ThemeProvider } from '@/providers'
 import React from 'react'
+import { siteConfig } from '@/config'
 
 const unboundedSans = Unbounded({
     subsets: ['latin'],
@@ -14,6 +15,9 @@ export const metadata: Metadata = {
         'Engineering Scalable Systems for Modern Business. Specializing in frontend, design, and AI integration.',
 }
 
+const { defaultValues } = siteConfig
+const { theme } = defaultValues
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -24,7 +28,7 @@ export default function RootLayout({
             <body className={`${unboundedSans.className} antialiased`}>
                 <ThemeProvider
                     attribute="class"
-                    defaultTheme="system"
+                    defaultTheme={theme?.colorScheme}
                     enableSystem
                     disableTransitionOnChange
                 >
