@@ -208,7 +208,7 @@ export function ExpertiseOverview() {
             }
 
             if (solutionBubbles && solutionBubbles.length > 0) {
-                solutionBubbles.forEach((bubble, idx) => {
+                solutionBubbles.forEach((bubble) => {
                     tl.to(
                         bubble,
                         {
