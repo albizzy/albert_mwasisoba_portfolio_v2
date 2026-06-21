@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { mainNavigation, siteConfig } from '@/config'
@@ -225,11 +225,7 @@ export function AppHeader() {
                     'w-full max-w-7xl mx-auto flex flex-row justify-between items-center px-6 md:px-0'
                 }
             >
-                <div
-                    className={'bg-background px-6 py-4 rounded-full shadow-md'}
-                >
-                    <AppLogo />
-                </div>
+                <AppLogo />
                 <div
                     ref={containerRef}
                     className={'relative flex flex-row gap-4 items-center'}

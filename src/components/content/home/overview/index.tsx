@@ -8,7 +8,7 @@ export function Overview() {
         <Section containerClassName={'flex flex-col items-center'}>
             <Typography
                 as={'p'}
-                variant={'h6'}
+                variant={'h5'}
                 className={'text-center max-w-2xl font-normal'}
             >
                 I am Albert, a digital creator rooted in craft, curiosity, and
@@ -17,7 +17,7 @@ export function Overview() {
 
             <Typography
                 as={'p'}
-                variant={'h6'}
+                variant={'h5'}
                 className={
                     'text-center max-w-2xl text-foreground/50 font-normal'
                 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ElementType, ReactNode } from 'react'
+import { ElementType, ReactNode, forwardRef } from 'react'
 import { Container } from '@/components/layout'
 import { cn } from '@/lib/utils'
 
@@ -23,39 +23,42 @@ interface SectionProps {
     id?: string
     as?: ElementType
 }
-export function Section(props: SectionProps) {
-    const {
-        tone = 'default',
-        bordered = false,
-        className,
-        withDefaultContainer = true,
-        containerClassName,
-        children,
-        id,
-        as: Component = 'section',
-    } = props
-    return (
-        <Component
-            id={id}
-            className={cn(
-                'w-full relative overflow-hidden py-20 md:py-28',
-                toneClasses[tone],
-                bordered && 'border-t border-border',
-                className
-            )}
-        >
-            {withDefaultContainer ? (
-                <Container
-                    className={cn(
-                        'flex flex-col gap-12 md:gap-16',
-                        containerClassName
-                    )}
-                >
-                    {children}
-                </Container>
-            ) : (
-                <div>{children}</div>
-            )}
-        </Component>
-    )
-}
+export const Section = forwardRef<HTMLElement, SectionProps>(
+    function Section(props, ref) {
+        const {
+            tone = 'default',
+            bordered = false,
+            className,
+            withDefaultContainer = true,
+            containerClassName,
+            children,
+            id,
+            as: Component = 'section',
+        } = props
+        return (
+            <Component
+                ref={ref}
+                id={id}
+                className={cn(
+                    'w-full relative overflow-hidden py-20 md:py-28',
+                    toneClasses[tone],
+                    bordered && 'border-t border-border',
+                    className
+                )}
+            >
+                {withDefaultContainer ? (
+                    <Container
+                        className={cn(
+                            'flex flex-col gap-12 md:gap-16',
+                            containerClassName
+                        )}
+                    >
+                        {children}
+                    </Container>
+                ) : (
+                    <div>{children}</div>
+                )}
+            </Component>
+        )
+    }
+)

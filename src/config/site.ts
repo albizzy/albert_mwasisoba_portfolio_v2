@@ -1,5 +1,5 @@
 export const siteConfig = {
-    name: 'Albert Mwasisoba',
+    name: 'Albert',
     roles: [
         'Software Architect',
         'Graphic Designer',

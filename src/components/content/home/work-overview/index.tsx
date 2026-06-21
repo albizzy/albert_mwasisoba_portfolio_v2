@@ -1,83 +1,90 @@
+'use client'
+
+import { useRef } from 'react'
 import { Section } from '@/components/content/sections'
-import SyncwhiteVisual from '@/assets/images/works/syncwhite_visual.png'
-import KiraVisual from '@/assets/images/works/kira_visual.png'
-import AutobimaVisual from '@/assets/images/works/autobima_visual.png'
-import SweetDoctorVisual from '@/assets/images/works/sweet_doctor_visual.png'
+import { works } from '@/config'
 import Image from 'next/image'
 import { Typography } from '@/components/ui/typography'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import gsap from 'gsap'
+import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const works = [
-    {
-        title: 'Sweet Doctor',
-        types: ['Web', 'App'],
-        services: ['Logo', 'Brand', 'Website'],
-        description:
-            'Sweet doctor is a dating platform connecting people with their perfect match.',
-        link: 'https://sweet.doctor',
-        image: SweetDoctorVisual,
-        imageAlt: 'Sweet Doctor',
-        imageWidth: 1000,
-        imageHeight: 1000,
-        imageBlurDataURL: '',
-        imagePlaceholder: 'blur',
-        imagePriority: true,
-        imageClassName: '',
-    },
-    {
-        title: 'Syncwhite',
-        types: ['Web'],
-        services: ['Logo', 'Brand'],
-        description:
-            'Syncwhite is a software company based in Dar es Salaam, Tanzania. Building serious solutions since 2021',
-        link: 'https://syncwhite.com',
-        image: SyncwhiteVisual,
-        imageAlt: 'Syncwhite',
-        imageWidth: 1000,
-        imageHeight: 1000,
-        imageBlurDataURL: '',
-        imagePlaceholder: 'blur',
-    },
-    {
-        title: 'Kira',
-        types: ['Web'],
-        services: ['Logo', 'Brand', 'Product'],
-        description:
-            'Kira is a cosmetics company based Dar es Salaam. They create high quality, natural hair products.',
-        link: 'https://kira.co.tz',
-        image: KiraVisual,
-        imageAlt: 'Kira',
-        imageWidth: 1000,
-        imageHeight: 1000,
-        imageBlurDataURL: '',
-        imagePlaceholder: 'blur',
-    },
-    {
-        title: 'Autobima',
-        types: ['Web', 'App'],
-        services: ['Logo', 'Brand', 'Website'],
-        description:
-            'Autobima is a automotive company based in Dar es Salaam, Tanzania. Dealing with providing efficient and convenient claim settlement from the Garages to the Financiers',
-        link: 'https://autobima.co.tz',
-        image: AutobimaVisual,
-        imageAlt: 'Autobima',
-        imageWidth: 1000,
-        imageHeight: 1000,
-        imageBlurDataURL: '',
-        imagePlaceholder: 'blur',
-    },
-]
+gsap.registerPlugin(useGSAP, ScrollTrigger)
 
 export function WorkOverview() {
+    const sectionRef = useRef<HTMLElement>(null)
+
+    useGSAP(
+        () => {
+            const cards = gsap.utils.toArray<HTMLElement>('.work-card')
+
+            const tl = gsap.timeline({
+                defaults: { ease: 'power3.out' },
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 75%',
+                    once: true,
+                },
+            })
+
+            tl.from(cards, {
+                y: 48,
+                opacity: 0,
+                duration: 0.9,
+                stagger: 0.14,
+            })
+                .from(
+                    '.work-image',
+                    {
+                        scale: 1.08,
+                        duration: 1.1,
+                        stagger: 0.14,
+                    },
+                    '<'
+                )
+                .from(
+                    '.work-pill',
+                    {
+                        y: 12,
+                        opacity: 0,
+                        duration: 0.5,
+                        stagger: 0.035,
+                    },
+                    '-=0.65'
+                )
+                .from(
+                    '.work-content, .work-link',
+                    {
+                        y: 20,
+                        opacity: 0,
+                        duration: 0.65,
+                        stagger: 0.08,
+                    },
+                    '-=0.45'
+                )
+                .from(
+                    '.work-cta',
+                    {
+                        y: 18,
+                        opacity: 0,
+                        duration: 0.7,
+                    },
+                    '-=0.3'
+                )
+        },
+        { scope: sectionRef }
+    )
+
     return (
-        <Section className={'flex flex-col gap-12'}>
+        <Section ref={sectionRef} className={'flex flex-col gap-12'}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {works.map((work, index) => (
                     <div
                         key={index}
-                        className="rounded-2xl flex flex-col gap-4"
+                        className="work-card rounded-2xl flex flex-col gap-4"
                     >
                         <div
                             className={
@@ -90,7 +97,7 @@ export function WorkOverview() {
                                 width={work.imageWidth}
                                 height={work.imageHeight}
                                 className={
-                                    'absolute w-full h-full object-cover'
+                                    'work-image absolute w-full h-full object-cover'
                                 }
                             />
                             <div className="absolute top-6 left-6 flex flex-row gap-2">
@@ -99,7 +106,7 @@ export function WorkOverview() {
                                         <div
                                             key={typeIndex}
                                             className={
-                                                'w-fit bg-muted-foreground/40 p-2 rounded-lg text-xs text-white backdrop-blur-sm'
+                                                'work-pill w-fit bg-muted-foreground/40 p-2 rounded-lg text-xs text-white backdrop-blur-sm'
                                             }
                                         >
                                             <span>{type}</span>
@@ -112,7 +119,7 @@ export function WorkOverview() {
                                             <div
                                                 key={serviceIndex}
                                                 className={
-                                                    'w-fit bg-muted-foreground/40 p-2 rounded-full text-xs text-white backdrop-blur-sm'
+                                                    'work-pill w-fit bg-muted-foreground/40 p-2 rounded-full text-xs text-white backdrop-blur-sm'
                                                 }
                                             >
                                                 <span>{service}</span>
@@ -122,7 +129,7 @@ export function WorkOverview() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="work-content flex flex-col gap-2">
                             <Typography
                                 as={'h3'}
                                 variant={'h6'}
@@ -138,7 +145,7 @@ export function WorkOverview() {
                                 {work.description}
                             </Typography>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="work-link flex items-center gap-2">
                             <Typography
                                 as={'p'}
                                 variant={'body'}
@@ -157,7 +164,11 @@ export function WorkOverview() {
                     </div>
                 ))}
             </div>
-            <div className={'flex flex-row w-full items-center justify-center'}>
+            <div
+                className={
+                    'work-cta flex flex-row w-full items-center justify-center'
+                }
+            >
                 <Button
                     asChild
                     variant="default"
