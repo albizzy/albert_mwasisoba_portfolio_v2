@@ -135,7 +135,7 @@ export function HeroSection() {
             className="relative w-full min-h-[60vh]  md:min-h-[50vh] flex flex-col justify-center items-center py-10 overflow-hidden"
         >
             <div className="max-w-4xl mx-auto flex flex-col items-center text-center px-4 space-y-8 z-10">
-                <div className="space-y-2 md:-space-y-4">
+                <div className="space-y-3 md:-space-y-6">
                     <Typography as="h1" variant="h4" className={'hero-title'}>
                         Engineering with {article}
                     </Typography>
