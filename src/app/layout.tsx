@@ -43,7 +43,7 @@ export const metadata: Metadata = {
         siteName: 'Albert Mwasisoba',
         images: [
             {
-                url: '/albert+og_image.png',
+                url: '/albert_og_image.png',
                 width: 1200,
                 height: 630,
                 alt: 'Albert Mwasisoba — Consultant & Engineer',
