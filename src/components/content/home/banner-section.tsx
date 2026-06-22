@@ -5,7 +5,7 @@ export function BannerSection() {
     return (
         <section
             className={
-                'w-full h-100 md:h-240 bg-foreground relative overflow-hidden'
+                'w-full h-100 md:h-240 bg-background relative overflow-hidden'
             }
         >
             <Image
