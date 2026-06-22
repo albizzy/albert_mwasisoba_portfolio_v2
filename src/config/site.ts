@@ -1,10 +1,22 @@
 export const siteConfig = {
-    name: 'Albert',
+    name: 'Albert Mwasisoba',
     roles: [
-        'Software Architect',
-        'Graphic Designer',
-        'Open Source Author',
-        'Interface Strategist',
+        {
+            title: 'Software Architect',
+            suffix: 'Blueprint',
+        },
+        {
+            title: 'Graphic Designer',
+            suffix: 'Touch',
+        },
+        {
+            title: 'Open Source Author',
+            suffix: 'Spirit',
+        },
+        {
+            title: 'Interface strategist',
+            suffix: 'Eye',
+        },
     ],
     defaultValues: {
         header: {

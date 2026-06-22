@@ -10,6 +10,7 @@ import ArtworkImage from '@/assets/images/bizzy_scribble.png'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { siteConfig } from '@/config'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -18,6 +19,8 @@ export function AppFooter() {
     const sectionRef = useRef<HTMLDivElement>(null)
     const boxRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
+
+    const { name } = siteConfig
 
     useGSAP(
         () => {
@@ -114,8 +117,8 @@ export function AppFooter() {
                         </div>
 
                         <div className="w-full text-center pt-6 text-xs text-white/40 border-t border-white/10">
-                            © {new Date().getFullYear()} Albert Mwasisoba. All
-                            rights reserved.
+                            © {new Date().getFullYear()} {name}. All rights
+                            reserved.
                         </div>
                     </div>
                 </div>
