@@ -6,7 +6,7 @@ export const siteConfig = {
             suffix: 'Blueprint',
         },
         {
-            title: 'Graphic Designer',
+            title: 'Graphics Designer',
             suffix: 'Touch',
         },
         {

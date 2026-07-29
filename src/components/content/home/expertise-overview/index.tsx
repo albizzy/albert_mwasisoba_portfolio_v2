@@ -6,103 +6,48 @@ import { Container } from '@/components/layout'
 import { Typography } from '@/components/ui/typography'
 import { Section } from '@/components/content/sections'
 import { Button } from '@/components/ui/button'
-import {
-    Check,
-    CheckCheck,
-    ChevronLeft,
-    CircleDashedIcon,
-    Clipboard,
-    Ellipsis,
-    Wallet,
-} from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { expertiseData } from '@/components/content/home/expertise-overview/expertise-data'
 
-const problemVsSolution = [
-    {
-        problem: 'Our product needs to be more intuitive',
-        solutions: [
-            'I suggest to start with an UX audit to identify opportunities where I could improve your product',
-            'From there, I can translate these insights into a functional and easy-to-use product',
-        ],
-    },
-    {
-        problem: 'We need a consistent look and feel across our products',
-        solutions: [
-            'I can create a design system to ensure visual and functional consistency',
-            'This helps strengthen your brand and improve usability across platforms',
-        ],
-    },
-    {
-        problem: 'Our product needs a new UX/UI design',
-        solutions: [
-            'I can redesign your product to make it intuitive and easy to use, prioritizing user needs and business goals',
-            'It would not only look great but create an enjoyable experience for your users',
-        ],
-    },
-    {
-        problem: 'Our brand needs to reflect who we are',
-        solutions: [
-            'I create cohesive and flexible brand identities that capture the essence of your business',
-            'This helps you connect with your audience and create a strong, recognizable presence',
-        ],
-    },
-    {
-        problem: 'We need compelling visuals to bring our brand to life',
-        solutions: [
-            'I specialize in designing engaging visuals that take your brand to the next level',
-            'This could include marketing materials and social content, static or animated, tailored to your goals',
-        ],
-    },
-    {
-        problem: 'We need a new website',
-        solutions: [
-            'I design websites that truly resonate with your audience and seamlessly represent your brand',
-            'Each website we craft is designed to elevate your digital presence and drive meaningful business growth',
-        ],
-    },
-]
-
-const completionSteps = [
-    {
-        icon: CircleDashedIcon,
-        title: 'Open',
-        background: 'bg-indigo-100',
-    },
-    {
-        icon: Ellipsis,
-        title: 'In progress',
-        background: 'bg-blue-100',
-    },
-    {
-        icon: Check,
-        title: 'Solved',
-        background: 'bg-green-100',
-    },
-    {
-        icon: Clipboard,
-        title: 'In quotation',
-        background: 'bg-yellow-100',
-    },
-    {
-        icon: Wallet,
-        title: 'Invoiced',
-        background: 'bg-orange-100',
-    },
-    {
-        icon: CheckCheck,
-        title: 'Closed',
-        background: 'bg-teal-100',
-    },
-]
+gsap.registerPlugin(ScrollTrigger)
 
 export function ExpertiseOverview() {
     const [selectedIdx, setSelectedIdx] = useState<number | null>(null)
     const [isTransitioning, setIsTransitioning] = useState<boolean>(false)
+    const sectionRef = useRef<HTMLElement>(null)
+    const stepsOuterRef = useRef<HTMLDivElement>(null)
+    const stepsInnerRef = useRef<HTMLDivElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
-    // @ts-ignore
-    const timelineRef = useRef<gsap.Timeline | null>(null)
+    const timelineRef = useRef<gsap.core.Timeline | null>(null)
+    const { problemVsSolution, completionSteps } = expertiseData
+
+    useGSAP(
+        () => {
+            const inner = stepsInnerRef.current
+            const outer = stepsOuterRef.current
+            if (!inner || !outer) return
+
+            gsap.to(inner, {
+                y: () => {
+                    const amount =
+                        inner.scrollHeight - (outer.clientHeight - 48)
+                    return amount > 0 ? -amount : 0
+                },
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: sectionRef.current,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    scrub: true,
+                },
+            })
+        },
+        { scope: sectionRef }
+    )
 
     useGSAP(
         () => {
@@ -255,26 +200,32 @@ export function ExpertiseOverview() {
     }
 
     return (
-        <Section withDefaultContainer={false}>
+        <Section ref={sectionRef} withDefaultContainer={false}>
             <Container className={'flex flex-col'}>
                 <div className={'w-full grid grid-cols-1 md:grid-cols-2 gap-8'}>
                     <div className={'flex items-center justify-center'}>
                         <div
+                            ref={stepsOuterRef}
                             className={
-                                'size-96 rounded-4xl bg-muted flex flex-col  items-center gap-4 px-6 pt-6 relative overflow-hidden'
+                                'size-96 rounded-4xl bg-muted px-6 py-6 relative overflow-hidden'
                             }
                         >
-                            {completionSteps.map((step, index) => (
-                                <div
-                                    key={index}
-                                    className={`rounded-full w-fit px-6 py-4 flex flex-row items-center ${step.background} gap-2`}
-                                >
-                                    <step.icon />
-                                    <Typography as={'span'}>
-                                        {step.title}
-                                    </Typography>
-                                </div>
-                            ))}
+                            <div
+                                ref={stepsInnerRef}
+                                className="flex flex-col items-center gap-4 w-full"
+                            >
+                                {completionSteps.map((step) => (
+                                    <div
+                                        key={step.title}
+                                        className={`rounded-full w-fit px-6 py-4 flex flex-row items-center ${step.background} gap-2`}
+                                    >
+                                        <step.icon />
+                                        <Typography as={'span'}>
+                                            {step.title}
+                                        </Typography>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <div className={''}>
@@ -318,13 +269,17 @@ export function ExpertiseOverview() {
                                             selectedIdx !== null
 
                                         return (
-                                            <div
-                                                key={index}
+                                            <button
+                                                key={item.problem}
+                                                type="button"
                                                 onClick={() =>
                                                     handleSelect(index)
                                                 }
+                                                disabled={
+                                                    isAnySelected && !isSelected
+                                                }
                                                 className={cn(
-                                                    'problem-item',
+                                                    'problem-item text-left',
                                                     `problem-item-${index}`,
                                                     'bg-background p-4 md:p-6 rounded-3xl cursor-pointer w-fit',
                                                     selectedIdx === null &&
@@ -344,7 +299,7 @@ export function ExpertiseOverview() {
                                                 >
                                                     {item.problem}
                                                 </Typography>
-                                            </div>
+                                            </button>
                                         )
                                     })}
                                 </div>
@@ -355,7 +310,7 @@ export function ExpertiseOverview() {
                                             selectedIdx
                                         ].solutions.map((solution, sIdx) => (
                                             <div
-                                                key={sIdx}
+                                                key={`${solution}-${sIdx}`}
                                                 className="solution-bubble self-end w-fit max-w-[85%] text-white p-4 md:p-6 rounded-3xl opacity-0 translate-y-4 hidden"
                                                 style={{
                                                     backgroundColor:
@@ -389,7 +344,7 @@ export function ExpertiseOverview() {
                                             className="rounded-full px-6 py-5 h-auto text-sm md:text-base font-semibold shadow-md cursor-pointer hover:scale-105 transition-transform"
                                         >
                                             <Link href="/contact">
-                                                Let's work together
+                                                Let&apos;s work together
                                             </Link>
                                         </Button>
                                     </div>
@@ -406,8 +361,8 @@ export function ExpertiseOverview() {
                     variant={'h6'}
                     className={'text-center font-normal max-w-2xl'}
                 >
-                    We’re the creative link between people, business, and
-                    technology.
+                    I connect people, business, and technology through clear
+                    digital work.
                 </Typography>
 
                 <Button
