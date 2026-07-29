@@ -1,3 +1,4 @@
+import type { LucideIcon } from 'lucide-react'
 import {
     Check,
     CheckCheck,
@@ -7,7 +8,18 @@ import {
     Wallet,
 } from 'lucide-react'
 
-const problemVsSolution = [
+export interface ProblemSolution {
+    problem: string
+    solutions: ReadonlyArray<string>
+}
+
+export interface CompletionStep {
+    icon: LucideIcon
+    title: string
+    background: string
+}
+
+const problemVsSolution: ReadonlyArray<ProblemSolution> = [
     {
         problem: 'Our product needs to be more intuitive',
         solutions: [
@@ -52,7 +64,7 @@ const problemVsSolution = [
     },
 ]
 
-const completionSteps = [
+const completionSteps: ReadonlyArray<CompletionStep> = [
     {
         icon: CircleDashedIcon,
         title: 'Open',
@@ -88,4 +100,4 @@ const completionSteps = [
 export const expertiseData = {
     problemVsSolution,
     completionSteps,
-}
+} as const
