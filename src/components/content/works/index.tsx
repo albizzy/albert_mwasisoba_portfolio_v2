@@ -8,7 +8,7 @@ import { useState, useRef } from 'react'
 import { WorkCard } from '../home/work-overview/work-card'
 import { Section } from '../sections'
 
-gsap.registerPlugin(useGSAP)
+// gsap.registerPlugin(useGSAP)
 
 export function WorksContent() {
     const [activeFilter, setActiveFilter] = useState('All')
