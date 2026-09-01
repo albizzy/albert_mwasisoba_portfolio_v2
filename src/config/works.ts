@@ -10,6 +10,9 @@ export interface WorkItem {
     services: string[]
     description: string
     link: string
+    previewMode?: 'live' | 'image'
+    previewUrl?: string
+    previewScale?: number
     image: StaticImageData
     imageAlt: string
     imageWidth: number
@@ -28,6 +31,7 @@ export const works: WorkItem[] = [
         description:
             'Sweet doctor is a dating platform connecting people with their perfect match.',
         link: 'https://sweet.doctor',
+        previewMode: 'image',
         image: SweetDoctorVisual,
         imageAlt: 'Sweet Doctor',
         imageWidth: 1000,
@@ -44,6 +48,7 @@ export const works: WorkItem[] = [
         description:
             'Syncwhite is a software company based in Dar es Salaam, Tanzania. Building serious solutions since 2021',
         link: 'https://syncwhite.com',
+        previewMode: 'image',
         image: SyncwhiteVisual,
         imageAlt: 'Syncwhite',
         imageWidth: 1000,
@@ -58,6 +63,7 @@ export const works: WorkItem[] = [
         description:
             'Kira is a cosmetics company based Dar es Salaam. They create high quality, natural hair products.',
         link: 'https://kira.co.tz',
+        previewMode: 'image',
         image: KiraVisual,
         imageAlt: 'Kira',
         imageWidth: 1000,
@@ -71,11 +77,12 @@ export const works: WorkItem[] = [
         services: ['Logo', 'Brand', 'Website'],
         description:
             'Autobima is a automotive company based in Dar es Salaam, Tanzania. Dealing with providing efficient and convenient claim settlement from the Garages to the Financiers',
-        link: 'https://autobima.co.tz',
+        link: 'https://autobima.co.tz/',
+        previewMode: 'image',
         image: AutobimaVisual,
         imageAlt: 'Autobima',
-        imageWidth: 1000,
-        imageHeight: 1000,
+        imageWidth: 1600,
+        imageHeight: 900,
         imageBlurDataURL: '',
         imagePlaceholder: 'blur',
     },

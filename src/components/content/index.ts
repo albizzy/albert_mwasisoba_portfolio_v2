@@ -1,1 +1,5 @@
 export * from './home'
+export * from './about'
+export * from './sections'
+export * from './expertise'
+export * from './works'
