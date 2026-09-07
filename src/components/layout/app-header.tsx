@@ -1,16 +1,25 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { mainNavigation, siteConfig } from '@/config'
 import { AppLogo } from '@/components/layout/app-logo'
 import { Typography } from '@/components/ui/typography'
+import { Button } from '@/components/ui/button'
 import { Instagram, Linkedin, Plus } from 'lucide-react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 
 gsap.registerPlugin(useGSAP)
+
+function subscribeToScroll(onChange: () => void) {
+    window.addEventListener('scroll', onChange, { passive: true })
+    return () => window.removeEventListener('scroll', onChange)
+}
+
+const getScrolledSnapshot = () => window.scrollY > 0
+const getServerScrolledSnapshot = () => false
 
 const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
@@ -35,36 +44,24 @@ const BehanceIcon = (props: React.SVGProps<SVGSVGElement>) => (
 export function AppHeader() {
     const containerRef = useRef<HTMLDivElement>(null)
     const menuRef = useRef<HTMLSpanElement>(null)
-    const iconRef = useRef<HTMLDivElement>(null)
+    const iconRef = useRef<HTMLButtonElement>(null)
     const overlayRef = useRef<HTMLDivElement>(null)
 
     const [isOpen, setIsOpen] = useState(false)
-    const [isScrolled, setIsScrolled] = useState(false)
+    const hasScrolled = useSyncExternalStore(
+        subscribeToScroll,
+        getScrolledSnapshot,
+        getServerScrolledSnapshot
+    )
 
     const pathname = usePathname()
     const isHome = pathname === '/'
+    const isScrolled = !isHome && hasScrolled
 
     const { defaultValues } = siteConfig
     const { header } = defaultValues
 
     const { contextSafe } = useGSAP({ scope: containerRef })
-
-    useEffect(() => {
-        if (isHome) {
-            setIsScrolled(false)
-            return
-        }
-
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0)
-        }
-
-        handleScroll()
-        window.addEventListener('scroll', handleScroll)
-        return () => {
-            window.removeEventListener('scroll', handleScroll)
-        }
-    }, [pathname, isHome])
 
     const getDynamicLabel = () => {
         if (isHome) return 'Menu'
@@ -75,18 +72,10 @@ export function AppHeader() {
 
     const dynamicLabel = getDynamicLabel()
 
-    const handleMouseEnter = contextSafe(() => {
-        if (isOpen) return
-        if (isHome) {
-            gsap.to(menuRef.current, {
-                x: 0,
-                y: 0,
-                opacity: 1,
-                duration: 0.4,
-                ease: 'power3.out',
-            })
-        } else {
-            if (isScrolled) {
+    const handleMouseEnter = () => {
+        contextSafe(() => {
+            if (isOpen) return
+            if (isHome) {
                 gsap.to(menuRef.current, {
                     x: 0,
                     y: 0,
@@ -94,32 +83,44 @@ export function AppHeader() {
                     duration: 0.4,
                     ease: 'power3.out',
                 })
+            } else {
+                if (isScrolled) {
+                    gsap.to(menuRef.current, {
+                        x: 0,
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.4,
+                        ease: 'power3.out',
+                    })
+                }
             }
-        }
-    })
+        })()
+    }
 
-    const handleMouseLeave = contextSafe(() => {
-        if (isOpen) return
-        if (isHome) {
-            gsap.to(menuRef.current, {
-                x: 0,
-                y: -10,
-                opacity: 0,
-                duration: 0.3,
-                ease: 'power3.inOut',
-            })
-        } else {
-            if (isScrolled) {
+    const handleMouseLeave = () => {
+        contextSafe(() => {
+            if (isOpen) return
+            if (isHome) {
                 gsap.to(menuRef.current, {
-                    x: 15,
-                    y: 0,
+                    x: 0,
+                    y: -10,
                     opacity: 0,
                     duration: 0.3,
                     ease: 'power3.inOut',
                 })
+            } else {
+                if (isScrolled) {
+                    gsap.to(menuRef.current, {
+                        x: 15,
+                        y: 0,
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: 'power3.inOut',
+                    })
+                }
             }
-        }
-    })
+        })()
+    }
 
     const toggleMenu = () => {
         setIsOpen((prev) => !prev)
@@ -128,6 +129,18 @@ export function AppHeader() {
     const closeMenu = () => {
         setIsOpen(false)
     }
+
+    useEffect(() => {
+        if (!isOpen) return
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setIsOpen(false)
+                iconRef.current?.focus()
+            }
+        }
+        window.addEventListener('keydown', handleKeyDown)
+        return () => window.removeEventListener('keydown', handleKeyDown)
+    }, [isOpen])
 
     const isFirstRender = useRef(true)
 
@@ -222,14 +235,24 @@ export function AppHeader() {
         >
             <div
                 className={
-                    'w-full max-w-7xl mx-auto flex flex-row justify-between items-center px-6 md:px-0'
+                    'w-full max-w-7xl mx-auto flex flex-row justify-between items-center px-4 sm:px-6 lg:px-8'
                 }
             >
                 <AppLogo />
                 <div
                     ref={containerRef}
-                    className={'relative flex flex-row gap-4 items-center'}
+                    className={
+                        'relative flex flex-row gap-2 sm:gap-4 items-center'
+                    }
                 >
+                    <Button
+                        asChild
+                        className="h-auto rounded-full px-4 py-3 text-xs sm:px-6 sm:py-4"
+                    >
+                        <Link href="/schedule" onClick={closeMenu}>
+                            Book a call
+                        </Link>
+                    </Button>
                     <span
                         ref={menuRef}
                         style={
@@ -237,31 +260,42 @@ export function AppHeader() {
                                 ? { transform: 'translateY(-10px)', opacity: 0 }
                                 : { transform: 'translateX(0px)', opacity: 1 }
                         }
-                        className={'inline-block pointer-events-none'}
+                        className={'hidden sm:inline-block pointer-events-none'}
                     >
                         <Typography as={'span'} variant={'lead'}>
                             {dynamicLabel}
                         </Typography>
                     </span>
-                    <div
+                    <button
                         ref={iconRef}
+                        type="button"
+                        aria-label={
+                            isOpen ? 'Close navigation' : 'Open navigation'
+                        }
+                        aria-expanded={isOpen}
+                        aria-controls="main-navigation"
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={toggleMenu}
-                        className={`rounded-full p-4 size-16 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative ${
+                        className={`rounded-full p-4 size-16 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${
                             isOpen
                                 ? 'bg-white/10 text-white'
                                 : 'bg-muted text-foreground'
                         }`}
                     >
                         <Plus size={32} strokeWidth={'3'} />
-                    </div>
+                    </button>
 
                     <div
                         ref={overlayRef}
+                        id="main-navigation"
+                        role="navigation"
+                        aria-label="Main navigation"
+                        inert={!isOpen}
+                        data-lenis-prevent
                         style={{ display: 'none' }}
                         className={
-                            'absolute -top-2 -right-2 w-[320px] md:w-95 bg-black text-white rounded-[2.5rem] p-8 pt-24 pb-6 z-40 shadow-2xl flex flex-col justify-between'
+                            'absolute -top-2 -right-2 w-[min(320px,calc(100vw-2rem))] md:w-95 max-h-[calc(100dvh-2rem)] overflow-y-auto bg-black text-white rounded-[2.5rem] p-8 pt-24 pb-6 z-40 shadow-2xl flex flex-col justify-between gap-8'
                         }
                     >
                         <div className="flex flex-col gap-5 text-left pl-2">
