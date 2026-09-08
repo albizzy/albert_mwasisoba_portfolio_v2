@@ -2,7 +2,7 @@ import { type ChangeEvent, type ComponentProps } from 'react'
 import { cn } from '@/lib/utils'
 
 const inputClass =
-    'w-full rounded-none border-0 border-b border-border bg-transparent px-0 py-4 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-foreground focus-visible:ring-0 disabled:opacity-60 md:text-lg'
+    'w-full rounded-t-lg border-0 border-b border-border bg-muted px-3 py-4 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-foreground focus-visible:ring-0 disabled:opacity-60 md:text-lg'
 
 type Props = {
     label: string
@@ -38,10 +38,7 @@ export function FormField({
     }
     return (
         <div className="flex min-w-0 flex-col gap-2">
-            <label
-                htmlFor={id}
-                className="font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground"
-            >
+            <label htmlFor={id} className="text-md text-muted-foreground">
                 {label}
             </label>
             {multiline ? (

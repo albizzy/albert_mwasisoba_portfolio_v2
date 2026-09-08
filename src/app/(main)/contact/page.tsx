@@ -29,17 +29,14 @@ export default function ContactPage() {
                 aria-labelledby="contact-title"
             >
                 <div className="flex max-w-5xl flex-col items-center gap-6">
-                    <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                        Good work starts with a conversation
-                    </span>
                     <Typography
                         id="contact-title"
                         as="h1"
-                        variant="h1"
+                        variant="h3"
                         className="font-medium"
                     >
-                        Let’s talk
-                        <span className="text-muted-foreground">.</span>
+                        Let’s work together
+                        <span className="text-muted-foreground">!</span>
                     </Typography>
                     <Typography
                         as="p"
@@ -56,12 +53,12 @@ export default function ContactPage() {
                 aria-labelledby="contact-form-title"
             >
                 <div className="mx-auto flex w-full max-w-4xl flex-col gap-12">
-                    <h2
+                    {/*<h2
                         id="contact-form-title"
                         className="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground"
                     >
                         Tell me what you’re building
-                    </h2>
+                    </h2>*/}
                     <ContactForm {...availability} publicEmail={publicEmail} />
                     {publicEmail && (
                         <p className="text-center text-sm leading-loose text-muted-foreground">
