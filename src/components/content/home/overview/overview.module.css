@@ -1,0 +1,262 @@
+.section {
+    --overview-lime: #b5f52b;
+    --overview-ink: #101116;
+    background: #fff;
+    color: var(--overview-ink);
+    font-family: var(--overview-font), Arial, sans-serif;
+    padding-block: clamp(88px, 10vw, 144px);
+}
+
+.content {
+    align-items: center;
+    gap: 0;
+}
+
+.statement {
+    container-type: inline-size;
+    width: min(100%, 640px);
+}
+
+.introduction {
+    margin: 0 5% 1em;
+    font-size: 12.5cqw;
+}
+
+.intro {
+    font-size: 0.48em;
+    letter-spacing: -0.045em;
+    line-height: 1.45;
+    text-wrap: pretty;
+}
+
+.intro strong {
+    font-weight: 650;
+}
+
+.composition {
+    position: relative;
+    margin-inline: 5%;
+    padding-bottom: 1.55em;
+    font-size: 12.5cqw;
+}
+
+.copy {
+    margin: 0;
+    font-weight: 400;
+    letter-spacing: -0.065em;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.line {
+    display: block;
+    white-space: nowrap;
+}
+
+.outcome {
+    display: block;
+    margin-top: 1.8em;
+    font-size: 0.47em;
+    letter-spacing: -0.045em;
+    line-height: 1.4;
+}
+
+.copy strong {
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: -0.065em;
+}
+
+.highlight {
+    position: relative;
+    display: inline-block;
+    margin-left: -0.28em;
+    padding: 0.025em 0.12em 0.035em 0.25em;
+    border-inline: 2px solid var(--overview-lime);
+    background: #d9f79a;
+    color: #41660d;
+    line-height: 0.98;
+}
+
+.rotator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28em;
+    max-width: 100%;
+}
+
+.wordStack {
+    display: inline-grid;
+    vertical-align: bottom;
+}
+
+.word {
+    grid-area: 1 / 1;
+    visibility: hidden;
+}
+
+.word:first-child {
+    visibility: visible;
+}
+
+.characters {
+    display: inline-block;
+}
+
+.character {
+    position: relative;
+}
+
+.pause {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f1f4ec;
+    color: #41660d;
+    cursor: pointer;
+}
+
+.pause svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pause:hover {
+    background: #d9f79a;
+}
+
+.pause:focus-visible {
+    outline: 2px solid #41660d;
+    outline-offset: 4px;
+}
+
+.reducedTerms {
+    display: none;
+}
+
+.handleStart,
+.handleEnd {
+    position: absolute;
+    width: 0.48em;
+    height: 0.48em;
+    background: var(--overview-lime);
+    pointer-events: none;
+}
+
+.handleStart {
+    top: -0.48em;
+    left: calc(-0.24em - 1px);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.handleEnd {
+    right: calc(-0.24em - 1px);
+    bottom: -0.48em;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.sticker {
+    position: absolute;
+    z-index: 1;
+    width: max-content;
+    pointer-events: none;
+}
+
+.label {
+    display: block;
+    padding: 0.16em 0.5em 0.2em;
+    border-radius: 999px;
+    background: var(--overview-lime);
+    box-shadow:
+        0 0.16em 0.1em rgb(18 22 12 / 18%),
+        0 0.3em 0.26em rgb(18 22 12 / 12%);
+    color: #172009;
+    font-size: 0.385em;
+    font-weight: 400;
+    letter-spacing: -0.055em;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.target {
+    position: absolute;
+    width: 0.49em;
+    height: 0.49em;
+    color: var(--overview-lime);
+    stroke-width: 3;
+}
+
+.strategy {
+    top: 0.56em;
+    left: 56%;
+    transform: rotate(-6deg);
+}
+
+.strategy .target {
+    bottom: calc(100% + 0.12em);
+    left: 0.52em;
+    transform: rotate(-15deg);
+}
+
+.meaning {
+    top: 3.6em;
+    left: 40%;
+    transform: rotate(3deg);
+}
+
+.meaning .target {
+    right: -0.62em;
+    bottom: 0.04em;
+    transform: rotate(7deg);
+}
+
+.scale {
+    top: 5.55em;
+    left: 11%;
+    transform: rotate(-7deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animatedHighlight,
+    .pause,
+    .sticker {
+        display: none;
+    }
+
+    .reducedTerms {
+        display: inline;
+        font-size: 0.5em;
+        font-weight: 650;
+        letter-spacing: -0.035em;
+        line-height: 1.4;
+        white-space: normal;
+    }
+
+    .outcome {
+        margin-top: 0.5em;
+    }
+
+    .composition {
+        padding-bottom: 0;
+    }
+}
+
+.scale .target {
+    top: calc(100% + 0.22em);
+    left: 53%;
+    transform: rotate(-18deg);
+}
+
+@media (max-width: 479px) {
+    .section {
+        padding-block: 76px;
+    }
+
+    .highlight {
+        border-inline-width: 1px;
+    }
+}

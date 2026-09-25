@@ -1,32 +1,67 @@
 'use client'
 
-import { Typography } from '@/components/ui/typography'
+import { Inter } from 'next/font/google'
+import { Goal } from 'lucide-react'
 import { Section } from '@/components/content/sections'
+import { RotatingSpecialties } from './rotating-specialties'
+import styles from './overview.module.css'
+
+const inter = Inter({
+    subsets: ['latin'],
+    style: ['normal', 'italic'],
+    variable: '--overview-font',
+})
 
 export function Overview() {
     return (
-        <Section containerClassName={'flex flex-col items-center'}>
-            <Typography
-                as={'p'}
-                variant={'h5'}
-                className={'text-center max-w-2xl font-normal'}
-            >
-                I am Albert, a digital creator rooted in craft, curiosity, and
-                care.
-            </Typography>
+        <Section
+            id="overview"
+            aria-labelledby="overview-title"
+            className={`${styles.section}`}
+            containerClassName={styles.content}
+        >
+            <h2 className="sr-only" id="overview-title">
+                About my work
+            </h2>
+            <div className={styles.statement}>
+                <div className={styles.introduction}></div>
+                <div className={styles.composition}>
+                    <p className={styles.copy}>
+                        <span className={styles.line}>I design</span>{' '}
+                        <span className={styles.line}>
+                            <RotatingSpecialties />
+                        </span>{' '}
+                        <span className={styles.line}>that people love,</span>{' '}
+                        <span className={styles.outcome}>
+                            helping businesses <strong>grow.</strong>
+                        </span>
+                    </p>
 
-            <Typography
-                as={'p'}
-                variant={'h5'}
-                className={
-                    'text-center max-w-2xl text-foreground/50 font-normal'
-                }
-            >
-                I design <span className={'text-foreground'}>products</span>,{' '}
-                <span className={'text-foreground'}>brands</span>, and{' '}
-                <span className={'text-foreground'}>websites</span> that people
-                love, helping businesses thrive.
-            </Typography>
+                    <div
+                        className={`${styles.sticker} ${styles.strategy}`}
+                        aria-hidden="true"
+                    >
+                        <Goal className={styles.target} />
+                        <span className={styles.label}>Strategy first</span>
+                    </div>
+                    <div
+                        className={`${styles.sticker} ${styles.meaning}`}
+                        aria-hidden="true"
+                    >
+                        <Goal className={styles.target} />
+                        <span className={styles.label}>
+                            Design with meaning
+                        </span>
+                    </div>
+                    <div
+                        className={`${styles.sticker} ${styles.scale}`}
+                        aria-hidden="true"
+                    >
+                        <span className={styles.label}>Built to scale</span>
+                        <Goal className={styles.target} />
+                    </div>
+                </div>
+            </div>
         </Section>
     )
 }
