@@ -3,12 +3,13 @@
 import { Typography } from '@/components/ui/typography'
 import { works } from '@/config'
 import { cn } from '@/lib/utils'
+import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { useState, useRef } from 'react'
 import { WorkCard } from '../home/work-overview/work-card'
 import { Section } from '../sections'
 
-// gsap.registerPlugin(useGSAP)
+gsap.registerPlugin(useGSAP)
 
 export function WorksContent() {
     const [activeFilter, setActiveFilter] = useState('All')

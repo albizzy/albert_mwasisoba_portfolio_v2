@@ -7,74 +7,67 @@ if (typeof window !== 'undefined') {
     gsap.registerPlugin(useGSAP, ScrollTrigger)
 }
 
-const selectors = {
-    cards: '.work-card',
-    content: '.work-content, .work-link',
-    cta: '.work-cta',
-    images: '.work-image',
-    pills: '.work-pill',
-} as const
-
 export function useWorkOverviewAnimation() {
     const sectionRef = useRef<HTMLElement>(null)
 
     useGSAP(
         () => {
-            const cards = gsap.utils.toArray<HTMLElement>(selectors.cards)
-            const timeline = gsap.timeline({
-                defaults: { ease: 'power3.out' },
-                scrollTrigger: {
-                    trigger: sectionRef.current,
-                    start: 'top 75%',
-                    once: true,
-                },
+            const section = sectionRef.current
+            if (!section) return
+
+            const cards = Array.from(
+                section.querySelectorAll<HTMLElement>('[data-work-card]')
+            )
+            const media = gsap.matchMedia()
+
+            // Let tall cards scroll normally instead of trapping content below the fold.
+            const updateStack = () => {
+                const top = parseFloat(
+                    getComputedStyle(section).getPropertyValue('--stack-top')
+                )
+                section.dataset.stackEnabled = String(
+                    cards.every(
+                        (card) =>
+                            card.offsetHeight <= window.innerHeight - top - 16
+                    )
+                )
+            }
+            const observer = new ResizeObserver(updateStack)
+            cards.forEach((card) => observer.observe(card))
+            window.addEventListener('resize', updateStack)
+            updateStack()
+
+            media.add('(prefers-reduced-motion: no-preference)', () => {
+                cards.forEach((card) => {
+                    const image = card.querySelector('[data-work-image]')
+                    if (!image) return
+
+                    // Animate only the image; the folder edges keep their exact alignment.
+                    gsap.fromTo(
+                        image,
+                        { yPercent: -3 },
+                        {
+                            yPercent: 3,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top bottom',
+                                end: () =>
+                                    `+=${window.innerHeight + card.offsetHeight}`,
+                                scrub: true,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    )
+                })
             })
 
-            timeline
-                .from(cards, {
-                    y: 48,
-                    opacity: 0,
-                    duration: 0.9,
-                    stagger: 0.14,
-                })
-                .from(
-                    selectors.images,
-                    {
-                        scale: 1.08,
-                        duration: 1.1,
-                        stagger: 0.14,
-                    },
-                    '<'
-                )
-                .from(
-                    selectors.pills,
-                    {
-                        y: 12,
-                        opacity: 0,
-                        duration: 0.5,
-                        stagger: 0.035,
-                    },
-                    '-=0.65'
-                )
-                .from(
-                    selectors.content,
-                    {
-                        y: 20,
-                        opacity: 0,
-                        duration: 0.65,
-                        stagger: 0.08,
-                    },
-                    '-=0.45'
-                )
-                .from(
-                    selectors.cta,
-                    {
-                        y: 18,
-                        opacity: 0,
-                        duration: 0.7,
-                    },
-                    '-=0.3'
-                )
+            return () => {
+                observer.disconnect()
+                window.removeEventListener('resize', updateStack)
+                media.revert()
+                delete section.dataset.stackEnabled
+            }
         },
         { scope: sectionRef }
     )

@@ -1,11 +1,4 @@
-import {
-    Briefcase,
-    CalendarDays,
-    FileText,
-    LayoutGrid,
-    LucideIcon,
-    Send,
-} from 'lucide-react'
+import { Briefcase, FileText, LayoutGrid, LucideIcon, Send } from 'lucide-react'
 
 export type MainNavLink = {
     labelKey: string
@@ -15,12 +8,6 @@ export type MainNavLink = {
 }
 
 export const mainNavigation: ReadonlyArray<MainNavLink> = [
-    {
-        labelKey: 'Book a call',
-        href: '/schedule',
-        description: 'Find a time for an introduction or a working session.',
-        icon: CalendarDays,
-    },
     {
         labelKey: 'About',
         href: '/about',

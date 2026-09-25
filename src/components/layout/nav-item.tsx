@@ -6,45 +6,44 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 import { isActive } from '@/helpers'
 
-export type NavItemProps = {
+export type NavItemProps = React.ComponentProps<typeof Link> & {
     type?: 'nav' | 'footer'
-    href: string
-    children: React.ReactNode
-    className?: string
 }
 
-export function NavItem({ children, ...props }: NavItemProps) {
-    const { type = 'nav', href, className } = props
+export function NavItem({
+    children,
+    type = 'nav',
+    href,
+    className,
+    ...rest
+}: NavItemProps) {
     const pathname = usePathname()
-    const active = isActive(pathname, href)
+    const active = isActive(pathname, href.toString())
 
     const baseClass =
-        'group relative flex items-center gap-2 overflow-hidden rounded-md px-4 py-2'
+        'w-fit group relative flex items-center gap-2 overflow-hidden rounded-4xl p-4'
 
     const transitionClass =
-        'transition-colors duration-300 ease-in-out hover:text-accent-foreground'
-    const colorClass = active
-        ? 'text-accent-foreground'
-        : 'text-muted-foreground'
+        'transition-colors duration-300 ease-in-out hover:text-neutral'
+
+    const backgroundClass =
+        type === 'nav'
+            ? 'bg-transparent hover:bg-accent/20'
+            : 'bg-transparent hover:bg-accent/5'
 
     return (
         <Link
             href={href}
             aria-current={active ? 'page' : undefined}
-            className={cn(baseClass, transitionClass, colorClass, className)}
-        >
-            {type === 'nav' && (
-                <span
-                    className={cn(
-                        'absolute inset-0 -z-10 bg-accent transition-transform duration-50 ease-out',
-                        active
-                            ? 'translate-x-0'
-                            : '-translate-x-[101%] group-hover:translate-x-0'
-                    )}
-                />
+            className={cn(
+                baseClass,
+                transitionClass,
+                backgroundClass,
+                className
             )}
-
-            <span className="w-full relative z-10 font-semibold">
+            {...rest}
+        >
+            <span className="w-full relative z-10 text-2xl md:text-3xl font-normal tracking-tight">
                 {children}
             </span>
         </Link>

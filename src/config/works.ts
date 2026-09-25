@@ -27,7 +27,7 @@ export const works: WorkItem[] = [
     {
         title: 'Sweet Doctor',
         types: ['Web', 'App'],
-        services: ['Logo', 'Brand', 'Website'],
+        services: ['Logo', 'Brand', 'Website', 'App'],
         description:
             'Sweet doctor is a dating platform connecting people with their perfect match.',
         link: 'https://sweet.doctor',

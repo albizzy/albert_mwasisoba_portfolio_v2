@@ -7,7 +7,7 @@ import { BannerSection } from '@/components/content/home/banner-section'
 
 export const HomeContent = () => {
     return (
-        <AppContent>
+        <AppContent containerClassName="overflow-x-clip overflow-y-visible [scrollbar-gutter:auto]">
             <div className="flex flex-col w-full h-full relative">
                 <HeroSection />
                 <BannerSection />

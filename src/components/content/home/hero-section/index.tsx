@@ -40,7 +40,8 @@ export function HeroSection() {
                     >
                         <span
                             ref={rolePillRef}
-                            className="relative mx-1 inline-flex items-center overflow-hidden whitespace-nowrap rounded-full bg-primary px-4 py-1 text-primary-foreground"
+                            className="relative mx-1 inline-flex items-center overflow-hidden whitespace-nowrap bg-primary px-4 py-1 text-primary-foreground"
+                            style={{ borderRadius: '15px 40px 15px 15px' }}
                         >
                             <AnimatedCharacters
                                 text={currentRole.title}

@@ -41,20 +41,24 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
         <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-10">
             <ol
                 aria-label="Booking process"
-                className="flex flex-wrap justify-center gap-x-6 gap-y-3 font-mono text-[10px] uppercase tracking-wider sm:text-xs"
+                className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[10px] uppercase tracking-wider sm:text-xs"
             >
                 <li
                     aria-current={!selected ? 'step' : undefined}
                     className={
-                        !selected ? 'text-foreground' : 'text-muted-foreground'
+                        !selected
+                            ? 'text-background bg-foreground p-4 rounded-xl'
+                            : 'text-muted-foreground bg-accent p-4 rounded-xl'
                     }
                 >
-                    01 / Conversation
+                    Conversation
                 </li>
                 <li
                     aria-current={selected ? 'step' : undefined}
                     className={
-                        selected ? 'text-foreground' : 'text-muted-foreground'
+                        selected
+                            ? 'text-background bg-foreground p-4 rounded-xl'
+                            : 'text-muted-foreground bg-muted/50 p-4 rounded-xl'
                     }
                 >
                     02 / Date, time & details
@@ -62,9 +66,6 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
             </ol>
             {!selected ? (
                 <>
-                    <h2 className="text-center text-xl font-medium tracking-tight sm:text-2xl md:text-3xl">
-                        What are we meeting about?
-                    </h2>
                     <div
                         ref={choices}
                         className="grid w-full gap-4 md:grid-cols-2"
@@ -74,7 +75,7 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                                 key={meeting.id}
                                 disabled={!meeting.calLink}
                                 onClick={() => setSelected(meeting)}
-                                className="group flex min-h-56 flex-col gap-6 rounded-4xl border border-border bg-background p-7 text-left transition-colors hover:border-foreground hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-50 md:p-9"
+                                className="group flex h-fit flex-col gap-6 rounded-4xl border border-border bg-background p-4 md:p-6 text-left transition-colors hover:border-foreground hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-50"
                             >
                                 <span className="flex w-full flex-wrap items-center justify-between gap-4">
                                     <span className="text-xl font-medium tracking-tight">
@@ -90,19 +91,6 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                                 </span>
                                 <span className="text-sm leading-relaxed text-muted-foreground">
                                     {meeting.description}
-                                </span>
-                                <span className="mt-auto flex items-center gap-2 text-xs">
-                                    {meeting.calLink ? (
-                                        <>
-                                            Choose a time{' '}
-                                            <ArrowUpRight
-                                                className="size-4"
-                                                aria-hidden="true"
-                                            />
-                                        </>
-                                    ) : (
-                                        'Booking opens soon'
-                                    )}
                                 </span>
                             </button>
                         ))}

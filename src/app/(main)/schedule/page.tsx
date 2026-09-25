@@ -18,16 +18,6 @@ export default function SchedulePage() {
             containerClassName="items-center"
             aria-labelledby="schedule-title"
         >
-            <div className="flex flex-col items-center gap-5 text-center">
-                <Typography
-                    id="schedule-title"
-                    as="h1"
-                    variant="h3"
-                    className="text-4xl font-medium sm:text-6xl lg:text-8xl"
-                >
-                    Schedule<span className="text-muted-foreground">.</span>
-                </Typography>
-            </div>
             <Scheduler meetings={getMeetingTypes()} />
         </Section>
     )
