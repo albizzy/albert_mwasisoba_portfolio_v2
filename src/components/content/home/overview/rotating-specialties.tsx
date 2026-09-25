@@ -10,11 +10,12 @@ import styles from './overview.module.css'
 
 gsap.registerPlugin(useGSAP)
 
-// Keep the wording grammatical after “I design”, using the actual project services.
 const specialtyLabels = {
     Product: 'products',
     Brand: 'brands',
     Website: 'websites',
+    Mobile: 'mobile',
+    Logo: 'logos',
 }
 const workServices = new Set(
     works.flatMap((work) => [...work.services, ...work.types])
@@ -48,18 +49,37 @@ export function RotatingSpecialties() {
             const media = gsap.matchMedia()
 
             media.add('(prefers-reduced-motion: no-preference)', () => {
+                const wordStack =
+                    container.querySelector<HTMLElement>('[data-word-stack]')
                 const words = Array.from(
                     container.querySelectorAll<HTMLElement>('[data-specialty]')
                 )
-                const timeline = gsap.timeline({ repeat: -1, paused: true })
+                if (!wordStack || !words.length) return
+
+                let activeIndex = 0
+                gsap.set(wordStack, { width: words[0].offsetWidth })
+
+                const timeline = gsap.timeline({
+                    repeat: -1,
+                    repeatRefresh: true,
+                    paused: true,
+                })
                 timelineRef.current = timeline
 
-                words.forEach((word) => {
+                words.forEach((word, index) => {
                     const characters = word.querySelectorAll(
                         'span[aria-hidden="true"]'
                     )
                     timeline
-                        .set(word, { autoAlpha: 1 })
+                        .call(() => {
+                            activeIndex = index
+                            gsap.set(word, { autoAlpha: 1 })
+                        })
+                        .to(wordStack, {
+                            width: () => word.offsetWidth,
+                            duration: 0.5,
+                            ease: 'power3.out',
+                        })
                         .fromTo(
                             characters,
                             { y: 20, opacity: 0 },
@@ -69,7 +89,8 @@ export function RotatingSpecialties() {
                                 stagger: 0.04,
                                 ease: 'back.out(2.5)',
                                 duration: 0.4,
-                            }
+                            },
+                            '<'
                         )
                         .to({}, { duration: 3 })
                         .to(characters, {
@@ -96,12 +117,26 @@ export function RotatingSpecialties() {
                 observer.observe(container)
                 document.addEventListener('visibilitychange', syncPlayback)
 
+                const syncWidth = () => {
+                    timeline.invalidate()
+                    gsap.set(wordStack, {
+                        width: words[activeIndex].offsetWidth,
+                    })
+                }
+                let disposed = false
+                window.addEventListener('resize', syncWidth)
+                void document.fonts.ready.then(() => {
+                    if (!disposed) syncWidth()
+                })
+
                 return () => {
+                    disposed = true
                     observer.disconnect()
                     document.removeEventListener(
                         'visibilitychange',
                         syncPlayback
                     )
+                    window.removeEventListener('resize', syncWidth)
                     timelineRef.current = null
                 }
             })
@@ -119,7 +154,7 @@ export function RotatingSpecialties() {
                 aria-hidden="true"
             >
                 <span className={styles.handleStart} />
-                <span className={styles.wordStack}>
+                <span className={styles.wordStack} data-word-stack>
                     {specialties.map((specialty) => (
                         <span
                             className={styles.word}

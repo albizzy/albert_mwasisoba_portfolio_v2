@@ -85,16 +85,22 @@
 }
 
 .wordStack {
-    display: inline-grid;
+    position: relative;
+    display: inline-block;
     vertical-align: bottom;
 }
 
 .word {
-    grid-area: 1 / 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: max-content;
     visibility: hidden;
 }
 
 .word:first-child {
+    position: relative;
     visibility: visible;
 }
 
