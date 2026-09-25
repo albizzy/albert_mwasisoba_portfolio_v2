@@ -1,7 +1,6 @@
 import { AppContent } from '@/components/layout'
 import { HeroSection } from './hero-section'
 import { Overview } from '@/components/content/home/overview'
-import { ExpertiseOverview } from '@/components/content/home/expertise-overview'
 import { WorkOverview } from '@/components/content/home/work-overview'
 import { BannerSection } from '@/components/content/home/banner-section'
 
@@ -13,7 +12,7 @@ export const HomeContent = () => {
                 <BannerSection />
                 <Overview />
                 <WorkOverview />
-                <ExpertiseOverview />
+                {/*<ExpertiseOverview />*/}
             </div>
         </AppContent>
     )

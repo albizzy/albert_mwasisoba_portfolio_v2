@@ -1,8 +1,15 @@
 'use client'
 
-import React, { useEffect, useRef, useState, useSyncExternalStore } from 'react'
+import React, {
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+    useSyncExternalStore,
+} from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useLenis } from 'lenis/react'
 import { mainNavigation, siteConfig } from '@/config'
 import { AppLogo } from '@/components/layout/app-logo'
 import { Typography } from '@/components/ui/typography'
@@ -23,12 +30,14 @@ const getScrolledSnapshot = () => window.scrollY > 0
 const getServerScrolledSnapshot = () => false
 
 export function AppHeader() {
+    const headerRef = useRef<HTMLElement>(null)
     const containerRef = useRef<HTMLDivElement>(null)
     const menuRef = useRef<HTMLSpanElement>(null)
     const iconRef = useRef<HTMLButtonElement>(null)
     const overlayRef = useRef<HTMLDivElement>(null)
 
     const [isOpen, setIsOpen] = useState(false)
+    const [currentHash, setCurrentHash] = useState('')
     const hasScrolled = useSyncExternalStore(
         subscribeToScroll,
         getScrolledSnapshot,
@@ -36,6 +45,7 @@ export function AppHeader() {
     )
 
     const pathname = usePathname()
+    const lenis = useLenis()
     const isHome = pathname === '/'
     const isScrolled = !isHome && hasScrolled
 
@@ -109,6 +119,136 @@ export function AppHeader() {
 
     const closeMenu = () => {
         setIsOpen(false)
+    }
+
+    const scrollToSection = useCallback(
+        (hash: string) => {
+            let id: string
+            try {
+                id = decodeURIComponent(hash.slice(1))
+            } catch {
+                return false
+            }
+
+            const target = document.getElementById(id)
+            if (!target) return false
+
+            const offset = -(headerRef.current?.offsetHeight ?? 96)
+            const reducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)'
+            ).matches
+            const focusHeading = () => {
+                target.querySelector<HTMLElement>('h1, h2, h3')?.focus({
+                    preventScroll: true,
+                })
+            }
+
+            if (lenis) {
+                lenis.scrollTo(target, {
+                    offset,
+                    immediate: reducedMotion,
+                    onComplete: focusHeading,
+                })
+            } else {
+                window.scrollTo({
+                    top:
+                        window.scrollY +
+                        target.getBoundingClientRect().top +
+                        offset,
+                    behavior: reducedMotion ? 'instant' : 'smooth',
+                })
+                focusHeading()
+            }
+
+            return true
+        },
+        [lenis]
+    )
+
+    useEffect(() => {
+        let frame = 0
+        const syncHash = () => {
+            window.cancelAnimationFrame(frame)
+            const hash = window.location.hash
+            setCurrentHash(hash)
+            if (!lenis || !hash) return
+
+            let attempts = 0
+            const scrollWhenReady = () => {
+                if (scrollToSection(hash) || attempts++ >= 20) return
+                frame = window.requestAnimationFrame(scrollWhenReady)
+            }
+            frame = window.requestAnimationFrame(scrollWhenReady)
+        }
+
+        syncHash()
+        window.addEventListener('hashchange', syncHash)
+        return () => {
+            window.cancelAnimationFrame(frame)
+            window.removeEventListener('hashchange', syncHash)
+        }
+    }, [pathname, lenis, scrollToSection])
+
+    const handleNavigationClick = (
+        event: React.MouseEvent<HTMLAnchorElement>,
+        href: string
+    ) => {
+        if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.altKey
+        ) {
+            return
+        }
+
+        closeMenu()
+        const destination = new URL(href, window.location.href)
+        if (
+            destination.origin !== window.location.origin ||
+            destination.pathname !== window.location.pathname
+        ) {
+            return
+        }
+
+        if (!destination.hash) {
+            event.preventDefault()
+            if (window.location.hash) {
+                window.history.pushState(null, '', destination)
+            }
+            setCurrentHash('')
+            const reducedMotion = window.matchMedia(
+                '(prefers-reduced-motion: reduce)'
+            ).matches
+            if (lenis) {
+                lenis.scrollTo(0, { immediate: reducedMotion })
+            } else {
+                window.scrollTo({
+                    top: 0,
+                    behavior: reducedMotion ? 'instant' : 'smooth',
+                })
+            }
+            return
+        }
+
+        let targetId: string
+        try {
+            targetId = decodeURIComponent(destination.hash.slice(1))
+        } catch {
+            return
+        }
+        if (!document.getElementById(targetId)) {
+            return
+        }
+
+        event.preventDefault()
+        if (window.location.hash !== destination.hash) {
+            window.history.pushState(null, '', destination)
+        }
+        setCurrentHash(destination.hash)
+        scrollToSection(destination.hash)
     }
 
     useEffect(() => {
@@ -212,6 +352,7 @@ export function AppHeader() {
 
     return (
         <header
+            ref={headerRef}
             className={`w-full ${header?.height} flex flex-row items-center fixed top-0 left-0 z-50`}
         >
             <div
@@ -272,7 +413,17 @@ export function AppHeader() {
                         }
                     >
                         <div className="flex flex-col gap-0 text-left pl-2">
-                            <NavItem href="/" onClick={closeMenu}>
+                            <NavItem
+                                href="/"
+                                aria-current={
+                                    isHome && currentHash !== '#featured-work'
+                                        ? 'page'
+                                        : undefined
+                                }
+                                onClick={(event) =>
+                                    handleNavigationClick(event, '/')
+                                }
+                            >
                                 Home
                             </NavItem>
                             {mainNavigation &&
@@ -280,7 +431,28 @@ export function AppHeader() {
                                     <NavItem
                                         key={index}
                                         href={navigationItem.href}
-                                        onClick={closeMenu}
+                                        scroll={
+                                            navigationItem.href.includes('#')
+                                                ? false
+                                                : undefined
+                                        }
+                                        {...(navigationItem.href ===
+                                        '/#featured-work'
+                                            ? {
+                                                  'aria-current':
+                                                      isHome &&
+                                                      currentHash ===
+                                                          '#featured-work'
+                                                          ? 'location'
+                                                          : undefined,
+                                              }
+                                            : {})}
+                                        onClick={(event) =>
+                                            handleNavigationClick(
+                                                event,
+                                                navigationItem.href
+                                            )
+                                        }
                                     >
                                         {navigationItem.labelKey}
                                     </NavItem>

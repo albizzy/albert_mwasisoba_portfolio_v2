@@ -1,4 +1,4 @@
-import { Briefcase, FileText, LayoutGrid, LucideIcon, Send } from 'lucide-react'
+import { Briefcase, LayoutGrid, LucideIcon, Send } from 'lucide-react'
 
 export type MainNavLink = {
     labelKey: string
@@ -17,17 +17,16 @@ export const mainNavigation: ReadonlyArray<MainNavLink> = [
     },
     {
         labelKey: 'Works',
-        href: '/works',
-        description:
-            'Deep dives into my technical specializations and systems.',
+        href: '/#featured-work',
+        description: 'Selected projects and the work behind them.',
         icon: Briefcase,
     },
-    {
-        labelKey: 'Expertise',
-        href: '/expertise',
-        description: 'Technical writing and thought leadership on modern web.',
-        icon: FileText,
-    },
+    // {
+    //     labelKey: 'Expertise',
+    //     href: '/expertise',
+    //     description: 'Technical writing and thought leadership on modern web.',
+    //     icon: FileText,
+    // },
     {
         labelKey: 'Contact',
         href: '/contact',

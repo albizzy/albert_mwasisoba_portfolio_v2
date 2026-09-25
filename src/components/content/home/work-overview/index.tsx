@@ -19,7 +19,9 @@ export function WorkOverview() {
         >
             <div className={styles.heading}>
                 <p className={styles.eyebrow}>Selected projects</p>
-                <h2 id="featured-work-title">Featured work</h2>
+                <h2 id="featured-work-title" tabIndex={-1}>
+                    Featured work
+                </h2>
             </div>
             <div className={styles.stack} data-work-stack>
                 {works.map((work, index) => (

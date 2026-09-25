@@ -17,10 +17,9 @@ export function Overview() {
                 About my work
             </h2>
             <div className={styles.statement}>
-                <div className={styles.introduction}></div>
                 <div className={styles.composition}>
                     <p className={styles.copy}>
-                        <span className={styles.line}>I design</span>{' '}
+                        <span className={styles.line}>I create</span>{' '}
                         <span className={styles.line}>
                             <RotatingSpecialties />
                         </span>{' '}
