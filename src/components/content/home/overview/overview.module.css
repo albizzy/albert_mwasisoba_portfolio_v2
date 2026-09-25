@@ -3,7 +3,6 @@
     --overview-ink: #101116;
     background: #fff;
     color: var(--overview-ink);
-    font-family: var(--overview-font), Arial, sans-serif;
     padding-block: clamp(88px, 10vw, 144px);
 }
 
@@ -37,7 +36,7 @@
     position: relative;
     margin-inline: 5%;
     padding-bottom: 1.55em;
-    font-size: 12.5cqw;
+    font-size: min(12.5cqw, 9vw);
 }
 
 .copy {

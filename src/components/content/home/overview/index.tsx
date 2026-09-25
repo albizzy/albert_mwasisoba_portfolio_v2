@@ -1,16 +1,9 @@
 'use client'
 
-import { Inter } from 'next/font/google'
 import { Goal } from 'lucide-react'
 import { Section } from '@/components/content/sections'
 import { RotatingSpecialties } from './rotating-specialties'
 import styles from './overview.module.css'
-
-const inter = Inter({
-    subsets: ['latin'],
-    style: ['normal', 'italic'],
-    variable: '--overview-font',
-})
 
 export function Overview() {
     return (

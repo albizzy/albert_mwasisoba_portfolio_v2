@@ -118,7 +118,7 @@
     );
     padding: var(--folder-padding);
     background: var(--folder-color);
-    border-radius: 0 24px 24px 24px;
+    border-radius: 0 0 24px 24px;
 }
 
 .content {
