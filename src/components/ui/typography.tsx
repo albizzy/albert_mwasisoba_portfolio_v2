@@ -1,5 +1,6 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
+import styles from './typography.module.css'
 
 type Variant =
     | 'h1'
@@ -42,57 +43,51 @@ const variantMapping: Record<
 > = {
     h1: {
         element: 'h1',
-        classes:
-            'text-5xl md:text-6xl lg:text-8xl xl:text-9xl font-bold leading-tight tracking-tight md:tracking-tighter md:leading-tighter',
+        classes: 'font-bold leading-tight tracking-tight md:tracking-tighter',
     },
     h2: {
         element: 'h2',
-        classes:
-            'text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold leading-tight tracking-tight md:tracking-tighter md:leading-tighter',
+        classes: 'font-bold leading-tight tracking-tight md:tracking-tighter',
     },
     h3: {
         element: 'h3',
-        classes:
-            'text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-tight',
+        classes: 'font-semibold leading-tight',
     },
     h4: {
         element: 'h4',
-        classes:
-            'text-3xl md:text-3xl lg:text-5xl xl:text-6xl font-semibold leading-tight',
+        classes: 'font-semibold leading-tight',
     },
     h5: {
         element: 'h5',
-        classes:
-            'text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold leading-snug',
+        classes: 'font-semibold leading-snug',
     },
     h6: {
         element: 'h6',
-        classes: 'text-lg md:text-2xl lg:text-3xl font-semibold leading-snug',
+        classes: 'font-semibold leading-snug',
     },
     lead: {
         element: 'p',
-        classes: 'text-md md:text-lg lg:text-xl font-medium leading-relaxed',
+        classes: 'font-medium leading-relaxed',
     },
     body: {
         element: 'p',
-        classes: 'text-sm md:text-base font-normal leading-6',
+        classes: 'font-normal leading-relaxed',
     },
     caption: {
         element: 'span',
-        classes: 'text-xs md:text-sm font-normal text-gray-500',
+        classes: 'font-normal text-gray-500',
     },
     small: {
         element: 'span',
-        classes: 'text-[10px] md:text-xs font-normal text-gray-400',
+        classes: 'font-normal text-gray-400',
     },
     blockquote: {
         element: 'blockquote',
-        classes:
-            'border-l-4 border-muted/30 pl-4 text-sm md:text-base italic text-muted/70',
+        classes: 'border-l-4 border-muted/30 pl-4 italic text-muted/70',
     },
     code: {
         element: 'code',
-        classes: 'bg-muted text-foreground/80 px-1 text-xs md:text-sm rounded',
+        classes: 'bg-muted text-foreground/80 px-1 rounded',
     },
 }
 
@@ -101,6 +96,7 @@ const Typography = <T extends AllowedElements = 'p'>({
     as,
     className,
     color,
+    style,
     children,
     ...props
 }: TypographyProps<T>) => {
@@ -113,8 +109,9 @@ const Typography = <T extends AllowedElements = 'p'>({
         <Component
             style={{
                 color,
+                ...style,
             }}
-            className={cn(classes, className)}
+            className={cn(styles[variant], classes, className)}
             {...props}
         >
             {children}

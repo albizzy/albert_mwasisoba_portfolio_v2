@@ -1,0 +1,54 @@
+.root {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28em;
+}
+.stack {
+    position: relative;
+    display: inline-block;
+    vertical-align: bottom;
+}
+.word {
+    position: absolute;
+    inset: 0 auto auto 0;
+    display: block;
+    width: max-content;
+    visibility: hidden;
+    white-space: nowrap;
+}
+.word:first-child {
+    position: relative;
+    visibility: visible;
+}
+.control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.control svg {
+    width: 14px;
+    height: 14px;
+}
+.control:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}
+.reduced {
+    display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+    .control {
+        display: none;
+    }
+    .hasReduced .animated {
+        display: none;
+    }
+    .reduced {
+        display: inline;
+    }
+}

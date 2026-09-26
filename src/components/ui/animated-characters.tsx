@@ -1,7 +1,9 @@
+import { cn } from '@/lib/utils'
+
 interface AnimatedCharactersProps {
     text: string
     className?: string
-    characterClassName: string
+    characterClassName?: string
 }
 
 export function AnimatedCharacters({
@@ -11,11 +13,15 @@ export function AnimatedCharacters({
 }: AnimatedCharactersProps) {
     return (
         <span aria-label={text} className={className}>
-            {text.split('').map((character, index) => (
+            {Array.from(text).map((character, index) => (
                 <span
                     key={`${text}-${index}`}
+                    data-character
                     aria-hidden="true"
-                    className={`${characterClassName} inline-block whitespace-pre`}
+                    className={cn(
+                        'inline-block whitespace-pre',
+                        characterClassName
+                    )}
                 >
                     {character}
                 </span>

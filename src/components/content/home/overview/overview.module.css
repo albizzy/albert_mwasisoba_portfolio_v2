@@ -67,6 +67,9 @@
 }
 
 .highlight {
+    font-style: italic;
+    font-weight: 800;
+    letter-spacing: -0.065em;
     position: relative;
     display: inline-block;
     margin-left: -0.28em;
@@ -82,34 +85,6 @@
     align-items: center;
     gap: 0.28em;
     max-width: 100%;
-}
-
-.wordStack {
-    position: relative;
-    display: inline-block;
-    vertical-align: bottom;
-}
-
-.word {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
-    width: max-content;
-    visibility: hidden;
-}
-
-.word:first-child {
-    position: relative;
-    visibility: visible;
-}
-
-.characters {
-    display: inline-block;
-}
-
-.character {
-    position: relative;
 }
 
 .pause {
@@ -226,7 +201,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .animatedHighlight,
     .pause,
     .sticker {
         display: none;
