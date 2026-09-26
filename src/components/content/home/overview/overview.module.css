@@ -196,9 +196,9 @@
 }
 
 .strategy {
-    top: 0.56em;
+    top: 0.05em;
     left: 56%;
-    transform: rotate(-6deg);
+    transform: rotate(10deg);
 }
 
 .strategy .target {

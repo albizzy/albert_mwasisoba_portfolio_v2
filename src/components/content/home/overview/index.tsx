@@ -19,13 +19,13 @@ export function Overview() {
             <div className={styles.statement}>
                 <div className={styles.composition}>
                     <p className={styles.copy}>
-                        <span className={styles.line}>I create</span>{' '}
+                        <span className={styles.line}>I engineer</span>{' '}
                         <span className={styles.line}>
                             <RotatingSpecialties />
                         </span>{' '}
-                        <span className={styles.line}>that people love,</span>{' '}
+                        <span className={styles.line}>with clean code,</span>{' '}
                         <span className={styles.outcome}>
-                            helping businesses <strong>grow.</strong>
+                            optimized for <strong>scale</strong>
                         </span>
                     </p>
 
@@ -34,7 +34,7 @@ export function Overview() {
                         aria-hidden="true"
                     >
                         <Goal className={styles.target} />
-                        <span className={styles.label}>Strategy first</span>
+                        <span className={styles.label}>Clean architecture</span>
                     </div>
                     <div
                         className={`${styles.sticker} ${styles.meaning}`}
@@ -42,14 +42,14 @@ export function Overview() {
                     >
                         <Goal className={styles.target} />
                         <span className={styles.label}>
-                            Design with meaning
+                            Design-system driven
                         </span>
                     </div>
                     <div
                         className={`${styles.sticker} ${styles.scale}`}
                         aria-hidden="true"
                     >
-                        <span className={styles.label}>Built to scale</span>
+                        <span className={styles.label}>Built for speed</span>
                         <Goal className={styles.target} />
                     </div>
                 </div>

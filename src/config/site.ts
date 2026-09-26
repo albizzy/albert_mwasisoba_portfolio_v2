@@ -6,12 +6,12 @@ export const siteConfig = {
             suffix: 'Eye for Design',
         },
         {
-            title: "Graphic Designer's",
-            suffix: 'Alignment Obsession',
+            title: "UI Architect's",
+            suffix: 'System Precision',
         },
         {
-            title: "Open-Source Author's",
-            suffix: 'Side-Quest Energy',
+            title: "Product Builder's",
+            suffix: 'Focus on Speed',
         },
     ],
     defaultValues: {

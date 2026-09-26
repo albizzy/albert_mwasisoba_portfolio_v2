@@ -8,6 +8,8 @@ import { useMobile } from '@/hooks'
 import { AnimatedCharacters } from '@/components/content/home/hero-section/animated-characters'
 import { useRotatingRole } from '@/components/content/home/hero-section/hooks'
 import { getIndefiniteArticle } from '@/helpers'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(useGSAP)
@@ -63,6 +65,27 @@ export function HeroSection() {
                         />
                     </Typography>
                 </div>
+
+                <Typography as={'p'} variant={'body'} className="max-w-xl">
+                    Specializing in{' '}
+                    <span className="font-semibold text-foreground">
+                        TypeScript
+                    </span>
+                    ,{' '}
+                    <span className="font-semibold text-foreground">React</span>
+                    , and{' '}
+                    <span className="font-semibold text-foreground">
+                        Next.js
+                    </span>
+                </Typography>
+
+                <Button
+                    asChild
+                    variant={'default'}
+                    className={'h-14 py-6 px-8 rounded-full capitalize'}
+                >
+                    <Link href={'/contact'}>Contact Me</Link>
+                </Button>
             </div>
         </section>
     )

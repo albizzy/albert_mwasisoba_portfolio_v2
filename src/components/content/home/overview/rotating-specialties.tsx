@@ -10,23 +10,36 @@ import styles from './overview.module.css'
 
 gsap.registerPlugin(useGSAP)
 
-const specialtyLabels = {
-    Product: 'products',
-    Brand: 'brands',
-    Website: 'websites',
-    Mobile: 'mobile',
-    Logo: 'logos',
+const specialtyLabels: Record<string, string> = {
+    'Frontend Engineering': 'web apps',
+    'UI/UX': 'interfaces',
+    'Design Systems': 'UI systems',
+    'B2B SaaS': 'SaaS tools',
+    'E-Commerce': 'stores',
 }
+
 const workServices = new Set(
     works.flatMap((work) => [...work.services, ...work.types])
 )
+
 const specialties = Object.entries(specialtyLabels)
     .filter(([service]) => workServices.has(service))
     .map(([, label]) => label)
+
+const activeSpecialties =
+    specialties.length >= 2
+        ? specialties
+        : [
+              'web applications',
+              'user interfaces',
+              'design systems',
+              'SaaS platforms',
+          ]
+
 const specialtyList = new Intl.ListFormat('en', {
     style: 'long',
     type: 'conjunction',
-}).format(specialties)
+}).format(activeSpecialties)
 
 export function RotatingSpecialties() {
     const containerRef = useRef<HTMLSpanElement>(null)
@@ -45,7 +58,7 @@ export function RotatingSpecialties() {
     useGSAP(
         () => {
             const container = containerRef.current
-            if (!container || specialties.length < 2) return
+            if (!container || activeSpecialties.length < 2) return
             const media = gsap.matchMedia()
 
             media.add('(prefers-reduced-motion: no-preference)', () => {
@@ -155,7 +168,7 @@ export function RotatingSpecialties() {
             >
                 <span className={styles.handleStart} />
                 <span className={styles.wordStack} data-word-stack>
-                    {specialties.map((specialty) => (
+                    {activeSpecialties.map((specialty) => (
                         <span
                             className={styles.word}
                             data-specialty={specialty}
@@ -174,7 +187,7 @@ export function RotatingSpecialties() {
             <span className={styles.reducedTerms} aria-hidden="true">
                 {specialtyList}
             </span>
-            {specialties.length > 1 && (
+            {activeSpecialties.length > 1 && (
                 <button
                     className={styles.pause}
                     type="button"
