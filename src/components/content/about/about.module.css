@@ -1,0 +1,626 @@
+.page {
+    --about-paper: transparent;
+    --about-ink: #191510;
+    --about-yellow: #f7c948;
+    --about-pink: #ff4d8d;
+    --about-blue: #2b57d6;
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns: minmax(144px, 1fr) minmax(0, 896px) minmax(
+            144px,
+            1fr
+        );
+    padding-block: 56px 120px;
+    background: var(--about-paper);
+    color: var(--about-ink);
+}
+
+.page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: url('/images/about/paper-texture.png') repeat;
+    opacity: 0.06;
+    pointer-events: none;
+}
+
+.content {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+}
+
+.page [data-tone='yellow'] {
+    --section-color: var(--about-yellow);
+}
+
+.page [data-tone='pink'] {
+    --section-color: var(--about-pink);
+}
+
+.page [data-tone='blue'] {
+    --section-color: var(--about-blue);
+}
+
+.navigation {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 160px;
+    left: 100px;
+    align-self: start;
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 205px;
+    z-index: 20;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 45px;
+    width: fit-content;
+    padding: 12px;
+    border: 2px solid var(--about-ink);
+    border-radius: 14px;
+    box-shadow: 3px 3px 0 var(--about-ink);
+    background: var(--section-color);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition:
+        width 180ms ease,
+        padding 180ms ease;
+}
+
+.tab[data-tone='blue'] {
+    color: white;
+}
+
+.tab:hover,
+.tab[aria-current='location'] {
+    width: fit-content;
+    padding-left: 20px;
+}
+
+.tab:focus-visible,
+.workLink:focus-visible {
+    outline: 3px solid var(--about-ink);
+    outline-offset: 6px;
+}
+
+.tab img,
+.annotation img,
+.nameSticker img {
+    flex: none;
+}
+
+.page .section {
+    padding: 0;
+    overflow: visible;
+    color: inherit;
+    scroll-margin-top: 120px;
+}
+
+.section + .section {
+    margin-top: 96px;
+}
+
+.sectionLabel {
+    display: table;
+    padding: 8px 16px;
+    margin-bottom: 24px;
+    background: var(--section-color);
+    box-shadow: 2px 3px 6px rgb(17 18 18 / 18%);
+    font:
+        500 16px / 24px var(--about-mono),
+        monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.sectionLabel:focus-visible {
+    outline: 2px solid var(--about-ink);
+    outline-offset: 5px;
+}
+
+.section[data-tone='blue'] .sectionLabel {
+    color: white;
+}
+
+.panel {
+    position: relative;
+    padding: 40px;
+    border: 4px solid var(--section-color);
+    border-radius: 28px;
+}
+
+.bioCopy {
+    padding-right: 224px;
+}
+
+.introduction {
+    /*font: 400 36px / 1.375 var(--about-hand),*/
+    /*cursive;*/
+    font-weight: 400;
+    font-size: 36px;
+}
+
+.prose {
+    display: grid;
+    gap: 16px;
+    margin-top: 32px;
+    color: rgb(25 21 16 / 80%);
+}
+
+.prose p,
+.note p {
+    font-size: 16px;
+    line-height: 1.625;
+}
+
+.note {
+    position: relative;
+    background: #f3e2ad;
+    box-shadow: 2px 6px 12px rgb(17 18 18 / 18%);
+}
+
+.note::before,
+.note::after,
+.photo::before,
+.photo::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    width: 64px;
+    height: 20px;
+    background: rgb(255 255 255 / 55%);
+    box-shadow: 0 1px 3px rgb(17 18 18 / 15%);
+    pointer-events: none;
+}
+
+.currentNote {
+    padding: 20px;
+    margin-top: 36px;
+    transform: rotate(-1deg);
+}
+
+.currentNote::before {
+    top: -9px;
+    left: -16px;
+    transform: rotate(-38deg);
+}
+
+.currentNote::after,
+.personalNote::before,
+.personalNote::after {
+    display: none;
+}
+
+.personalNote {
+    margin: 32px 12px 0 64px;
+    padding: 16px;
+    transform: rotate(-2deg);
+}
+
+.portrait {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 176px;
+}
+
+.photo {
+    padding: 8px 8px 0;
+    background: white;
+    box-shadow: 0 6px 18px rgb(17 18 18 / 22%);
+    transform: rotate(6deg);
+}
+
+.portraitImage {
+    display: block;
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
+    background: #b7c6ef;
+}
+
+.photo::before {
+    left: -16px;
+    top: -9px;
+    transform: rotate(-38deg);
+    background: rgb(183 198 239 / 70%);
+}
+
+.photo::after {
+    right: -16px;
+    top: -9px;
+    transform: rotate(38deg);
+    background: rgb(243 226 173 / 70%);
+}
+
+.photo figcaption {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.nameSticker {
+    position: relative;
+    display: table;
+    margin-top: 24px;
+}
+
+.nameSticker > img {
+    position: absolute;
+    top: -20px;
+    left: -24px;
+}
+
+.nameSticker > span {
+    display: block;
+    border: 3px solid white;
+    border-radius: 100px;
+    padding: 5px 14px;
+    background: var(--section-color);
+    box-shadow: 0 4px 8px rgb(25 21 16 / 25%);
+    font:
+        500 14px / 20px var(--about-mono),
+        monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.storyPanel {
+    padding-block: 52px;
+}
+
+.principles {
+    display: grid;
+    gap: 64px;
+    list-style: none;
+}
+
+.principleRow {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.principleNote {
+    flex: 0 1 404px;
+    padding: 36px 32px 32px;
+    transform: rotate(-1deg);
+    background: #b7c6ef;
+}
+
+.principleNote h3 {
+    font-size: 30px;
+    line-height: 1.2;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+}
+
+.principleNote p {
+    margin-top: 12px;
+    color: rgb(25 21 16 / 85%);
+}
+
+.principleNote::before {
+    top: -10px;
+    left: -18px;
+    transform: rotate(-40deg);
+}
+
+.principleNote::after {
+    bottom: 26px;
+    right: -22px;
+    width: 56px;
+    transform: rotate(62deg);
+}
+
+.principleRow:nth-child(2) .principleNote {
+    background: #f3e2ad;
+    transform: rotate(1deg);
+}
+
+.principleRow:nth-child(2) .principleNote::before {
+    left: auto;
+    right: -18px;
+    transform: rotate(40deg);
+}
+
+.principleRow:nth-child(2) .principleNote::after {
+    right: auto;
+    left: -22px;
+    transform: rotate(-62deg);
+}
+
+.principleRow:nth-child(3) .principleNote {
+    flex-basis: 510px;
+    background: #a9dfc6;
+    transform: rotate(-2deg);
+}
+
+.principleRow:nth-child(3) .principleNote::before {
+    top: 45%;
+    transform: rotate(-78deg);
+}
+
+.principleRow:nth-child(3) .principleNote::after {
+    top: -10px;
+    right: -18px;
+    transform: rotate(36deg);
+}
+
+.annotation {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font:
+        400 30px / 1.2 var(--about-hand),
+        cursive;
+}
+
+.storySticker {
+    position: absolute;
+    top: 52%;
+    right: -12px;
+    transform: rotate(-8deg);
+}
+
+.workList {
+    display: grid;
+    gap: 28px;
+    list-style: none;
+}
+
+.workLink {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    position: relative;
+    padding-left: 28px;
+}
+
+.workLink::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: 0;
+    top: 8px;
+    background: var(--about-blue);
+}
+
+.workName {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.workRole {
+    font-size: 14px;
+    color: rgb(25 21 16 / 70%);
+}
+
+.workTag {
+    margin-left: auto;
+    padding: 4px 10px;
+    background: var(--about-blue);
+    color: white;
+    font:
+        500 10px / 15px var(--about-mono),
+        monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.workLink:hover .workName {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+@media (max-width: 1199px) {
+    .page {
+        grid-template-columns: 152px minmax(0, 896px) 32px;
+    }
+
+    .bioCopy {
+        padding-right: 176px;
+    }
+
+    .portrait {
+        width: 144px;
+        right: 12px;
+    }
+
+    .portraitImage {
+        width: 128px;
+        height: 160px;
+    }
+
+    .principleRow {
+        gap: 28px;
+    }
+
+    .annotation {
+        font-size: 26px;
+    }
+
+    .workLink {
+        flex-wrap: wrap;
+    }
+
+    .workRole {
+        flex-basis: calc(100% - 28px);
+        order: 2;
+    }
+}
+
+@media (max-width: 767px) {
+    .page {
+        display: block;
+        padding: 0 0 72px;
+    }
+
+    .navigation {
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        margin: 0;
+        padding: 12px 16px 16px;
+        top: 96px;
+        background: var(--about-paper);
+        border-bottom: 1px solid rgb(25 21 16 / 10%);
+    }
+
+    .tab,
+    .tab:hover,
+    .tab[aria-current='location'] {
+        width: fit-content;
+        min-width: 0;
+        padding: 10px 12px;
+        border: 2px solid var(--about-ink);
+        border-radius: 8px;
+    }
+
+    .tab[aria-current='location'] {
+        box-shadow: 1px 1px 0 var(--about-ink);
+        transform: translate(2px, 2px);
+    }
+
+    .content {
+        padding: 32px 24px 0;
+    }
+
+    .page .section {
+        scroll-margin-top: 190px;
+    }
+
+    .section + .section {
+        margin-top: 64px;
+    }
+
+    .panel {
+        padding: 28px 24px;
+    }
+
+    .sectionLabel {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .bioPanel {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .bioCopy {
+        padding-right: 0;
+    }
+
+    .introduction {
+        font-size: 32px;
+    }
+
+    .portrait {
+        position: relative;
+        order: -1;
+        top: auto;
+        right: auto;
+        align-self: center;
+        width: 160px;
+    }
+
+    .portraitImage {
+        width: 144px;
+        height: 180px;
+    }
+
+    .nameSticker {
+        margin: 20px auto 0;
+    }
+
+    .prose {
+        margin-top: 24px;
+    }
+
+    .personalNote {
+        margin-left: 20px;
+        margin-right: 0;
+    }
+
+    .storyPanel {
+        padding-block: 40px;
+    }
+
+    .principles {
+        gap: 44px;
+    }
+
+    .principleRow {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+    }
+
+    .principleNote,
+    .principleRow:nth-child(3) .principleNote {
+        flex-basis: auto;
+        padding: 28px 22px;
+    }
+
+    .principleNote h3 {
+        font-size: 26px;
+    }
+
+    .annotation {
+        align-self: flex-end;
+        font-size: 26px;
+        gap: 8px;
+    }
+
+    .storySticker {
+        top: 52%;
+        right: -14px;
+    }
+
+    .workList {
+        gap: 24px;
+    }
+
+    .workLink {
+        gap: 4px 8px;
+        padding-left: 22px;
+    }
+
+    .workName {
+        width: 100%;
+    }
+
+    .workRole {
+        order: initial;
+        flex-basis: 100%;
+    }
+
+    .workTag {
+        margin: 6px 0 0;
+        white-space: normal;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tab {
+        transition: none;
+    }
+}
