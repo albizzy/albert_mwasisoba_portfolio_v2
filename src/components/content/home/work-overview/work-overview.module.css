@@ -14,11 +14,7 @@
 
 .eyebrow {
     margin-bottom: 16px;
-    font:
-        500 13px / 1.5 var(--work-mono),
-        monospace;
     letter-spacing: 0.2em;
-    text-transform: uppercase;
 }
 
 .heading h2 {
@@ -85,7 +81,7 @@
     );
     padding-inline: var(--folder-tab-height);
     background: var(--folder-color);
-    border-radius: 20px 20px 0px 0px;
+    border-radius: 20px 20px 0 0;
     font:
         500 clamp(11px, 1vw, 16px) / 1.5 var(--work-mono),
         monospace;

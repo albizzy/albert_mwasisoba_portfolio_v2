@@ -5,6 +5,7 @@ import { Typography } from '@/components/ui/typography'
 import { WorkCardProps, WorkPreview } from './work-item'
 import { WorkTags } from './work-tags'
 import styles from './work-overview.module.css'
+import { cn } from '@/lib/utils'
 
 export function FolderWorkCard({
     work,
@@ -28,7 +29,7 @@ export function FolderWorkCard({
                     alt=""
                 />
                 <span>
-                    <span className={styles.tabLabel}>Project </span>
+                    <span className={cn(styles.tabLabel)}>Project </span>
                     {String(index + 1).padStart(2, '0')}
                 </span>
             </div>

@@ -1,13 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { Typography } from '@/components/ui/typography'
 import { RotatingText } from '@/components/ui/rotating-text'
-import { Button } from '@/components/ui/button'
 import { siteConfig } from '@/config'
 import { getIndefiniteArticle } from '@/helpers'
 import styles from './hero-section.module.css'
+import { Caveat } from 'next/font/google'
+
+export const caveat = Caveat({
+    subsets: ['latin'],
+    variable: '--font-caveat',
+    display: 'swap',
+})
 
 const roles = siteConfig.roles.map((role) => ({
     text: role.title,
@@ -22,7 +27,21 @@ export function HeroSection() {
         <section className={styles.section} aria-label="Introduction">
             <div className={styles.content}>
                 <div className={styles.composition}>
-                    <Typography as="h1" variant="h2" className={styles.heading}>
+                    <Typography
+                        as={'span'}
+                        variant={'h4'}
+                        className={`${caveat.className} text-muted-foreground mb-10`}
+                    >
+                        Hi,{' '}
+                        <span className={'text-primary font-bold'}>
+                            I'm Albert.
+                        </span>
+                    </Typography>
+                    <Typography
+                        as="h1"
+                        variant="h2"
+                        className={`${styles.heading}`}
+                    >
                         <span className={styles.intro}>
                             Engineering with{' '}
                             {getIndefiniteArticle(currentRole.text)}
@@ -39,25 +58,25 @@ export function HeroSection() {
                         />
                     </Typography>
                 </div>
-                <Typography
-                    as="p"
-                    variant="body"
-                    className={styles.description}
-                >
-                    Specializing in{' '}
-                    <span className="font-semibold text-foreground">
-                        TypeScript
-                    </span>
-                    ,{' '}
-                    <span className="font-semibold text-foreground">React</span>
-                    , and{' '}
-                    <span className="font-semibold text-foreground">
-                        Next.js
-                    </span>
-                </Typography>
-                <Button asChild variant="default" className={styles.contact}>
-                    <Link href="/contact">Contact Me</Link>
-                </Button>
+                {/*<Typography*/}
+                {/*    as="p"*/}
+                {/*    variant="body"*/}
+                {/*    className={styles.description}*/}
+                {/*>*/}
+                {/*    Specializing in{' '}*/}
+                {/*    <span className="font-semibold text-foreground">*/}
+                {/*        TypeScript*/}
+                {/*    </span>*/}
+                {/*    ,{' '}*/}
+                {/*    <span className="font-semibold text-foreground">React</span>*/}
+                {/*    , and{' '}*/}
+                {/*    <span className="font-semibold text-foreground">*/}
+                {/*        Next.js*/}
+                {/*    </span>*/}
+                {/*</Typography>*/}
+                {/*<Button asChild variant="default" className={styles.contact}>*/}
+                {/*    <Link href="/contact">Contact Me</Link>*/}
+                {/*</Button>*/}
             </div>
         </section>
     )
