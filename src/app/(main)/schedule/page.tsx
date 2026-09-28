@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Section } from '@/components/content/sections'
-import { Typography } from '@/components/ui/typography'
 import { getMeetingTypes } from '@/features/scheduling/config'
 import { Scheduler } from '@/features/scheduling/scheduler'
 

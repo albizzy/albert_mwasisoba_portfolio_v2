@@ -76,19 +76,6 @@
     color: var(--foreground);
 }
 
-.description {
-    max-width: 42rem;
-    font-size: clamp(0.8125rem, 0.65rem + 0.65vw, 1rem);
-    line-height: 1.7;
-    text-wrap: balance;
-}
-
-.contact {
-    height: clamp(3rem, 5vw, 3.5rem);
-    padding-inline: clamp(1.5rem, 3vw, 2rem);
-    border-radius: 999px;
-}
-
 @media (prefers-reduced-motion: reduce) {
     .roles {
         padding-bottom: 0;

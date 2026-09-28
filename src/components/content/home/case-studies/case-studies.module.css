@@ -1,8 +1,5 @@
 .section {
-    --sheet-ink: #191510;
-    --sheet-muted: #625f55;
-    --sheet-line: #dbddd3;
-    color: var(--sheet-ink);
+    color: var(--editorial-ink);
     padding: 0 clamp(12px, 2vw, 40px) clamp(80px, 10vw, 144px);
     scroll-margin-top: 112px;
 }
@@ -22,11 +19,11 @@
     width: fit-content;
     min-height: 48px;
     padding: 12px 24px;
-    border-radius: 20px 20px 0 0;
-    background: var(--sheet-ink);
+    border-radius: var(--editorial-radius-tab) var(--editorial-radius-tab) 0 0;
+    background: var(--editorial-ink);
     color: #fff;
-    font-weight: 500;
-    font-size: 14px;
+    font-weight: var(--editorial-weight-label);
+    font-size: var(--editorial-text-label);
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -37,9 +34,9 @@
     align-items: start;
     gap: clamp(32px, 4vw, 64px);
     padding: clamp(24px, 4vw, 64px);
-    border: 1px solid var(--sheet-line);
-    border-radius: 28px;
-    background-color: #f7f8f2;
+    border: 1px solid var(--editorial-line);
+    border-radius: var(--editorial-radius-panel);
+    background-color: var(--editorial-paper);
     background-image: radial-gradient(#d5d8ca 20px, transparent 0.7px);
     background-size: 18px 18px;
 }
@@ -50,13 +47,13 @@
 
 .notesHeader,
 .notesFooter {
-    font-family: ui-monospace, monospace;
+    font-family: var(--editorial-font-mono);
 }
 
 .eyebrow {
     margin-bottom: 4px;
-    font-size: 18px;
-    font-weight: 500;
+    font-size: var(--editorial-text-lead);
+    font-weight: var(--editorial-weight-label);
     letter-spacing: 0.18em;
     text-transform: capitalize;
 }
@@ -64,13 +61,13 @@
 .context h2 {
     font-size: clamp(28px, 3.3vw, 52px);
     line-height: 1.16;
-    font-weight: 600;
+    font-weight: var(--editorial-weight-heading);
     letter-spacing: -0.06em;
     outline-offset: 8px;
 }
 
 .dot {
-    color: #49720b;
+    color: var(--editorial-green);
 }
 
 .description {
@@ -78,7 +75,7 @@
     margin-top: 24px;
     font-size: clamp(13px, 1vw, 15px);
     line-height: 1.85;
-    color: var(--sheet-muted);
+    color: var(--editorial-muted);
 }
 
 .badges {
@@ -95,11 +92,11 @@
     align-items: center;
     gap: 6px;
     padding: 6px 9px;
-    border: 1px solid var(--sheet-line);
-    border-radius: 5px 10px 5px 5px;
+    border: 1px solid var(--editorial-line);
+    border-radius: var(--editorial-radius-tag);
     text-transform: uppercase;
     background: #fff;
-    font-size: 11px;
+    font-size: var(--editorial-text-micro);
     line-height: 1.4;
 }
 
@@ -107,7 +104,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: #49720b;
+    background: var(--editorial-green);
 }
 
 .actions {
@@ -123,9 +120,9 @@
     height: auto;
     padding: 14px 20px;
     border-radius: 12px;
-    background: var(--sheet-ink);
+    background: var(--editorial-ink);
     color: #fff;
-    font-size: 12px;
+    font-size: var(--editorial-text-small);
 }
 
 .sourceButton:hover {
@@ -137,32 +134,32 @@
     min-height: 44px;
     align-items: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: var(--editorial-text-small);
     text-decoration: underline;
     text-underline-offset: 5px;
 }
 
 .auditLink:hover {
-    color: #49720b;
+    color: var(--editorial-green);
 }
 
 .auditNote {
     margin-top: 14px;
     max-width: 42ch;
-    color: var(--sheet-muted);
-    font-size: 10px;
+    color: var(--editorial-muted);
+    font-size: var(--editorial-text-fine);
     line-height: 1.7;
 }
 
 .section a:focus-visible,
 .note summary:focus-visible {
-    outline: 2px solid #49720b;
+    outline: 2px solid var(--editorial-green);
     outline-offset: 5px;
 }
 
 .notes {
     min-width: 0;
-    border: 1px solid var(--sheet-line);
+    border: 1px solid var(--editorial-line);
     border-radius: 18px;
     background: #fff;
     box-shadow: 4px 5px 0 #e5e8dc;
@@ -173,19 +170,19 @@
     justify-content: space-between;
     gap: 16px;
     padding: 20px 24px;
-    border-bottom: 1px solid var(--sheet-line);
-    font-size: 11px;
+    border-bottom: 1px solid var(--editorial-line);
+    font-size: var(--editorial-text-micro);
     letter-spacing: 0.07em;
     text-transform: uppercase;
 }
 
 .fileLabel {
-    color: var(--sheet-muted);
+    color: var(--editorial-muted);
     white-space: nowrap;
 }
 
 .note {
-    border-bottom: 1px solid var(--sheet-line);
+    border-bottom: 1px solid var(--editorial-line);
 }
 
 .note summary {
@@ -203,17 +200,15 @@
 }
 
 .note summary:hover {
-    background: #f7f8f2;
+    background: var(--editorial-paper);
 }
 
 .number {
     flex: none;
     align-self: flex-start;
     padding-top: 3px;
-    color: #49720b;
-    font:
-        12px / 1.5 ui-monospace,
-        monospace;
+    color: var(--editorial-green);
+    font: var(--editorial-text-small) / 1.5 var(--editorial-font-mono);
 }
 
 .noteHeading {
@@ -226,16 +221,14 @@
 
 .noteTitle {
     font-size: clamp(12px, 1vw, 15px);
-    font-weight: 600;
+    font-weight: var(--editorial-weight-heading);
     line-height: 1.5;
     letter-spacing: -0.03em;
 }
 
 .noteSummary {
-    color: var(--sheet-muted);
-    font:
-        11px / 1.6 ui-monospace,
-        monospace;
+    color: var(--editorial-muted);
+    font: var(--editorial-text-micro) / 1.6 var(--editorial-font-mono);
 }
 
 .toggle {
@@ -252,8 +245,8 @@
 }
 
 .noteBody p {
-    color: var(--sheet-muted);
-    font-size: 12px;
+    color: var(--editorial-muted);
+    font-size: var(--editorial-text-small);
     line-height: 1.85;
 }
 
@@ -263,9 +256,7 @@
     gap: 6px;
     margin-top: 14px;
     min-height: 32px;
-    font:
-        12px / 1.5 ui-monospace,
-        monospace;
+    font: var(--editorial-text-small) / 1.5 var(--editorial-font-mono);
     text-decoration: underline;
     text-underline-offset: 4px;
 }
@@ -274,8 +265,8 @@
     display: flex;
     gap: 10px;
     padding: 18px 24px;
-    color: var(--sheet-muted);
-    font-size: 11px;
+    color: var(--editorial-muted);
+    font-size: var(--editorial-text-micro);
     line-height: 1.5;
 }
 
@@ -303,7 +294,7 @@
     .tab {
         min-height: 42px;
         padding-inline: 18px;
-        font-size: 11px;
+        font-size: var(--editorial-text-micro);
     }
 
     .context h2 {
@@ -325,7 +316,7 @@
     }
 
     .noteSummary {
-        font-size: 10px;
+        font-size: var(--editorial-text-fine);
     }
 }
 

@@ -34,7 +34,7 @@ export function HeroSection() {
                     >
                         Hi,{' '}
                         <span className={'text-primary font-bold'}>
-                            I'm Albert.
+                            I&apos;m Albert.
                         </span>
                     </Typography>
                     <Typography
@@ -58,25 +58,6 @@ export function HeroSection() {
                         />
                     </Typography>
                 </div>
-                {/*<Typography*/}
-                {/*    as="p"*/}
-                {/*    variant="body"*/}
-                {/*    className={styles.description}*/}
-                {/*>*/}
-                {/*    Specializing in{' '}*/}
-                {/*    <span className="font-semibold text-foreground">*/}
-                {/*        TypeScript*/}
-                {/*    </span>*/}
-                {/*    ,{' '}*/}
-                {/*    <span className="font-semibold text-foreground">React</span>*/}
-                {/*    , and{' '}*/}
-                {/*    <span className="font-semibold text-foreground">*/}
-                {/*        Next.js*/}
-                {/*    </span>*/}
-                {/*</Typography>*/}
-                {/*<Button asChild variant="default" className={styles.contact}>*/}
-                {/*    <Link href="/contact">Contact Me</Link>*/}
-                {/*</Button>*/}
             </div>
         </section>
     )

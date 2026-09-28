@@ -75,51 +75,38 @@ export function AboutContent() {
                                     caveat.className
                                 )}
                             >
-                                I&apos;m Albert, a frontend engineer with an eye
-                                for design. I connect technology, design, and
-                                strategy to turn complicated ideas into digital
-                                products that feel clear.
+                                Frontend engineer bridging scalable architecture
+                                and design precision.
                             </p>
                             <div className={styles.prose}>
                                 <Typography as={'p'} variant={'body'}>
-                                    I work where the interface meets the system
-                                    behind it: accessible React components,
-                                    thoughtful design systems, and the workflows
-                                    that hold a product together. From
-                                    onboarding journeys to data-heavy
-                                    dashboards, I care about the details that
-                                    make an experience easier to use.
+                                    I specialize in building performant,
+                                    accessible web applications using{' '}
+                                    <strong>TypeScript, React, Next.js</strong>,
+                                    and modern CSS systems. My focus sits at the
+                                    seam between engineering and product:
+                                    architecting modular design systems,
+                                    managing complex client state, and ensuring
+                                    smooth, sub-second user flows.
                                 </Typography>
                                 <Typography as={'p'} variant={'body'}>
-                                    Good digital work rarely belongs to one
-                                    discipline. I move between architecture,
-                                    interface thinking, and visual craft so that
-                                    the experience and the code support the same
-                                    goal: something practical to build, coherent
-                                    to maintain, and ready to grow.
+                                    Whether engineering data-dense SaaS
+                                    dashboards or consumer-facing storefronts, I
+                                    write strict, predictable code built for
+                                    long-term maintainability, zero layout
+                                    shifts, and full WCAG AA accessibility.
                                 </Typography>
                             </div>
                             <div
                                 className={`${styles.note} ${styles.currentNote}`}
                             >
                                 <Typography as={'p'} variant={'body'}>
-                                    My work spans consumer products, insurance,
-                                    e-commerce, and agency platforms. The common
-                                    thread? Making complex workflows feel
-                                    simple, with reusable components and clean
-                                    architecture underneath.
-                                </Typography>
-                            </div>
-                            <div
-                                className={`${styles.note} ${styles.personalNote}`}
-                            >
-                                <Typography as={'p'} variant={'body'}>
-                                    I also enjoy sharing useful ideas and
-                                    reusable building blocks through open
-                                    source, and learning by building with
-                                    others. There&apos;s always a better
-                                    question to ask or a small detail to get
-                                    right.
+                                    <strong>Remote Collaboration:</strong>{' '}
+                                    Experienced in asynchronous,
+                                    cross-functional agile teams. Disciplined
+                                    with written documentation, proactive
+                                    communication, and flexible overlap across
+                                    distributed time zones.
                                 </Typography>
                             </div>
                         </div>
@@ -180,7 +167,12 @@ export function AboutContent() {
                                         <h3>{principle.title}</h3>
                                         <p>{principle.description}</p>
                                     </article>
-                                    <p className={styles.annotation}>
+                                    <p
+                                        className={cn(
+                                            styles.annotation,
+                                            caveat.className
+                                        )}
+                                    >
                                         <Image
                                             src="/images/about/annotation-arrow.svg"
                                             alt=""
@@ -202,7 +194,7 @@ export function AboutContent() {
                                 width={32}
                                 height={32}
                             />
-                            <span>Story</span>
+                            <span>Principles</span>
                         </div>
                     </div>
                 </Section>

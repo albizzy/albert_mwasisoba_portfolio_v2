@@ -1,6 +1,8 @@
 .section {
     --overview-lime: #b5f52b;
     --overview-ink: #101116;
+    --overview-highlight: #d9f79a;
+    --overview-green: #41660d;
     background: #fff;
     color: var(--overview-ink);
     padding-block: clamp(88px, 10vw, 144px);
@@ -14,22 +16,6 @@
 .statement {
     container-type: inline-size;
     width: min(100%, 640px);
-}
-
-.introduction {
-    margin: 0 5% 1em;
-    font-size: 12.5cqw;
-}
-
-.intro {
-    font-size: 0.48em;
-    letter-spacing: -0.045em;
-    line-height: 1.45;
-    text-wrap: pretty;
-}
-
-.intro strong {
-    font-weight: 650;
 }
 
 .composition {
@@ -60,23 +46,21 @@
     line-height: 1.4;
 }
 
-.copy strong {
+.copy strong,
+.highlight {
     font-style: italic;
     font-weight: 800;
     letter-spacing: -0.065em;
 }
 
 .highlight {
-    font-style: italic;
-    font-weight: 800;
-    letter-spacing: -0.065em;
     position: relative;
     display: inline-block;
     margin-left: -0.28em;
     padding: 0.025em 0.12em 0.035em 0.25em;
     border-inline: 2px solid var(--overview-lime);
-    background: #d9f79a;
-    color: #41660d;
+    background: var(--overview-highlight);
+    color: var(--overview-green);
     line-height: 0.98;
 }
 
@@ -96,7 +80,7 @@
     justify-content: center;
     border-radius: 50%;
     background: #f1f4ec;
-    color: #41660d;
+    color: var(--overview-green);
     cursor: pointer;
 }
 
@@ -106,11 +90,11 @@
 }
 
 .pause:hover {
-    background: #d9f79a;
+    background: var(--overview-highlight);
 }
 
 .pause:focus-visible {
-    outline: 2px solid #41660d;
+    outline: 2px solid var(--overview-green);
     outline-offset: 4px;
 }
 

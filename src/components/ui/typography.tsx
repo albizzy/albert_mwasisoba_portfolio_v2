@@ -75,15 +75,15 @@ const variantMapping: Record<
     },
     caption: {
         element: 'span',
-        classes: 'font-normal text-gray-500',
+        classes: 'font-normal text-muted-foreground',
     },
     small: {
         element: 'span',
-        classes: 'font-normal text-gray-400',
+        classes: 'font-normal text-muted-foreground',
     },
     blockquote: {
         element: 'blockquote',
-        classes: 'border-l-4 border-muted/30 pl-4 italic text-muted/70',
+        classes: 'border-l-4 border-border pl-4 italic text-muted-foreground',
     },
     code: {
         element: 'code',
