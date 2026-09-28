@@ -81,8 +81,9 @@
     padding-inline: var(--folder-tab-height);
     background: var(--folder-color);
     border-radius: var(--editorial-radius-tab) var(--editorial-radius-tab) 0 0;
-    font: var(--editorial-weight-label) clamp(11px, 1vw, 16px) / 1.5
-        var(--editorial-font-mono);
+    font-size: clamp(11px, 1vw, 16px);
+    font-weight: var(--editorial-weight-label);
+    line-height: 1.5;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     white-space: nowrap;
@@ -126,8 +127,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    font: var(--editorial-weight-label) var(--editorial-text-label) / 20px
-        var(--editorial-font-mono);
+    font-size: var(--editorial-text-label);
+    font-weight: var(--editorial-weight-label);
+    line-height: 20px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
@@ -162,8 +164,9 @@
     margin-top: 32px;
     padding-bottom: 4px;
     border-bottom: 2px solid currentColor;
-    font: var(--editorial-weight-label) var(--editorial-text-label) / 20px
-        var(--editorial-font-mono);
+    font-size: var(--editorial-text-label);
+    font-weight: var(--editorial-weight-label);
+    line-height: 20px;
     letter-spacing: 0.2em;
     text-transform: uppercase;
 }
@@ -188,8 +191,9 @@
     background: var(--folder-ink);
     color: var(--tag-ink);
     border-radius: var(--editorial-radius-tag);
-    font: var(--editorial-weight-label) clamp(12px, 1vw, 16px) / 24px
-        var(--editorial-font-mono);
+    font-size: clamp(12px, 1vw, 16px);
+    font-weight: var(--editorial-weight-label);
+    line-height: 24px;
     text-transform: uppercase;
 }
 

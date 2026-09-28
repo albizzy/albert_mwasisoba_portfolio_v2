@@ -29,7 +29,7 @@ export function Turnstile({
         widget.current = window.turnstile.render(element.current, {
             sitekey: siteKey,
             action: 'contact',
-            theme: 'auto',
+            theme: 'light',
             size: 'flexible',
             'response-field': false,
             callback: (token: string) => {

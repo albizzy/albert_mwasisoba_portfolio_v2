@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { getReplyRecipient, submitBrandedReply } from '../actions'
 import { initialFormState, type FormState } from '../schema'
 import { FormField } from './form-field'
+import styles from '@/styles/correspondence.module.css'
 
 type ReplyContext = { token: string; name: string; email: string }
 
@@ -65,42 +66,29 @@ export function ReplyForm() {
 
     if (!loaded)
         return (
-            <p role="status" className="text-sm text-muted-foreground">
+            <p role="status" className={styles.status}>
                 Checking your private reply link…
             </p>
         )
     if (!context)
         return (
-            <div className="space-y-4">
-                <h2 className="text-xl">This reply link is unavailable.</h2>
-                <p className="text-sm leading-relaxed text-muted-foreground">
+            <div className={styles.emptyState}>
+                <h2>This reply link is unavailable.</h2>
+                <p className={styles.status}>
                     Open the “Reply with branding” link in a recent notification
                     email. Links expire after seven days. If a link has expired,
                     reply directly from your inbox.
                 </p>
-                <Link
-                    href="/"
-                    className="inline-block text-sm underline underline-offset-4"
-                >
-                    Back to the portfolio
-                </Link>
+                <Link href="/">Back to the portfolio</Link>
             </div>
         )
 
     return (
-        <form
-            action={action}
-            aria-busy={pending}
-            className="flex flex-col gap-8"
-        >
-            <div className="space-y-2 border-b border-border pb-6">
-                <p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-                    Replying to
-                </p>
-                <p className="text-lg">{context.name}</p>
-                <p className="break-all text-sm text-muted-foreground">
-                    {context.email}
-                </p>
+        <form action={action} aria-busy={pending} className={styles.form}>
+            <div className={styles.recipient}>
+                <p className={styles.recipientLabel}>Replying to</p>
+                <p className={styles.recipientName}>{context.name}</p>
+                <p className={styles.recipientEmail}>{context.email}</p>
             </div>
             {state.status !== 'success' && (
                 <>
@@ -118,23 +106,21 @@ export function ReplyForm() {
                         onChange={(event) => setMessage(event.target.value)}
                         placeholder="Write your reply. Your branding will be added automatically."
                     />
-                    <details className="rounded-3xl border border-border p-6">
-                        <summary className="cursor-pointer text-sm">
+                    <details className={styles.preview}>
+                        <summary className={styles.previewSummary}>
                             Preview branded reply
                         </summary>
-                        <div className="mt-6 overflow-hidden rounded-2xl border border-border">
-                            <div className="bg-foreground p-6 text-background">
-                                <p className="font-medium">Albert Mwasisoba.</p>
-                                <p className="mt-2 font-mono text-[10px] uppercase tracking-widest">
+                        <div className={styles.previewContent}>
+                            <div className={styles.previewTop}>
+                                <strong>Albert Mwasisoba.</strong>
+                                <p className={styles.previewKicker}>
                                     Consultant &amp; Engineer
                                 </p>
                             </div>
-                            <div className="space-y-5 p-6">
-                                <h2 className="text-xl">Let’s keep talking.</h2>
-                                <p className="text-sm text-muted-foreground">
-                                    Hi {context.name},
-                                </p>
-                                <p className="whitespace-pre-wrap break-words text-sm leading-relaxed">
+                            <div className={styles.previewBody}>
+                                <h2>Let’s keep talking.</h2>
+                                <p>Hi {context.name},</p>
+                                <p>
                                     {message || 'Your reply will appear here.'}
                                 </p>
                             </div>
@@ -143,7 +129,7 @@ export function ReplyForm() {
                     <Button
                         type="submit"
                         disabled={pending}
-                        className="h-auto self-start rounded-full px-7 py-4"
+                        className={styles.primaryButton}
                     >
                         {pending ? 'Sending reply…' : 'Send branded reply'}
                     </Button>
@@ -154,12 +140,12 @@ export function ReplyForm() {
                     ref={feedback}
                     tabIndex={-1}
                     role={state.status === 'error' ? 'alert' : 'status'}
-                    className="text-sm leading-relaxed outline-none"
+                    className={`${styles.status} ${state.status === 'error' ? styles.errorStatus : ''}`}
                 >
                     {state.message}
                 </p>
             )}
-            <p className="text-xs leading-relaxed text-muted-foreground">
+            <p className={styles.finePrint}>
                 This private link authorizes replies to this recipient. Keep it
                 in your inbox. Their responses will go to your configured
                 contact inbox.

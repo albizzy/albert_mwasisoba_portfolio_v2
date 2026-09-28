@@ -1,101 +1,140 @@
 import type { Metadata } from 'next'
+import { Caveat } from 'next/font/google'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import { Section } from '@/components/content/sections'
-import { Button } from '@/components/ui/button'
-import { Typography } from '@/components/ui/typography'
+import { RotatingText } from '@/components/ui/rotating-text'
 import { ContactForm } from '@/features/contact/components/contact-form'
 import {
     getContactAvailability,
     getPublicContactEmail,
 } from '@/features/contact/server/config'
+import styles from '@/styles/correspondence.module.css'
+import { Typography } from '@/components/ui/typography'
+import { cn } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const maxDuration = 60
 export const metadata: Metadata = {
     title: 'Contact — Albert Mwasisoba',
     description:
-        'Have a project in mind? Talk to Albert about software architecture, design, and your next digital product.',
+        'Get in touch with Albert Mwasisoba for frontend engineering roles, contract opportunities, and web architecture collaboration.',
 }
+
+const caveat = Caveat({
+    subsets: ['latin'],
+    variable: '--font-caveat',
+    display: 'swap',
+})
+
+const greetings = [
+    { text: 'hi.' },
+    { text: 'mambo.' },
+    { text: 'hola.' },
+    { text: 'salut.' },
+    { text: 'ciao.' },
+    { text: 'olá.' },
+]
 
 export default function ContactPage() {
     const availability = getContactAvailability()
     const publicEmail = getPublicContactEmail()
+
     return (
-        <>
-            <Section
-                className="pb-12 pt-14 md:pb-16 md:pt-20"
-                containerClassName="items-center text-center"
-                aria-labelledby="contact-title"
-            >
-                <div className="flex max-w-5xl flex-col items-center gap-6">
-                    <Typography
-                        id="contact-title"
-                        as="h1"
-                        variant="h3"
-                        className="font-medium"
-                    >
-                        Let’s work together
-                        <span className="text-muted-foreground">!</span>
-                    </Typography>
-                    <Typography
-                        as="p"
-                        variant="lead"
-                        className="max-w-2xl text-muted-foreground"
-                    >
-                        An idea, a challenge, or something worth building
-                        together. I’d love to hear about it.
-                    </Typography>
-                </div>
-            </Section>
-            <Section
-                className="pt-4 md:pt-6"
-                aria-labelledby="contact-form-title"
-            >
-                <div className="mx-auto flex w-full max-w-4xl flex-col gap-12">
-                    {/*<h2
-                        id="contact-form-title"
-                        className="text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground"
-                    >
-                        Tell me what you’re building
-                    </h2>*/}
-                    <ContactForm {...availability} publicEmail={publicEmail} />
-                    {publicEmail && (
-                        <p className="text-center text-sm leading-loose text-muted-foreground">
-                            Or reach me directly{' '}
-                            <a
-                                href={`mailto:${publicEmail}`}
-                                className="break-all text-foreground underline decoration-border underline-offset-8 transition-colors hover:decoration-foreground"
+        <div className={styles.page}>
+            <div className={styles.inner}>
+                <header className={styles.hero}>
+                    <div>
+                        <Typography as="h1" variant="h4" aria-label="Say hi.">
+                            Say{' '}
+                            <span
+                                className={`${styles.highlight} ${styles.highlightYellow}`}
                             >
-                                {publicEmail}
-                            </a>
-                        </p>
-                    )}
-                </div>
-            </Section>
-            <Section tone="muted" bordered aria-labelledby="contact-call-title">
-                <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
-                    <div className="max-w-2xl space-y-4">
-                        <Typography
-                            id="contact-call-title"
-                            as="h2"
-                            variant="h5"
-                            className="font-medium"
-                        >
-                            Prefer a conversation?
+                                <RotatingText
+                                    items={greetings}
+                                    className={styles.greeting}
+                                    controlClassName={styles.greetingControl}
+                                    accessibleText="hi."
+                                    reducedText="hi."
+                                    controlLabel="greetings"
+                                    holdDuration={3.5}
+                                />
+                            </span>
                         </Typography>
-                        <p className="text-sm leading-relaxed text-muted-foreground">
-                            Find a time that works for you, and let’s make a
-                            start.
+                        <p className={styles.lead}>
+                            Whether you’re hiring for an engineering role,
+                            scoping a frontend contract, or looking to
+                            collaborate on a modern web app—let’s talk.
                         </p>
                     </div>
-                    <Button asChild className="h-auto rounded-full px-7 py-5">
-                        <Link href="/schedule">
-                            Book a call <ArrowUpRight aria-hidden="true" />
+                    <div className={styles.heroNote} aria-hidden="true">
+                        <span className={cn(caveat.className)}>
+                            Communication
+                        </span>
+                        <strong>Fast responses. Direct communication.</strong>
+                    </div>
+                </header>
+
+                <div className={styles.contactGrid}>
+                    <aside
+                        className={styles.contactAside}
+                        aria-label="Other ways to connect"
+                    >
+                        <div>
+                            <h2 className={styles.asideTitle}>
+                                Open to remote roles & engineering contracts.
+                            </h2>
+                            <p className={styles.asideCopy}>
+                                Available for frontend development, design
+                                system architecture, and agile product team
+                                collaboration.
+                            </p>
+                        </div>
+                        <Link href="/schedule" className={styles.callCard}>
+                            <span>
+                                <small>Introductory chat</small>
+                                <strong>Book a call</strong>
+                            </span>
+                            <ArrowUpRight aria-hidden="true" />
                         </Link>
-                    </Button>
+                        {publicEmail && (
+                            <p className={styles.emailNote}>
+                                Prefer direct email?
+                                <a
+                                    href={`mailto:${publicEmail}`}
+                                    className={styles.emailLink}
+                                >
+                                    {publicEmail}
+                                </a>
+                            </p>
+                        )}
+                    </aside>
+
+                    <section
+                        className={styles.panelShell}
+                        aria-labelledby="contact-form-title"
+                    >
+                        <span className={styles.panelTab}>Direct message</span>
+                        <div className={styles.panel}>
+                            <div className={styles.panelHeader}>
+                                <h2
+                                    id="contact-form-title"
+                                    className={styles.panelTitle}
+                                >
+                                    How can I help?
+                                </h2>
+                                <p className={styles.panelHint}>
+                                    Share a brief note about the team, role
+                                    scope, or project timeline.
+                                </p>
+                            </div>
+                            <ContactForm
+                                {...availability}
+                                publicEmail={publicEmail}
+                            />
+                        </div>
+                    </section>
                 </div>
-            </Section>
-        </>
+            </div>
+        </div>
     )
 }

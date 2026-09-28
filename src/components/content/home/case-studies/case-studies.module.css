@@ -45,11 +45,6 @@
     min-width: 0;
 }
 
-.notesHeader,
-.notesFooter {
-    font-family: var(--editorial-font-mono);
-}
-
 .eyebrow {
     margin-bottom: 4px;
     font-size: var(--editorial-text-lead);
@@ -208,7 +203,8 @@
     align-self: flex-start;
     padding-top: 3px;
     color: var(--editorial-green);
-    font: var(--editorial-text-small) / 1.5 var(--editorial-font-mono);
+    font-size: var(--editorial-text-small);
+    line-height: 1.5;
 }
 
 .noteHeading {
@@ -228,7 +224,8 @@
 
 .noteSummary {
     color: var(--editorial-muted);
-    font: var(--editorial-text-micro) / 1.6 var(--editorial-font-mono);
+    font-size: var(--editorial-text-micro);
+    line-height: 1.6;
 }
 
 .toggle {
@@ -256,7 +253,8 @@
     gap: 6px;
     margin-top: 14px;
     min-height: 32px;
-    font: var(--editorial-text-small) / 1.5 var(--editorial-font-mono);
+    font-size: var(--editorial-text-small);
+    line-height: 1.5;
     text-decoration: underline;
     text-underline-offset: 4px;
 }

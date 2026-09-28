@@ -8,6 +8,7 @@ import { submitContact } from '../actions'
 import { contactLimits, initialFormState, type FormState } from '../schema'
 import { FormField } from './form-field'
 import { Turnstile } from './turnstile'
+import styles from '@/styles/correspondence.module.css'
 
 export function ContactForm({
     ready,
@@ -64,21 +65,17 @@ export function ContactForm({
                 ref={feedbackRef}
                 tabIndex={-1}
                 role="status"
-                className="flex flex-col items-center gap-6 rounded-4xl border border-border bg-muted/30 px-6 py-14 text-center outline-none"
+                className={styles.success}
             >
-                <span className="flex size-14 items-center justify-center rounded-full bg-foreground text-background">
+                <span className={styles.successIcon}>
                     <Check aria-hidden="true" />
                 </span>
-                <h2 className="text-2xl font-medium tracking-tight">
-                    A conversation started.
-                </h2>
-                <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-                    {state.message}
-                </p>
+                <h2 className={styles.successTitle}>A conversation started.</h2>
+                <p className={styles.status}>{state.message}</p>
                 <Button
                     asChild
                     variant="outline"
-                    className="h-auto rounded-full px-6 py-4"
+                    className={styles.secondaryButton}
                 >
                     <Link href="/schedule">
                         Book a call <ArrowUpRight aria-hidden="true" />
@@ -92,12 +89,9 @@ export function ContactForm({
             ref={formRef}
             action={action}
             aria-busy={pending}
-            className="flex flex-col gap-10"
+            className={styles.form}
         >
-            <fieldset
-                disabled={pending || !ready}
-                className="grid min-w-0 gap-10 sm:grid-cols-2"
-            >
+            <fieldset disabled={pending || !ready} className={styles.formGrid}>
                 <legend className="sr-only">
                     Tell me what you’re building
                 </legend>
@@ -130,7 +124,7 @@ export function ContactForm({
                     }
                     error={state.errors?.email}
                 />
-                <div className="sm:col-span-2">
+                <div className={styles.fullWidth}>
                     <FormField
                         id="contact-message"
                         name="message"
@@ -160,7 +154,7 @@ export function ContactForm({
                     autoComplete="off"
                 />
             </div>
-            <div className="flex flex-col items-center gap-6">
+            <div className={styles.formFooter}>
                 {ready && (
                     <Turnstile
                         key={attempt}
@@ -169,23 +163,14 @@ export function ContactForm({
                     />
                 )}
                 {!ready && (
-                    <p
-                        role="status"
-                        className="max-w-xl text-center text-sm leading-relaxed text-muted-foreground"
-                    >
+                    <p role="status" className={styles.status}>
                         The message form is temporarily unavailable.{' '}
                         {publicEmail ? (
-                            <a
-                                href={`mailto:${publicEmail}`}
-                                className="underline underline-offset-4"
-                            >
+                            <a href={`mailto:${publicEmail}`}>
                                 Email me directly
                             </a>
                         ) : (
-                            <Link
-                                href="/schedule"
-                                className="underline underline-offset-4"
-                            >
+                            <Link href="/schedule">
                                 Check call availability
                             </Link>
                         )}
@@ -197,7 +182,7 @@ export function ContactForm({
                         ref={feedbackRef}
                         tabIndex={-1}
                         role="alert"
-                        className="text-center text-sm text-destructive outline-none"
+                        className={`${styles.status} ${styles.errorStatus}`}
                     >
                         {state.message}
                     </div>
@@ -205,7 +190,7 @@ export function ContactForm({
                 <Button
                     disabled={pending || !ready || !token}
                     type="submit"
-                    className="h-auto rounded-full px-8 py-5 text-sm md:text-base"
+                    className={styles.primaryButton}
                 >
                     {pending ? (
                         <>
@@ -221,7 +206,7 @@ export function ContactForm({
                         </>
                     )}
                 </Button>
-                <p className="max-w-lg text-center text-xs leading-relaxed text-muted-foreground">
+                <p className={styles.finePrint}>
                     Your details are used to respond to your inquiry. This form
                     uses Resend for email delivery and Cloudflare Turnstile for
                     spam protection.

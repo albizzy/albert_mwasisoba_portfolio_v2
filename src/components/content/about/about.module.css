@@ -118,8 +118,9 @@
     margin-bottom: 24px;
     background: var(--section-color);
     box-shadow: 2px 3px 6px rgb(17 18 18 / 18%);
-    font: var(--editorial-weight-label) var(--editorial-text-body) / 24px
-        var(--editorial-font-mono);
+    font-size: var(--editorial-text-body);
+    font-weight: var(--editorial-weight-label);
+    line-height: 24px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -259,8 +260,9 @@
     padding: 5px 14px;
     background: var(--section-color);
     box-shadow: 0 4px 8px rgb(25 21 16 / 25%);
-    font: var(--editorial-weight-label) var(--editorial-text-label) / 20px
-        var(--editorial-font-mono);
+    font-size: var(--editorial-text-label);
+    font-weight: var(--editorial-weight-label);
+    line-height: 20px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
 }
@@ -403,8 +405,9 @@
     padding: 4px 10px;
     background: var(--editorial-blue);
     color: white;
-    font: var(--editorial-weight-label) var(--editorial-text-fine) / 15px
-        var(--editorial-font-mono);
+    font-size: var(--editorial-text-fine);
+    font-weight: var(--editorial-weight-label);
+    line-height: 15px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     white-space: nowrap;

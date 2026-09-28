@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import styles from '@/styles/correspondence.module.css'
 import type { MeetingType } from './types'
 
 const CalBooking = dynamic(
@@ -12,10 +14,7 @@ const CalBooking = dynamic(
     {
         ssr: false,
         loading: () => (
-            <div
-                role="status"
-                className="flex min-h-96 items-center justify-center rounded-3xl border border-border text-sm text-muted-foreground"
-            >
+            <div role="status" className={styles.calendarLoading}>
                 Loading live availability…
             </div>
         ),
@@ -38,75 +37,73 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
     }, [selected])
 
     return (
-        <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-10">
-            <ol
-                aria-label="Booking process"
-                className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-[10px] uppercase tracking-wider sm:text-xs"
-            >
+        <div>
+            <ol aria-label="Booking process" className={styles.steps}>
                 <li
                     aria-current={!selected ? 'step' : undefined}
-                    className={
-                        !selected
-                            ? 'text-background bg-foreground p-4 rounded-xl'
-                            : 'text-muted-foreground bg-accent p-4 rounded-xl'
-                    }
+                    className={cn(styles.step, !selected && styles.stepActive)}
                 >
-                    Conversation
+                    01 / Conversation
                 </li>
                 <li
                     aria-current={selected ? 'step' : undefined}
-                    className={
-                        selected
-                            ? 'text-background bg-foreground p-4 rounded-xl'
-                            : 'text-muted-foreground bg-muted/50 p-4 rounded-xl'
-                    }
+                    className={cn(styles.step, selected && styles.stepActive)}
                 >
-                    02 / Date, time & details
+                    02 / Date, time &amp; details
                 </li>
             </ol>
+
             {!selected ? (
                 <>
-                    <div
-                        ref={choices}
-                        className="grid w-full gap-4 md:grid-cols-2"
-                    >
-                        {meetings.map((meeting) => (
+                    <div ref={choices} className={styles.meetingGrid}>
+                        {meetings.map((meeting, index) => (
                             <button
                                 key={meeting.id}
+                                type="button"
                                 disabled={!meeting.calLink}
                                 onClick={() => setSelected(meeting)}
-                                className="group flex h-fit flex-col gap-6 rounded-4xl border border-border bg-background p-4 md:p-6 text-left transition-colors hover:border-foreground hover:bg-muted/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground disabled:cursor-not-allowed disabled:opacity-50"
+                                className={styles.meetingCard}
+                                data-tone={index % 2 === 1 ? 'pink' : 'yellow'}
                             >
-                                <span className="flex w-full flex-wrap items-center justify-between gap-4">
-                                    <span className="text-xl font-medium tracking-tight">
+                                <span className={styles.meetingTop}>
+                                    <span className={styles.meetingIndex}>
+                                        Conversation /{' '}
+                                        {String(index + 1).padStart(2, '0')}
+                                    </span>
+                                    <ArrowUpRight
+                                        className={styles.meetingArrow}
+                                        aria-hidden="true"
+                                    />
+                                </span>
+                                <span>
+                                    <span className={styles.meetingTitle}>
                                         {meeting.title}
                                     </span>
-                                    <span className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
-                                        <Clock3
-                                            className="size-4"
-                                            aria-hidden="true"
-                                        />
-                                        {meeting.duration}
+                                    <span className={styles.meetingDescription}>
+                                        {meeting.description}
                                     </span>
                                 </span>
-                                <span className="text-sm leading-relaxed text-muted-foreground">
-                                    {meeting.description}
+                                <span className={styles.meetingBottom}>
+                                    <span className={styles.duration}>
+                                        <Clock3 size={16} aria-hidden="true" />
+                                        {meeting.duration}
+                                    </span>
+                                    <span className={styles.meetingIndex}>
+                                        {meeting.calLink
+                                            ? 'Choose this call'
+                                            : 'Unavailable'}
+                                    </span>
                                 </span>
                             </button>
                         ))}
                     </div>
-                    <p className="max-w-xl text-center text-xs leading-relaxed text-muted-foreground">
+                    <p className={styles.scheduleFootnote}>
                         {meetings.some((meeting) => meeting.calLink) ? (
-                            'Choose a conversation to load the calendar. Available times are shown in your timezone, with confirmation and calendar invitations handled by Cal.com.'
+                            'Available times are shown in your timezone. Cal.com handles the confirmation and calendar invitation.'
                         ) : (
                             <>
                                 Online booking is being prepared.{' '}
-                                <Link
-                                    href="/contact"
-                                    className="underline underline-offset-4"
-                                >
-                                    Send me a message
-                                </Link>{' '}
+                                <Link href="/contact">Send me a message</Link>{' '}
                                 to arrange a conversation.
                             </>
                         )}
@@ -114,30 +111,30 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                 </>
             ) : (
                 <>
-                    <div className="flex w-full flex-wrap items-center justify-between gap-4">
+                    <div className={styles.calendarHeader}>
                         <h2
                             ref={heading}
                             tabIndex={-1}
-                            className="text-xl font-medium tracking-tight outline-none"
+                            className={styles.calendarTitle}
                         >
                             {selected.title}{' '}
-                            <span className="font-mono text-sm text-muted-foreground">
+                            <span className={styles.calendarDuration}>
                                 / {selected.duration}
                             </span>
                         </h2>
                         <Button
-                            variant="ghost"
+                            variant="outline"
                             onClick={() => setSelected(null)}
-                            className="rounded-full"
+                            className={styles.secondaryButton}
                         >
                             <ArrowLeft aria-hidden="true" />
                             Change conversation
                         </Button>
                     </div>
-                    <p className="-mt-4 w-full text-sm leading-relaxed text-muted-foreground">
-                        Choose a date and time, then add your details in the
-                        calendar below. Your booking is complete when Cal.com
-                        shows its confirmation.
+                    <p className={styles.panelHint}>
+                        Choose a date and time, then add your details below.
+                        Your booking is complete when Cal.com shows its
+                        confirmation.
                     </p>
                     <CalBooking
                         key={selected.id}
@@ -148,10 +145,10 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                         href={`https://cal.com/${selected.calLink}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-center text-xs text-muted-foreground underline underline-offset-4"
+                        className={styles.externalLink}
                     >
-                        Open calendar in a new tab{' '}
-                        <ArrowUpRight className="size-4" aria-hidden="true" />
+                        Open calendar in a new tab
+                        <ArrowUpRight size={16} aria-hidden="true" />
                     </a>
                 </>
             )}
