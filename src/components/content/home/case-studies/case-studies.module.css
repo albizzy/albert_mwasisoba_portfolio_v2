@@ -50,7 +50,7 @@
     font-size: var(--editorial-text-lead);
     font-weight: var(--editorial-weight-label);
     letter-spacing: 0.18em;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 
 .context h2 {
@@ -147,7 +147,7 @@
 }
 
 .section a:focus-visible,
-.note summary:focus-visible {
+.noteTrigger:focus-visible {
     outline: 2px solid var(--editorial-green);
     outline-offset: 5px;
 }
@@ -180,22 +180,30 @@
     border-bottom: 1px solid var(--editorial-line);
 }
 
-.note summary {
+.noteHeadingContainer {
+    margin: 0;
+}
+
+.noteTrigger {
     display: flex;
     align-items: center;
     gap: 14px;
+    width: 100%;
     min-height: 96px;
     padding: 22px 24px;
-    list-style: none;
     cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font: inherit;
 }
 
-.note summary::-webkit-details-marker {
-    display: none;
-}
-
-.note summary:hover {
+.noteTrigger:hover,
+.note[data-active='true'] .noteTrigger {
     background: var(--editorial-paper);
+}
+
+.notePanel {
+    overflow: hidden;
 }
 
 .number {
@@ -230,10 +238,9 @@
 
 .toggle {
     flex: none;
-    transition: transform 180ms ease;
 }
 
-.note[open] .toggle {
+.note[data-active='true'] .toggle {
     transform: rotate(45deg);
 }
 
@@ -304,7 +311,7 @@
         padding: 16px;
     }
 
-    .note summary {
+    .noteTrigger {
         gap: 10px;
         padding: 18px 16px;
     }
@@ -319,7 +326,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .toggle,
     .sourceButton {
         transition: none;
     }

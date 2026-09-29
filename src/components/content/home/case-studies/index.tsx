@@ -1,5 +1,6 @@
-import { ArrowUpRight, Github, Plus, ScanLine } from 'lucide-react'
+import { ArrowUpRight, Github, ScanLine } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ArchitectureAccordion } from './architecture-accordion'
 import styles from './case-studies.module.css'
 import { Caveat } from 'next/font/google'
 import { cn } from '@/lib/utils'
@@ -52,7 +53,7 @@ export function CaseStudies() {
             <div className={styles.dossier}>
                 <div className={styles.tab}>
                     <ScanLine size={16} aria-hidden="true" />
-                    Source Breakdown
+                    Case study
                 </div>
                 <div className={styles.sheet}>
                     <div className={styles.context}>
@@ -129,53 +130,7 @@ export function CaseStudies() {
                             <span>Architecture Breakdown</span>
                             <span className={styles.fileLabel}>01 — 03</span>
                         </div>
-                        {technicalNotes.map((note, index) => (
-                            <details
-                                key={note.title}
-                                className={styles.note}
-                                open={index === 0}
-                            >
-                                <summary>
-                                    <span
-                                        className={styles.number}
-                                        aria-hidden="true"
-                                    >
-                                        0{index + 1}
-                                    </span>
-                                    <span className={styles.noteHeading}>
-                                        <span className={styles.noteTitle}>
-                                            {note.title}
-                                        </span>
-                                        <span className={styles.noteSummary}>
-                                            {note.summary}
-                                        </span>
-                                    </span>
-                                    <Plus
-                                        className={styles.toggle}
-                                        size={18}
-                                        aria-hidden="true"
-                                    />
-                                </summary>
-                                <div className={styles.noteBody}>
-                                    <p>{note.description}</p>
-                                    <a
-                                        href={note.href}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {note.link}{' '}
-                                        <ArrowUpRight
-                                            size={14}
-                                            aria-hidden="true"
-                                        />
-                                        <span className="sr-only">
-                                            {' '}
-                                            (opens in a new tab)
-                                        </span>
-                                    </a>
-                                </div>
-                            </details>
-                        ))}
+                        <ArchitectureAccordion notes={technicalNotes} />
                         <div className={styles.notesFooter}>
                             <span aria-hidden="true">↳</span> Direct links to
                             production code samples.
