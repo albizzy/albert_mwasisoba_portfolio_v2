@@ -386,7 +386,7 @@ export function AppHeader() {
     return (
         <header
             ref={headerRef}
-            className={`w-full ${header?.height} ${isOverFooter ? '' : 'bg-background/50 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/50'} md:bg-transparent md:backdrop-blur-none flex flex-row items-center fixed top-0 left-0 z-50`}
+            className={`w-full ${header?.height} ${isOverFooter ? '' : styles.mobileBackdrop} flex flex-row items-center fixed top-0 left-0 z-50`}
         >
             <div
                 className={

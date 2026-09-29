@@ -1,3 +1,45 @@
+.mobileBackdrop {
+    isolation: isolate;
+}
+
+.mobileBackdrop::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        var(--background) 0%,
+        var(--background) 2rem,
+        color-mix(in oklab, var(--background) 75%, transparent) 4rem,
+        color-mix(in oklab, var(--background) 50%, transparent) 6rem
+    );
+
+    -webkit-backdrop-filter: blur(64px);
+    backdrop-filter: blur(64px);
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 calc(100% - 7rem),
+        rgb(0 0 0 / 85%) calc(100% - 4.5rem),
+        rgb(0 0 0 / 60%) calc(100% - 3rem),
+        rgb(0 0 0 / 30%) calc(100% - 1.5rem),
+        rgb(0 0 0 / 10%) calc(100% - 0.75rem),
+        transparent 100%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 calc(100% - 7rem),
+        rgb(0 0 0 / 85%) calc(100% - 4.5rem),
+        rgb(0 0 0 / 60%) calc(100% - 3rem),
+        rgb(0 0 0 / 30%) calc(100% - 1.5rem),
+        rgb(0 0 0 / 10%) calc(100% - 0.75rem),
+        transparent 100%
+    );
+}
+
 .menuButton {
     border-radius: 9999px;
     background: var(--muted);
@@ -18,6 +60,10 @@
 }
 
 @media (min-width: 48rem) {
+    .mobileBackdrop::before {
+        display: none;
+    }
+
     .navigationPanel {
         width: 23.75rem;
     }
