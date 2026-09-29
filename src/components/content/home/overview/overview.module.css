@@ -1,9 +1,10 @@
 .section {
-    --overview-lime: #b5f52b;
-    --overview-ink: #101116;
-    --overview-highlight: #d9f79a;
-    --overview-green: #41660d;
-    background: #fff;
+    --overview-lime: #c5cca6; /* Muted dried-herb / olive sticker */
+    --overview-ink: #1c1917; /* Espresso ink */
+    --overview-highlight: #edf0df; /* Warm herbal wash */
+    --overview-green: #374221; /* Dark olive timber */
+
+    background: var(--editorial-paper, #f4efe6);
     color: var(--overview-ink);
     padding-block: clamp(88px, 10vw, 144px);
 }

@@ -24,13 +24,7 @@ export const works: WorkItem[] = [
     {
         title: 'Sweet Doctor',
         types: ['Frontend Engineering', 'UI/UX'],
-        services: [
-            'Next.js',
-            'TypeScript',
-            'Tailwind CSS',
-            'UI Architecture',
-            'Design Systems',
-        ],
+        services: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Three.js', 'Rive'],
         description:
             'Collaborated with product and backend engineers to build the client-facing web application. Spearheaded the UI/UX design system and implemented modular, accessible React components, real-time chat views, and multi-step onboarding journeys.',
         link: 'https://sweet.doctor',

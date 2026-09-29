@@ -1,5 +1,6 @@
-import { ArrowUpRight, Github, ScanLine } from 'lucide-react'
+import { ArrowUpRight, ScanLine } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { GithubBrandIcon } from '@/components/ui/brand-icons'
 import { ArchitectureAccordion } from './architecture-accordion'
 import styles from './case-studies.module.css'
 import { Caveat } from 'next/font/google'
@@ -97,8 +98,7 @@ export function CaseStudies() {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    <Github aria-hidden="true" /> View Source
-                                    Code
+                                    <GithubBrandIcon /> View Source Code
                                     <ArrowUpRight aria-hidden="true" />
                                     <span className="sr-only">
                                         {' '}

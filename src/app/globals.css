@@ -50,14 +50,14 @@
 :root {
     --radius: 0.625rem;
     /* Fixed colors and shapes shared by the editorial sections. */
-    --editorial-ink: #191510;
-    --editorial-muted: #625f55;
+    --editorial-ink: #141413;
+    --editorial-muted: #6b6357;
     --editorial-line: #dbddd3;
     --editorial-paper: #f7f8f2;
-    --editorial-yellow: #f7c948;
-    --editorial-pink: #ff4d8d;
-    --editorial-blue: #2b57d6;
-    --editorial-green: #49720b;
+    --editorial-yellow: #dfad49;
+    --editorial-pink: #eb4f68;
+    --editorial-blue: #3b6b88;
+    --editorial-green: #3a6b35;
     --editorial-radius-panel: 28px;
     --editorial-radius-tab: 20px;
     --editorial-radius-tag: 5px 10px 5px 5px;

@@ -6,11 +6,13 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation' // 1. Import usePathname
 import { Typography } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
+import { SocialLinks } from '@/components/ui/social-links'
 import ArtworkImage from '@/assets/images/bizzy_scribble.png'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { siteConfig } from '@/config'
+import styles from './app-footer.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -80,7 +82,7 @@ export function AppFooter() {
             <div className="sticky top-0 h-full w-full flex items-start justify-center overflow-hidden">
                 <div
                     ref={boxRef}
-                    className="footer-box bg-foreground text-white flex flex-col items-center justify-between relative overflow-hidden"
+                    className={`footer-box flex flex-col items-center justify-between relative overflow-hidden ${styles.footerBox}`}
                     style={{
                         width: '120px',
                         height: '60px',
@@ -110,7 +112,7 @@ export function AppFooter() {
                             <Button
                                 asChild
                                 variant="outline"
-                                className="rounded-full px-8 py-6 h-auto text-sm md:text-base font-semibold shadow-md cursor-pointer hover:scale-105 transition-transform bg-white text-black border-none hover:bg-white/90"
+                                className={`px-8 py-6 h-auto text-sm md:text-base font-semibold shadow-md cursor-pointer hover:scale-105 transition-transform ${styles.contactButton}`}
                             >
                                 <Link href="/contact">Contact me</Link>
                             </Button>
@@ -120,6 +122,7 @@ export function AppFooter() {
                             © {new Date().getFullYear()} {name}. All rights
                             reserved.
                         </div>
+                        <SocialLinks className={styles.socialLinks} />
                     </div>
                 </div>
             </div>

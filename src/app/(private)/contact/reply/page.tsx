@@ -3,10 +3,11 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { ReplyForm } from '@/features/contact/components/reply-form'
 import styles from '@/styles/correspondence.module.css'
+import { Typography } from '@/components/ui/typography'
 
 export const maxDuration = 60
 export const metadata: Metadata = {
-    title: 'Private reply — Albert Mwasisoba',
+    title: 'Private Reply — Albert Mwasisoba',
     robots: { index: false, follow: false, noarchive: true },
     referrer: 'no-referrer',
 }
@@ -21,20 +22,17 @@ export default function ReplyPage() {
                 </Link>
                 <header className={styles.hero}>
                     <div>
-                        <p className={styles.eyebrow}>
-                            Albert / Private correspondence
-                        </p>
-                        <h1 className={styles.heroTitle}>
-                            A thoughtful{' '}
+                        <Typography as={'h1'} variant={'h4'}>
+                            Direct{' '}
                             <span
                                 className={`${styles.highlight} ${styles.highlightBlue}`}
                             >
                                 reply.
                             </span>
-                        </h1>
+                        </Typography>
                         <p className={styles.lead}>
-                            A quiet space to continue the conversation, with the
-                            same care as the first message.
+                            A private line to follow up and continue the
+                            conversation.
                         </p>
                     </div>
                     <div
@@ -42,17 +40,15 @@ export default function ReplyPage() {
                         data-tone="blue"
                         aria-hidden="true"
                     >
-                        <span>A note to send</span>
-                        <strong>Make every word count.</strong>
+                        <span>Private thread</span>
+                        <strong>Delivered directly to my inbox.</strong>
                     </div>
                 </header>
                 <section
                     className={styles.panelShell}
                     aria-label="Private reply"
                 >
-                    <span className={styles.panelTab}>
-                        Reply draft / Private
-                    </span>
+                    <span className={styles.panelTab}>Private thread</span>
                     <div className={`${styles.panel} ${styles.panelBlue}`}>
                         <ReplyForm />
                     </div>

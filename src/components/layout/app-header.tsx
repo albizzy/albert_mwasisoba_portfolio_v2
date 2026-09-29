@@ -14,10 +14,12 @@ import { mainNavigation, siteConfig } from '@/config'
 import { AppLogo } from '@/components/layout/app-logo'
 import { Typography } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
-import { Linkedin, Github, Plus } from 'lucide-react'
+import { SocialLinks } from '@/components/ui/social-links'
+import { Plus } from 'lucide-react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { NavItem } from './nav-item'
+import styles from './app-header.module.css'
 
 gsap.registerPlugin(useGSAP)
 
@@ -391,11 +393,7 @@ export function AppHeader() {
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={toggleMenu}
-                        className={`rounded-full p-4 size-16 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${
-                            isOpen
-                                ? 'bg-white/10 text-white'
-                                : 'bg-muted text-foreground'
-                        }`}
+                        className={`p-4 size-16 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${styles.menuButton} ${isOpen ? styles.menuButtonOpen : ''}`}
                     >
                         <Plus size={32} strokeWidth={'3'} />
                     </button>
@@ -408,9 +406,7 @@ export function AppHeader() {
                         inert={!isOpen}
                         data-lenis-prevent
                         style={{ display: 'none' }}
-                        className={
-                            'absolute -top-2 -right-2 w-[min(320px,calc(100vw-2rem))] md:w-95 max-h-[calc(100dvh-2rem)] overflow-y-auto bg-black text-white rounded-[2.5rem] p-8 pt-24 pb-6 z-40 shadow-2xl flex flex-col justify-between gap-2'
-                        }
+                        className={`absolute -top-2 -right-2 overflow-y-auto p-8 pt-24 pb-6 z-40 shadow-2xl flex flex-col justify-between gap-2 ${styles.navigationPanel}`}
                     >
                         <div className="flex flex-col gap-0 text-left pl-2">
                             <NavItem
@@ -470,7 +466,7 @@ export function AppHeader() {
                             </Button>
 
                             <div className="flex flex-row justify-between gap-4 text-neutral-500 pr-2 pb-2">
-                                <div className="flex flex-col gap-2.5">
+                                <div className="flex flex-col gap-2.5 hidden">
                                     <Link
                                         href="/playground"
                                         onClick={closeMenu}
@@ -480,26 +476,7 @@ export function AppHeader() {
                                     </Link>
                                 </div>
 
-                                <div className="flex flex-row gap-4">
-                                    <Link
-                                        href="https://github.com/albizzy"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-white transition-colors"
-                                        aria-label="Instagram"
-                                    >
-                                        <Github className="size-6 stroke-[1.5]" />
-                                    </Link>
-                                    <Link
-                                        href="https://linkedin.com"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="hover:text-white transition-colors"
-                                        aria-label="LinkedIn"
-                                    >
-                                        <Linkedin className="size-6 stroke-[1.5]" />
-                                    </Link>
-                                </div>
+                                <SocialLinks className="flex flex-row gap-4" />
                             </div>
                         </div>
                     </div>

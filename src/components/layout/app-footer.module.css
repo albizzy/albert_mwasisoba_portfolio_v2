@@ -1,0 +1,32 @@
+.footerBox {
+    background: var(--foreground);
+    color: white;
+}
+
+.contactButton {
+    border-radius: 9999px;
+    border: 0;
+    background: white;
+    color: black;
+}
+
+.contactButton:hover {
+    background: rgb(255 255 255 / 90%);
+}
+
+.socialLinks {
+    position: absolute;
+    right: 3rem;
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (max-width: 40rem) {
+    .socialLinks {
+        right: 50%;
+        bottom: 5rem;
+        transform: translateX(50%);
+    }
+}

@@ -8,9 +8,9 @@ import { cn } from '@/lib/utils'
 
 export const dynamic = 'force-dynamic'
 export const metadata: Metadata = {
-    title: 'Schedule a Call — Albert Mwasisoba',
+    title: 'Schedule — Albert Mwasisoba',
     description:
-        'Book an introductory chat, role screening, or technical discussion with Albert Mwasisoba.',
+        'Book an intro chat, role screen, or project discussion with Albert Mwasisoba.',
 }
 
 const caveat = Caveat({
@@ -34,13 +34,12 @@ export default function SchedulePage() {
                             <span
                                 className={`${styles.highlight} ${styles.highlightPink}`}
                             >
-                                connect.
+                                talk.
                             </span>
                         </Typography>
                         <p className={styles.lead}>
-                            Whether you’re scheduling an introductory recruiter
-                            screen, discussing a frontend role, or scoping a
-                            technical project—pick a slot that works for you.
+                            Grab a slot for an intro chat, role screen, or
+                            project scope.
                         </p>
                     </div>
                     <div
@@ -48,13 +47,8 @@ export default function SchedulePage() {
                         data-tone="pink"
                         aria-hidden="true"
                     >
-                        <span className={cn(caveat.className)}>
-                            Direct & focused
-                        </span>
-                        <strong>
-                            A quick chat to discuss fit, scope, and technical
-                            alignment.
-                        </strong>
+                        <span className={cn(caveat.className)}>Quick sync</span>
+                        <strong>15–30 mins. Google Meet or voice.</strong>
                     </div>
                 </header>
 
@@ -72,8 +66,7 @@ export default function SchedulePage() {
                                 Select a format.
                             </h2>
                             <p className={styles.panelHint}>
-                                Choose a call type below to view live calendar
-                                availability and book directly.
+                                Pick a call type to view open calendar slots.
                             </p>
                         </div>
                         <Scheduler meetings={getMeetingTypes()} />

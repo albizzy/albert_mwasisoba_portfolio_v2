@@ -1,0 +1,13 @@
+.socialLink {
+    color: white;
+    transition: transform 150ms ease;
+}
+
+.socialLink:hover {
+    transform: translateY(-2px);
+}
+
+.socialLink:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+}

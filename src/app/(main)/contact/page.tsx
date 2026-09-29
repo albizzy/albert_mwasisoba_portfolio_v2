@@ -17,7 +17,7 @@ export const maxDuration = 60
 export const metadata: Metadata = {
     title: 'Contact — Albert Mwasisoba',
     description:
-        'Get in touch with Albert Mwasisoba for frontend engineering roles, contract opportunities, and web architecture collaboration.',
+        'Get in touch with Albert Mwasisoba for frontend engineering roles, contracts, and technical collaboration.',
 }
 
 const caveat = Caveat({
@@ -61,16 +61,15 @@ export default function ContactPage() {
                             </span>
                         </Typography>
                         <p className={styles.lead}>
-                            Whether you’re hiring for an engineering role,
-                            scoping a frontend contract, or looking to
-                            collaborate on a modern web app—let’s talk.
+                            Open for engineering roles, contracts, and modern
+                            web collaborations.
                         </p>
                     </div>
                     <div className={styles.heroNote} aria-hidden="true">
                         <span className={cn(caveat.className)}>
-                            Communication
+                            Response time
                         </span>
-                        <strong>Fast responses. Direct communication.</strong>
+                        <strong>Usually within 24 hours.</strong>
                     </div>
                 </header>
 
@@ -81,12 +80,11 @@ export default function ContactPage() {
                     >
                         <div>
                             <h2 className={styles.asideTitle}>
-                                Open to remote roles & engineering contracts.
+                                Open to roles & contracts.
                             </h2>
                             <p className={styles.asideCopy}>
-                                Available for frontend development, design
-                                system architecture, and agile product team
-                                collaboration.
+                                Frontend engineering, design systems, and
+                                product delivery.
                             </p>
                         </div>
                         <Link href="/schedule" className={styles.callCard}>
@@ -98,7 +96,7 @@ export default function ContactPage() {
                         </Link>
                         {publicEmail && (
                             <p className={styles.emailNote}>
-                                Prefer direct email?
+                                Prefer email?
                                 <a
                                     href={`mailto:${publicEmail}`}
                                     className={styles.emailLink}
@@ -123,8 +121,7 @@ export default function ContactPage() {
                                     How can I help?
                                 </h2>
                                 <p className={styles.panelHint}>
-                                    Share a brief note about the team, role
-                                    scope, or project timeline.
+                                    Brief notes on scope, timeline, or team fit.
                                 </p>
                             </div>
                             <ContactForm
