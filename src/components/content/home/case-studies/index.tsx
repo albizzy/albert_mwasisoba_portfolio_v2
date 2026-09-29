@@ -15,7 +15,8 @@ export const caveat = Caveat({
 
 const repository = 'https://github.com/albizzy/albert_mwasisoba_portfolio_v2'
 const source = `${repository}/blob/main`
-const auditUrl = `https://pagespeed.web.dev/analysis?url=${encodeURIComponent('https://albert-mwasisoba-portfolio-v2.vercel.app/')}`
+const appUrl = 'https://albertmwasisoba.vercel.app/'
+const auditUrl = `https://pagespeed.web.dev/analysis?url=${encodeURIComponent(appUrl)}`
 
 const technicalNotes = [
     {
