@@ -1,5 +1,5 @@
 .page {
-    --about-paper: transparent;
+    --about-paper: var(--background);
     --about-note-yellow: #f3e2ad;
     --about-note-blue: #b7c6ef;
     --about-note-green: #a9dfc6;
@@ -13,16 +13,6 @@
     padding-block: 56px 120px;
     background: var(--about-paper);
     color: var(--editorial-ink);
-}
-
-.page::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: url('/images/about/paper-texture.png') repeat;
-    opacity: 0.06;
-    pointer-events: none;
 }
 
 .content {

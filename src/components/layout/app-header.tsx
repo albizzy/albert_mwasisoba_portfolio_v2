@@ -40,6 +40,7 @@ export function AppHeader() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [currentHash, setCurrentHash] = useState('')
+    const [isOverFooter, setIsOverFooter] = useState(false)
     const hasScrolled = useSyncExternalStore(
         subscribeToScroll,
         getScrolledSnapshot,
@@ -50,6 +51,36 @@ export function AppHeader() {
     const lenis = useLenis()
     const isHome = pathname === '/'
     const isScrolled = !isHome && hasScrolled
+
+    useEffect(() => {
+        const footer = document.querySelector<HTMLElement>('[data-app-footer]')
+        const headerElement = headerRef.current
+
+        const updateFooterOverlap = () => {
+            if (!footer || !headerElement) {
+                setIsOverFooter(false)
+                return
+            }
+
+            const headerBounds = headerElement.getBoundingClientRect()
+            const footerBounds = footer.getBoundingClientRect()
+            setIsOverFooter(
+                footerBounds.top < headerBounds.bottom &&
+                    footerBounds.bottom > headerBounds.top
+            )
+        }
+
+        updateFooterOverlap()
+        window.addEventListener('scroll', updateFooterOverlap, {
+            passive: true,
+        })
+        window.addEventListener('resize', updateFooterOverlap)
+
+        return () => {
+            window.removeEventListener('scroll', updateFooterOverlap)
+            window.removeEventListener('resize', updateFooterOverlap)
+        }
+    }, [pathname])
 
     const { defaultValues } = siteConfig
     const { header } = defaultValues
@@ -355,7 +386,7 @@ export function AppHeader() {
     return (
         <header
             ref={headerRef}
-            className={`w-full ${header?.height} flex flex-row items-center fixed top-0 left-0 z-50`}
+            className={`w-full ${header?.height} ${isOverFooter ? '' : 'bg-background/50 backdrop-blur-3xl supports-[backdrop-filter]:bg-background/50'} md:bg-transparent md:backdrop-blur-none flex flex-row items-center fixed top-0 left-0 z-50`}
         >
             <div
                 className={

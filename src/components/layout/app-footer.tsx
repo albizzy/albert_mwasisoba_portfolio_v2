@@ -77,6 +77,7 @@ export function AppFooter() {
     return (
         <section
             ref={sectionRef}
+            data-app-footer
             className="w-full relative h-dvh bg-background"
         >
             <div className="sticky top-0 h-full w-full flex items-start justify-center overflow-hidden">
