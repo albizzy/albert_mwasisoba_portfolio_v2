@@ -43,7 +43,12 @@
 
 .section[data-stack-enabled='true'] .card {
     position: sticky;
-    top: min(var(--stack-top), calc(100svh - var(--card-height, 0px) - 16px));
+    /* One shared offset keeps the folder tabs aligned. It only drops above
+       --stack-top if the tallest card can't fit (e.g. landscape phones). */
+    top: min(
+        var(--stack-top),
+        calc(100svh - var(--stack-card-height, 0px) - 16px)
+    );
 }
 
 .stack::after {
@@ -279,10 +284,19 @@
         display: none;
     }
 
+    /* Size every card to the space under the navbar; the preview absorbs
+       the difference so cards are equal height and stack evenly. */
     .body {
-        grid-template-columns: minmax(0, 1fr);
-        min-height: 0;
-        gap: 32px;
+        display: flex;
+        flex-direction: column;
+        min-height: calc(
+            100svh - var(--stack-top) - var(--folder-tab-height) - 16px
+        );
+        gap: 24px;
+    }
+
+    .content {
+        flex: none;
     }
 
     .meta {
@@ -312,7 +326,8 @@
     }
 
     .preview {
-        aspect-ratio: 16 / 10;
+        flex: 1 1 0;
+        min-height: 140px;
     }
 
     .preview::before {

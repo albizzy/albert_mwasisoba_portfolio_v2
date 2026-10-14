@@ -21,12 +21,10 @@ export function useWorkOverviewAnimation() {
             const media = gsap.matchMedia()
 
             const updateStack = () => {
-                cards.forEach((card) => {
-                    card.style.setProperty(
-                        '--card-height',
-                        `${card.offsetHeight}px`
-                    )
-                })
+                const tallest = Math.max(
+                    ...cards.map((card) => card.offsetHeight)
+                )
+                section.style.setProperty('--stack-card-height', `${tallest}px`)
                 section.dataset.stackEnabled = 'true'
             }
             const observer = new ResizeObserver(updateStack)
@@ -63,9 +61,7 @@ export function useWorkOverviewAnimation() {
                 window.removeEventListener('resize', updateStack)
                 media.revert()
                 delete section.dataset.stackEnabled
-                cards.forEach((card) =>
-                    card.style.removeProperty('--card-height')
-                )
+                section.style.removeProperty('--stack-card-height')
             }
         },
         { scope: sectionRef }
