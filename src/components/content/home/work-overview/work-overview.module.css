@@ -43,7 +43,7 @@
 
 .section[data-stack-enabled='true'] .card {
     position: sticky;
-    top: var(--stack-top);
+    top: min(var(--stack-top), calc(100svh - var(--card-height, 0px) - 16px));
 }
 
 .stack::after {

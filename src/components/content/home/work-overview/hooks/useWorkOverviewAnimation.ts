@@ -20,17 +20,14 @@ export function useWorkOverviewAnimation() {
             )
             const media = gsap.matchMedia()
 
-            // Let tall cards scroll normally instead of trapping content below the fold.
             const updateStack = () => {
-                const top = parseFloat(
-                    getComputedStyle(section).getPropertyValue('--stack-top')
-                )
-                section.dataset.stackEnabled = String(
-                    cards.every(
-                        (card) =>
-                            card.offsetHeight <= window.innerHeight - top - 16
+                cards.forEach((card) => {
+                    card.style.setProperty(
+                        '--card-height',
+                        `${card.offsetHeight}px`
                     )
-                )
+                })
+                section.dataset.stackEnabled = 'true'
             }
             const observer = new ResizeObserver(updateStack)
             cards.forEach((card) => observer.observe(card))
@@ -42,7 +39,6 @@ export function useWorkOverviewAnimation() {
                     const image = card.querySelector('[data-work-image]')
                     if (!image) return
 
-                    // Animate only the image; the folder edges keep their exact alignment.
                     gsap.fromTo(
                         image,
                         { yPercent: -3 },
@@ -67,6 +63,9 @@ export function useWorkOverviewAnimation() {
                 window.removeEventListener('resize', updateStack)
                 media.revert()
                 delete section.dataset.stackEnabled
+                cards.forEach((card) =>
+                    card.style.removeProperty('--card-height')
+                )
             }
         },
         { scope: sectionRef }
