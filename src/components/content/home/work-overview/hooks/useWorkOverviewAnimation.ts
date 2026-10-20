@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 if (typeof window !== 'undefined') {
     gsap.registerPlugin(useGSAP, ScrollTrigger)
+    ScrollTrigger.config({ ignoreMobileResize: true })
 }
 
 export function useWorkOverviewAnimation() {
@@ -20,28 +21,39 @@ export function useWorkOverviewAnimation() {
             )
             const media = gsap.matchMedia()
 
+            let lastTallest = 0
             const updateStack = () => {
                 const tallest = Math.max(
+                    0,
                     ...cards.map((card) => card.offsetHeight)
                 )
-                section.style.setProperty('--stack-card-height', `${tallest}px`)
-                section.dataset.stackEnabled = 'true'
+                if (Math.abs(tallest - lastTallest) > 1) {
+                    lastTallest = tallest
+                    section.style.setProperty(
+                        '--stack-card-height',
+                        `${tallest}px`
+                    )
+                }
             }
             const observer = new ResizeObserver(updateStack)
             cards.forEach((card) => observer.observe(card))
-            window.addEventListener('resize', updateStack)
+            window.addEventListener('resize', updateStack, { passive: true })
             updateStack()
 
             media.add('(prefers-reduced-motion: no-preference)', () => {
                 cards.forEach((card) => {
-                    const image = card.querySelector('[data-work-image]')
+                    const image =
+                        card.querySelector<HTMLElement>('[data-work-image]')
                     if (!image) return
+
+                    gsap.set(image, { yPercent: -3, force3D: true })
 
                     gsap.fromTo(
                         image,
                         { yPercent: -3 },
                         {
                             yPercent: 3,
+                            force3D: true,
                             ease: 'none',
                             scrollTrigger: {
                                 trigger: card,
@@ -49,7 +61,6 @@ export function useWorkOverviewAnimation() {
                                 end: () =>
                                     `+=${window.innerHeight + card.offsetHeight}`,
                                 scrub: true,
-                                invalidateOnRefresh: true,
                             },
                         }
                     )
@@ -60,7 +71,6 @@ export function useWorkOverviewAnimation() {
                 observer.disconnect()
                 window.removeEventListener('resize', updateStack)
                 media.revert()
-                delete section.dataset.stackEnabled
                 section.style.removeProperty('--stack-card-height')
             }
         },

@@ -34,15 +34,23 @@ export const WorkPreview = memo(function WorkPreview({
                 <Image
                     src={work.image}
                     alt={work.imageAlt}
-                    width={work.imageWidth}
-                    height={work.imageHeight}
+                    fill
+                    priority={work.imagePriority}
+                    loading={
+                        work.imagePriority
+                            ? undefined
+                            : isFolder
+                              ? 'eager'
+                              : 'lazy'
+                    }
+                    decoding="async"
                     placeholder={work.imagePlaceholder}
                     sizes={
                         isFolder
                             ? '(min-width: 768px) 46vw, 90vw'
                             : '(min-width: 1280px) 576px, (min-width: 768px) 50vw, 100vw'
                     }
-                    className="absolute inset-0 size-full object-cover"
+                    className="object-cover"
                 />
             </div>
             {!isFolder && (

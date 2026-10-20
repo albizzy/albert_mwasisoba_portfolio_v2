@@ -34,14 +34,6 @@
     --folder-color: var(--editorial-blue);
     --folder-ink: #fff;
     --tag-ink: var(--editorial-ink);
-    position: relative;
-    z-index: calc(var(--card-index) + 1);
-    color: var(--folder-ink);
-    flex-shrink: 0;
-    scroll-margin-top: var(--stack-top);
-}
-
-.section[data-stack-enabled='true'] .card {
     position: sticky;
     /* One shared offset keeps the folder tabs aligned. It only drops above
        --stack-top if the tallest card can't fit (e.g. landscape phones). */
@@ -49,6 +41,13 @@
         var(--stack-top),
         calc(100svh - var(--stack-card-height, 0px) - 16px)
     );
+    z-index: calc(var(--card-index) + 1);
+    color: var(--folder-ink);
+    flex-shrink: 0;
+    scroll-margin-top: var(--stack-top);
+    isolation: isolate;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 .stack::after {
@@ -83,6 +82,7 @@
     margin-left: calc(
         var(--card-index) * var(--folder-step) - var(--folder-tab-height)
     );
+    margin-bottom: -1px;
     padding-inline: var(--folder-tab-height);
     background: var(--folder-color);
     border-radius: var(--editorial-radius-tab) var(--editorial-radius-tab) 0 0;
@@ -240,6 +240,9 @@
 .previewImage {
     position: absolute;
     inset: -5% 0;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
 }
 
 @media (max-width: 1023px) {
@@ -340,9 +343,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .section[data-stack-enabled='true'] .card {
+    .card {
         position: relative;
         top: auto;
+        transform: none;
     }
 
     .stack::after {
@@ -351,5 +355,7 @@
 
     .previewImage {
         inset: 0;
+        will-change: auto;
+        transform: none;
     }
 }

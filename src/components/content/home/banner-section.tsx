@@ -4,16 +4,18 @@ import Image from 'next/image'
 export function BannerSection() {
     return (
         <section
-            className={
-                'w-full h-100 md:h-240 bg-background relative overflow-hidden'
-            }
+            aria-label="Project showcase banner"
+            className="bg-background relative h-100 w-full overflow-hidden md:h-240"
         >
             <Image
                 src={BannerImage}
-                alt={'banner'}
-                width={1000}
-                height={1000}
-                className={'absolute w-full h-full object-cover'}
+                alt="Collage of selected design and frontend engineering projects"
+                fill
+                priority
+                placeholder="blur"
+                sizes="100vw"
+                quality={85}
+                className="object-cover object-center"
             />
         </section>
     )

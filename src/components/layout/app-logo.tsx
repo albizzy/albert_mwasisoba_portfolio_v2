@@ -11,6 +11,8 @@ export function AppLogo() {
                 src={AlbertMascot}
                 alt={'mascot logo'}
                 fill
+                priority
+                quality={85}
                 className={
                     'absolute inset-0 object-center w-full h-full object-cover'
                 }
