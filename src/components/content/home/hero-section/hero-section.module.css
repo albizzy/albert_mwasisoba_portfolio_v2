@@ -123,25 +123,25 @@
 .skillBubble[data-position='top-left'] {
     top: -0.5rem;
     left: clamp(0.5rem, 6vw, 5.5rem);
-    --sticker-tilt: -8deg;
+    --sticker-tilt: -6deg;
 }
 
 .skillBubble[data-position='top-right'] {
     top: -0.25rem;
     right: clamp(0.5rem, 6vw, 5.5rem);
-    --sticker-tilt: 7deg;
+    --sticker-tilt: 5deg;
 }
 
 .skillBubble[data-position='bottom-left'] {
     bottom: -1.5rem;
     left: clamp(1rem, 8vw, 7.5rem);
-    --sticker-tilt: 6deg;
+    --sticker-tilt: 5deg;
 }
 
 .skillBubble[data-position='bottom-right'] {
     bottom: -1.25rem;
     right: clamp(1rem, 8vw, 7.5rem);
-    --sticker-tilt: -7deg;
+    --sticker-tilt: -5deg;
 }
 
 .skillFloat {
@@ -203,39 +203,16 @@
     padding-top: 0.04em;
 }
 
-.skillBubble[data-position='top-left'] {
-    top: -0.55rem;
-    left: -0.45rem;
-    transform: rotate(-14deg);
-}
-
-.skillBubble[data-position='top-right'] {
-    top: -0.55rem;
-    right: -0.45rem;
-    transform: rotate(16deg);
-}
-
-.skillBubble[data-position='bottom-left'] {
-    bottom: -0.55rem;
-    left: 0.35rem;
-    transform: rotate(12deg);
-}
-
-.skillBubble[data-position='bottom-right'] {
-    bottom: -0.55rem;
-    right: 0.35rem;
-    transform: rotate(-15deg);
-}
-
 @media (max-width: 767px) {
     .skills {
         position: relative;
         inset: auto;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, max-content);
         justify-content: center;
-        gap: 0.75rem 0.875rem;
-        margin-top: 0.5rem;
+        align-items: center;
+        gap: 1.25rem 1rem;
+        margin-top: 1.25rem;
     }
 
     .skillBubble,
@@ -248,6 +225,32 @@
         right: auto;
         bottom: auto;
         left: auto;
+    }
+
+    .skillBubble[data-position='top-left'],
+    .skillBubble[data-position='bottom-left'] {
+        justify-self: end;
+    }
+
+    .skillBubble[data-position='top-right'],
+    .skillBubble[data-position='bottom-right'] {
+        justify-self: start;
+    }
+
+    .skillBubble[data-position='top-left'] {
+        --sticker-tilt: -3deg;
+    }
+
+    .skillBubble[data-position='top-right'] {
+        --sticker-tilt: 3deg;
+    }
+
+    .skillBubble[data-position='bottom-left'] {
+        --sticker-tilt: 2.5deg;
+    }
+
+    .skillBubble[data-position='bottom-right'] {
+        --sticker-tilt: -2.5deg;
     }
 }
 
