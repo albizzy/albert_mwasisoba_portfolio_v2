@@ -5,7 +5,7 @@
     min-height: 60svh;
     align-items: center;
     justify-content: center;
-    padding: clamp(2.5rem, 6vw, 5rem) clamp(1rem, 3vw, 2rem);
+    padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 3vw, 2rem);
 }
 
 .content {
@@ -19,6 +19,8 @@
 }
 
 .composition {
+    position: relative;
+    z-index: 1;
     container-type: inline-size;
     width: 100%;
 }
@@ -76,8 +78,185 @@
     color: var(--foreground);
 }
 
+/* Editorial floating skill stickers */
+.skills {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    pointer-events: none;
+}
+
+.skillBubble {
+    position: absolute;
+    width: max-content;
+    pointer-events: auto;
+    will-change: transform;
+}
+
+.skillBubble[data-tone='yellow'] {
+    --sticker-bg: var(--editorial-yellow, #dfad49);
+    --sticker-fg: var(--editorial-ink, #141413);
+    --sticker-icon-bg: rgb(20 20 19 / 12%);
+}
+
+.skillBubble[data-tone='blue'] {
+    --sticker-bg: var(--editorial-blue, #3b6b88);
+    --sticker-fg: #ffffff;
+    --sticker-icon-bg: rgb(255 255 255 / 18%);
+}
+
+.skillBubble[data-tone='green'] {
+    --sticker-bg: var(--editorial-green, #3a6b35);
+    --sticker-fg: #ffffff;
+    --sticker-icon-bg: rgb(255 255 255 / 18%);
+}
+
+.skillBubble[data-tone='pink'] {
+    --sticker-bg: var(--editorial-pink, #eb4f68);
+    --sticker-fg: #ffffff;
+    --sticker-icon-bg: rgb(255 255 255 / 20%);
+}
+
+.skillBubble[data-position='top-left'] {
+    top: -0.5rem;
+    left: clamp(0.5rem, 6vw, 5.5rem);
+    --sticker-tilt: -8deg;
+}
+
+.skillBubble[data-position='top-right'] {
+    top: -0.25rem;
+    right: clamp(0.5rem, 6vw, 5.5rem);
+    --sticker-tilt: 7deg;
+}
+
+.skillBubble[data-position='bottom-left'] {
+    bottom: -1.5rem;
+    left: clamp(1rem, 8vw, 7.5rem);
+    --sticker-tilt: 6deg;
+}
+
+.skillBubble[data-position='bottom-right'] {
+    bottom: -1.25rem;
+    right: clamp(1rem, 8vw, 7.5rem);
+    --sticker-tilt: -7deg;
+}
+
+.skillFloat {
+    display: block;
+    will-change: transform;
+}
+
+.skillSticker {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.32rem 0.85rem 0.32rem 0.4rem;
+    border: 3px solid #ffffff;
+    border-radius: 999px;
+    background: var(--sticker-bg);
+    color: var(--sticker-fg);
+    box-shadow:
+        0 5px 12px rgb(20 20 19 / 22%),
+        0 2px 4px rgb(20 20 19 / 14%);
+    font-size: clamp(0.6875rem, 0.85vw, 0.8125rem);
+    font-weight: var(--editorial-weight-label, 500);
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    transform: rotate(var(--sticker-tilt, 0deg));
+    transition:
+        transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.skillBubble:hover .skillSticker {
+    transform: rotate(calc(var(--sticker-tilt, 0deg) * 0.3)) translateY(-3px)
+        scale(1.07);
+    box-shadow:
+        0 10px 20px rgb(20 20 19 / 26%),
+        0 3px 6px rgb(20 20 19 / 16%);
+}
+
+.skillIcon {
+    display: inline-flex;
+    width: 1.6rem;
+    height: 1.6rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: var(--sticker-icon-bg);
+}
+
+.skillIcon svg {
+    width: 0.95rem;
+    height: 0.95rem;
+}
+
+.skillLabel {
+    padding-top: 0.04em;
+}
+
+.skillBubble[data-position='top-left'] {
+    top: -0.55rem;
+    left: -0.45rem;
+    transform: rotate(-14deg);
+}
+
+.skillBubble[data-position='top-right'] {
+    top: -0.55rem;
+    right: -0.45rem;
+    transform: rotate(16deg);
+}
+
+.skillBubble[data-position='bottom-left'] {
+    bottom: -0.55rem;
+    left: 0.35rem;
+    transform: rotate(12deg);
+}
+
+.skillBubble[data-position='bottom-right'] {
+    bottom: -0.55rem;
+    right: 0.35rem;
+    transform: rotate(-15deg);
+}
+
+@media (max-width: 767px) {
+    .skills {
+        position: relative;
+        inset: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem 0.875rem;
+        margin-top: 0.5rem;
+    }
+
+    .skillBubble,
+    .skillBubble[data-position='top-left'],
+    .skillBubble[data-position='top-right'],
+    .skillBubble[data-position='bottom-left'],
+    .skillBubble[data-position='bottom-right'] {
+        position: relative;
+        top: auto;
+        right: auto;
+        bottom: auto;
+        left: auto;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .roles {
         padding-bottom: 0;
+    }
+
+    .skillSticker {
+        transition: none;
     }
 }

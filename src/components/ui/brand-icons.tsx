@@ -38,3 +38,71 @@ export function LinkedinBrandIcon(props: BrandIconProps) {
         </svg>
     )
 }
+
+export function NextjsBrandIcon(props: BrandIconProps) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            {...props}
+        >
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10c2.04 0 3.938-.611 5.518-1.66L9.64 9.923v6.827H8.15V7.25h1.812l8.674 11.45A9.96 9.96 0 0 0 22 12c0-5.523-4.477-10-10-10Zm3.85 11.5h-1.5V7.25h1.5v6.25Z" />
+        </svg>
+    )
+}
+
+export function TailwindCssBrandIcon(props: BrandIconProps) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            {...props}
+        >
+            <path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8Zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12Z" />
+        </svg>
+    )
+}
+
+export function TypescriptBrandIcon(props: BrandIconProps) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            {...props}
+        >
+            <path d="M3 3h18v18H3V3Zm10.71 14.86v-6.71h2.29V9.5H9.64v1.65h2.29v6.71h1.78Zm5.43-1.69c0-.89-.52-1.45-1.91-1.99-1.02-.4-1.36-.66-1.36-1.15 0-.42.34-.73.96-.73.6 0 1.07.22 1.45.55l.89-1.16c-.57-.49-1.36-.79-2.31-.79-1.56 0-2.63.89-2.63 2.22 0 1.04.61 1.62 2.02 2.16.95.37 1.25.66 1.25 1.17 0 .5-.44.83-1.13.83-.77 0-1.39-.31-1.84-.74l-.93 1.16c.57.6 1.55.99 2.75.99 1.72 0 2.79-.89 2.79-2.52Z" />
+        </svg>
+    )
+}
+
+export function FigmaBrandIcon(props: BrandIconProps) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            focusable="false"
+            {...props}
+        >
+            <path d="M8.5 2A3.5 3.5 0 0 0 5 5.5c0 1.306.716 2.445 1.775 3.048A3.496 3.496 0 0 0 5 11.5c0 1.306.716 2.445 1.775 3.048A3.496 3.496 0 0 0 5 17.5 3.5 3.5 0 1 0 12 17.5V9h3.5a3.5 3.5 0 1 0 0-7h-7Zm3.5 2h3.5a1.5 1.5 0 0 1 0 3H12V4Zm-2 0v3H8.5a1.5 1.5 0 0 1 0-3H10Zm0 5v3H8.5a1.5 1.5 0 0 1 0-3H10Zm0 5v3.5a1.5 1.5 0 1 1-1.5-1.5H10v-2Zm5.5-3a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm0 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+        </svg>
+    )
+}

@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Typography } from '@/components/ui/typography'
 import { RotatingText } from '@/components/ui/rotating-text'
 import { siteConfig } from '@/config'
 import { getIndefiniteArticle } from '@/helpers'
+import { useFloatingSkills } from './hooks'
+import { HERO_SKILL_MOTIONS, SkillBubbles } from './skill-bubbles'
 import styles from './hero-section.module.css'
 import { Caveat } from 'next/font/google'
 
@@ -20,11 +22,18 @@ const roles = siteConfig.roles.map((role) => ({
 }))
 
 export function HeroSection() {
+    const sectionRef = useRef<HTMLElement>(null)
     const [roleIndex, setRoleIndex] = useState(0)
     const currentRole = roles[roleIndex]
 
+    useFloatingSkills(sectionRef, HERO_SKILL_MOTIONS)
+
     return (
-        <section className={styles.section} aria-label="Introduction">
+        <section
+            ref={sectionRef}
+            className={styles.section}
+            aria-label="Introduction"
+        >
             <div className={styles.content}>
                 <div className={styles.composition}>
                     <Typography
@@ -58,6 +67,7 @@ export function HeroSection() {
                         />
                     </Typography>
                 </div>
+                <SkillBubbles />
             </div>
         </section>
     )
