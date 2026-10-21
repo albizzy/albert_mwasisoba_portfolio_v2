@@ -1,17 +1,29 @@
 .footerBox {
-    background: var(--foreground);
-    color: white;
+    background: var(--editorial-ink);
+    color: var(--editorial-paper);
 }
 
 .contactButton {
+    min-height: 3.5rem;
     border-radius: 9999px;
-    border: 0;
-    background: white;
-    color: black;
+    border: 2px solid #ffffff;
+    background: var(--editorial-yellow);
+    color: var(--editorial-ink);
+    font-size: var(--editorial-text-label);
+    font-weight: var(--editorial-weight-heading);
+    letter-spacing: -0.01em;
+    box-shadow: 4px 4px 0 var(--editorial-blue);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
 }
 
 .contactButton:hover {
-    background: rgb(255 255 255 / 90%);
+    background: var(--editorial-yellow-soft);
+    color: var(--editorial-ink);
+    box-shadow: 2px 2px 0 var(--editorial-blue);
+    transform: translate(2px, 2px);
 }
 
 .socialLinks {

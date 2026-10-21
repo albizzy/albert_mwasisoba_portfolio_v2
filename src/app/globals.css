@@ -49,26 +49,42 @@
 
 :root {
     --radius: 0.625rem;
+    /* Shared layout & spacing tokens */
+    --container-max: 80rem;
+    --section-padding-y: clamp(4.5rem, 8vw, 7.5rem);
+    --section-padding-x: clamp(1rem, 3vw, 2.5rem);
+
     /* Fixed colors and shapes shared by the editorial sections. */
     --editorial-ink: #141413;
     --editorial-muted: #6b6357;
     --editorial-line: #dbddd3;
     --editorial-paper: #f7f8f2;
+    --editorial-surface: #ffffff;
     --editorial-yellow: #dfad49;
+    --editorial-yellow-soft: #f3e2ad;
     --editorial-pink: #eb4f68;
+    --editorial-pink-soft: #f8cad3;
     --editorial-blue: #3b6b88;
+    --editorial-blue-soft: #b7c6ef;
     --editorial-green: #3a6b35;
+    --editorial-green-soft: #a9dfc6;
+    --editorial-olive: #c5cca6;
+    --editorial-olive-wash: #edf0df;
+    --editorial-danger: #b4234e;
+
     --editorial-radius-panel: 28px;
     --editorial-radius-tab: 20px;
     --editorial-radius-tag: 5px 10px 5px 5px;
-    --editorial-text-fine: 10px;
-    --editorial-text-micro: 11px;
-    --editorial-text-small: 12px;
-    --editorial-text-label: 14px;
-    --editorial-text-body: 16px;
-    --editorial-text-lead: 18px;
+    --editorial-text-fine: 0.6875rem;
+    --editorial-text-micro: 0.75rem;
+    --editorial-text-small: 0.8125rem;
+    --editorial-text-label: 0.875rem;
+    --editorial-text-body: 1rem;
+    --editorial-text-lead: 1.125rem;
+    --editorial-weight-body: 400;
     --editorial-weight-label: 500;
     --editorial-weight-heading: 600;
+    --editorial-weight-display: 700;
     --background: oklch(1 0 0);
     --foreground: oklch(0.141 0.005 285.823);
     --card: oklch(1 0 0);
@@ -136,14 +152,34 @@
     body {
         @apply bg-background text-foreground;
     }
-}
 
-html.custom-cursor-active,
-html.custom-cursor-active * {
-    cursor: none !important;
-}
+    ::selection {
+        background-color: color-mix(
+            in oklab,
+            var(--editorial-yellow) 45%,
+            transparent
+        );
+        color: var(--editorial-ink);
+    }
 
-html.custom-cursor-active
+    input:not(
+        [type='button'],
+        [type='checkbox'],
+        [type='color'],
+        [type='file'],
+        [type='hidden'],
+        [type='image'],
+        [type='radio'],
+        [type='range'],
+        [type='reset'],
+        [type='submit']
+    ),
+    textarea,
+    [contenteditable=''],
+    [contenteditable='true'] {
+        caret-color: var(--editorial-blue);
+    }
+
     :is(
         input:not(
             [type='button'],
@@ -159,8 +195,17 @@ html.custom-cursor-active
         ),
         textarea,
         [contenteditable=''],
-        [contenteditable='true'],
-        iframe
-    ) {
+        [contenteditable='true']
+    )[aria-invalid='true'] {
+        caret-color: var(--editorial-danger);
+    }
+}
+
+html.custom-cursor-active,
+html.custom-cursor-active * {
+    cursor: none !important;
+}
+
+html.custom-cursor-active iframe {
     cursor: auto !important;
 }

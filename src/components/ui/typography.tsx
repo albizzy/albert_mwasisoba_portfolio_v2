@@ -47,47 +47,50 @@ const variantMapping: Record<
     },
     h2: {
         element: 'h2',
-        classes: 'font-bold leading-tight tracking-tight md:tracking-tighter',
+        classes:
+            'font-semibold leading-tight tracking-tight md:tracking-tighter',
     },
     h3: {
         element: 'h3',
-        classes: 'font-semibold leading-tight',
+        classes: 'font-semibold leading-tight tracking-tight',
     },
     h4: {
         element: 'h4',
-        classes: 'font-semibold leading-tight',
+        classes: 'font-semibold leading-tight tracking-tight',
     },
     h5: {
         element: 'h5',
-        classes: 'font-semibold leading-snug',
+        classes: 'font-semibold leading-snug tracking-tight',
     },
     h6: {
         element: 'h6',
-        classes: 'font-semibold leading-snug',
+        classes: 'font-medium leading-snug tracking-tight',
     },
     lead: {
         element: 'p',
-        classes: 'font-medium leading-relaxed',
+        classes: 'font-normal leading-relaxed tracking-[-0.015em]',
     },
     body: {
         element: 'p',
-        classes: 'font-normal leading-relaxed',
+        classes: 'font-normal leading-relaxed tracking-[-0.01em]',
     },
     caption: {
         element: 'span',
-        classes: 'font-normal text-muted-foreground',
+        classes: 'font-medium text-muted-foreground tracking-[0.08em]',
     },
     small: {
         element: 'span',
-        classes: 'font-normal text-muted-foreground',
+        classes: 'font-normal text-muted-foreground leading-normal',
     },
     blockquote: {
         element: 'blockquote',
-        classes: 'border-l-4 border-border pl-4 italic text-muted-foreground',
+        classes:
+            'border-l-4 border-border pl-4 italic font-normal text-muted-foreground leading-relaxed',
     },
     code: {
         element: 'code',
-        classes: 'bg-muted text-foreground/80 px-1 rounded',
+        classes:
+            'bg-muted text-foreground/80 px-1.5 py-0.5 rounded font-medium',
     },
 }
 

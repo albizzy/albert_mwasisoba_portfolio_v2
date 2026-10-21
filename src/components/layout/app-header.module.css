@@ -42,21 +42,53 @@
 
 .menuButton {
     border-radius: 9999px;
-    background: var(--muted);
-    color: var(--foreground);
+    border: 1.5px solid var(--editorial-line);
+    background: var(--editorial-paper);
+    color: var(--editorial-ink);
+}
+
+.menuButton:hover:not(.menuButtonOpen) {
+    border-color: var(--editorial-ink);
+    background: var(--editorial-yellow);
 }
 
 .menuButtonOpen {
+    border-color: rgb(255 255 255 / 18%);
     background: rgb(255 255 255 / 10%);
-    color: white;
+    color: #ffffff;
 }
 
 .navigationPanel {
     width: min(320px, calc(100vw - 2rem));
     max-height: calc(100dvh - 2rem);
-    border-radius: 2.5rem;
-    background: black;
-    color: white;
+    border-radius: var(--editorial-radius-panel);
+    border: 1px solid rgb(255 255 255 / 12%);
+    background: var(--editorial-ink);
+    color: var(--editorial-paper);
+}
+
+.bookButton {
+    min-height: 3.25rem;
+    height: auto;
+    border-radius: 9999px;
+    border: 2px solid #ffffff;
+    background: var(--editorial-yellow);
+    color: var(--editorial-ink);
+    font-size: var(--editorial-text-label);
+    font-weight: var(--editorial-weight-heading);
+    letter-spacing: -0.01em;
+    box-shadow: 3px 3px 0 var(--editorial-blue);
+    transition:
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+}
+
+.bookButton:hover {
+    background: var(--editorial-yellow-soft);
+    color: var(--editorial-ink);
+    box-shadow: 1px 1px 0 var(--editorial-blue);
+    transform: translate(2px, 2px);
 }
 
 @media (min-width: 48rem) {

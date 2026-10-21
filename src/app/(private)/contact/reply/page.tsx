@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
+import { Caveat } from 'next/font/google'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { ReplyForm } from '@/features/contact/components/reply-form'
 import styles from '@/styles/correspondence.module.css'
 import { Typography } from '@/components/ui/typography'
+import { cn } from '@/lib/utils'
 
 export const maxDuration = 60
 export const metadata: Metadata = {
@@ -11,6 +13,12 @@ export const metadata: Metadata = {
     robots: { index: false, follow: false, noarchive: true },
     referrer: 'no-referrer',
 }
+
+const caveat = Caveat({
+    subsets: ['latin'],
+    variable: '--font-caveat',
+    display: 'swap',
+})
 
 export default function ReplyPage() {
     return (
@@ -22,7 +30,14 @@ export default function ReplyPage() {
                 </Link>
                 <header className={styles.hero}>
                     <div>
-                        <Typography as={'h1'} variant={'h4'}>
+                        <p className={cn(styles.eyebrow, caveat.className)}>
+                            Private correspondence
+                        </p>
+                        <Typography
+                            as={'h1'}
+                            variant={'h4'}
+                            className={styles.heroTitle}
+                        >
                             Direct{' '}
                             <span
                                 className={`${styles.highlight} ${styles.highlightBlue}`}
@@ -40,7 +55,9 @@ export default function ReplyPage() {
                         data-tone="blue"
                         aria-hidden="true"
                     >
-                        <span>Private thread</span>
+                        <span className={cn(caveat.className)}>
+                            Private thread
+                        </span>
                         <strong>Delivered directly to my inbox.</strong>
                     </div>
                 </header>

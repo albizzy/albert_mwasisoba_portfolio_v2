@@ -1,5 +1,6 @@
 'use client'
 
+import { Caveat } from 'next/font/google'
 import { Typography } from '@/components/ui/typography'
 import { works } from '@/config'
 import { cn } from '@/lib/utils'
@@ -10,6 +11,12 @@ import { WorkCard } from '../home/work-overview/work-card'
 import { Section } from '../sections'
 
 gsap.registerPlugin(useGSAP)
+
+const caveat = Caveat({
+    subsets: ['latin'],
+    variable: '--font-caveat',
+    display: 'swap',
+})
 
 export function WorksContent() {
     const [activeFilter, setActiveFilter] = useState('All')
@@ -71,28 +78,49 @@ export function WorksContent() {
     )
 
     return (
-        <div ref={containerRef} className="w-full">
+        <div ref={containerRef} className="w-full text-(--editorial-ink)">
             <Section className="py-16 md:py-24">
-                <div className="works-title flex flex-col gap-4 max-w-4xl">
+                <div className="works-title flex flex-col gap-3 max-w-4xl">
+                    <p
+                        className={cn(
+                            caveat.className,
+                            'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                        )}
+                    >
+                        Selected archive
+                    </p>
                     <Typography
                         as="h1"
-                        variant="h5"
-                        className="font-semibold text-foreground tracking-tight leading-tight"
+                        variant="h2"
+                        className="font-semibold text-(--editorial-ink) tracking-tight leading-[1.08]"
                     >
-                        Digital design for forward-thinking businesses and
-                        people.
+                        Digital products engineered for clarity and scale.
+                    </Typography>
+                    <Typography
+                        as="p"
+                        variant="lead"
+                        className="mt-2 max-w-2xl text-(--editorial-muted)"
+                    >
+                        A curated index of frontend systems, design direction,
+                        and production web applications.
                     </Typography>
                 </div>
 
                 <div className="works-filter-container flex flex-col gap-4">
-                    <div className="flex flex-wrap gap-2 items-center">
+                    <div
+                        className="flex flex-wrap gap-2.5 items-center"
+                        role="group"
+                        aria-label="Filter projects"
+                    >
                         <button
+                            type="button"
                             onClick={() => handleFilterSelect('All')}
+                            aria-pressed={activeFilter === 'All'}
                             className={cn(
-                                'px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 border cursor-pointer select-none',
+                                'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
                                 activeFilter === 'All'
-                                    ? 'bg-foreground text-background border-foreground shadow-md'
-                                    : 'bg-muted/10 hover:bg-muted/30 text-muted-foreground hover:text-foreground border-border/40'
+                                    ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                    : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
                             )}
                         >
                             All Projects
@@ -101,12 +129,14 @@ export function WorksContent() {
                         {allServices.map((service) => (
                             <button
                                 key={service}
+                                type="button"
                                 onClick={() => handleFilterSelect(service)}
+                                aria-pressed={activeFilter === service}
                                 className={cn(
-                                    'px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 border cursor-pointer select-none',
+                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
                                     activeFilter === service
-                                        ? 'bg-foreground text-background border-foreground shadow-md'
-                                        : 'bg-muted/10 hover:bg-muted/30 text-muted-foreground hover:text-foreground border-border/40'
+                                        ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                        : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
                                 )}
                             >
                                 {service}
@@ -114,18 +144,20 @@ export function WorksContent() {
                         ))}
 
                         {allTypes.length > 0 && (
-                            <div className="hidden sm:block h-4 w-px bg-border/60 mx-1" />
+                            <div className="hidden sm:block h-5 w-px bg-(--editorial-line) mx-1" />
                         )}
 
                         {allTypes.map((type) => (
                             <button
                                 key={type}
+                                type="button"
                                 onClick={() => handleFilterSelect(type)}
+                                aria-pressed={activeFilter === type}
                                 className={cn(
-                                    'px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 border cursor-pointer select-none',
+                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
                                     activeFilter === type
-                                        ? 'bg-foreground text-background border-foreground shadow-md'
-                                        : 'bg-muted/10 hover:bg-muted/30 text-muted-foreground hover:text-foreground border-border/40'
+                                        ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                        : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
                                 )}
                             >
                                 {type}
@@ -134,14 +166,14 @@ export function WorksContent() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 min-h-75">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 min-h-75">
                     {filteredWorks.length > 0 ? (
                         filteredWorks.map((work) => (
                             <WorkCard key={work.title} work={work} />
                         ))
                     ) : (
                         <div className="col-span-2 flex flex-col items-center justify-center py-20 text-center">
-                            <Typography className="text-muted-foreground">
+                            <Typography className="text-(--editorial-muted)">
                                 No works found matching the selected filter.
                             </Typography>
                         </div>

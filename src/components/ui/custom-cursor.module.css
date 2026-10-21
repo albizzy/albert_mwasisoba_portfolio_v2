@@ -58,7 +58,6 @@
     transition: opacity 120ms ease;
 }
 
-.root[data-state='text'] .track,
 .root[data-state='hidden'] .track {
     opacity: 0;
 }
@@ -69,7 +68,49 @@
     overflow: visible;
     transform-origin: 3.5px 3.5px;
     filter: drop-shadow(0 2px 3px rgb(20 20 19 / 28%));
-    transition: transform 200ms var(--cursor-ease);
+    transition:
+        transform 200ms var(--cursor-ease),
+        opacity 150ms ease;
+}
+
+.root[data-state='text'] .arrow {
+    opacity: 0;
+    transform: scale(0.5);
+}
+
+.caret {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    margin: -12px 0 0 -12px;
+    overflow: visible;
+    transform-origin: 12px 12px;
+    filter: drop-shadow(0 2px 4px rgb(20 20 19 / 26%));
+    opacity: 0;
+    transform: scale(0.55);
+    transition:
+        transform 200ms var(--cursor-spring),
+        opacity 150ms ease;
+}
+
+.caretShape {
+    fill: var(--cursor-accent);
+    stroke: var(--cursor-outline);
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    transition:
+        fill 180ms ease,
+        stroke 180ms ease;
+}
+
+.root[data-state='text'] .caret {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.root[data-state='text'][data-pressed='true'] .caret {
+    transform: scale(0.92, 0.86);
 }
 
 .arrowShape {
@@ -141,13 +182,16 @@
 @media (prefers-reduced-motion: reduce) {
     .arrow,
     .arrowShape,
+    .caret,
+    .caretShape,
     .label {
         transition: none;
     }
 
     .root[data-state='interactive'] .arrow,
     .root[data-state='interactive'][data-pressed='true'] .arrow,
-    .root[data-pressed='true'] .arrow {
+    .root[data-pressed='true'] .arrow,
+    .root[data-state='text'][data-pressed='true'] .caret {
         transform: none;
     }
 }

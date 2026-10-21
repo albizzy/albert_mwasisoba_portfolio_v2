@@ -1,12 +1,13 @@
 .section {
-    --overview-lime: #c5cca6; /* Muted dried-herb / olive sticker */
-    --overview-ink: #1c1917; /* Espresso ink */
-    --overview-highlight: #edf0df; /* Warm herbal wash */
-    --overview-green: #374221; /* Dark olive timber */
+    --overview-lime: var(--editorial-olive, #c5cca6);
+    --overview-ink: var(--editorial-ink, #141413);
+    --overview-highlight: var(--editorial-olive-wash, #edf0df);
+    --overview-green: var(--editorial-green, #3a6b35);
 
-    background: var(--editorial-paper, #f4efe6);
+    background: var(--editorial-paper);
     color: var(--overview-ink);
-    padding-block: clamp(88px, 10vw, 144px);
+    padding-block: var(--section-padding-y);
+    padding-inline: var(--section-padding-x);
 }
 
 .content {
@@ -16,7 +17,7 @@
 
 .statement {
     container-type: inline-size;
-    width: min(100%, 640px);
+    width: min(100%, 680px);
 }
 
 .composition {
@@ -28,8 +29,8 @@
 
 .copy {
     margin: 0;
-    font-weight: 400;
-    letter-spacing: -0.065em;
+    font-weight: var(--editorial-weight-body, 400);
+    letter-spacing: -0.045em;
     line-height: 1.25;
     text-align: left;
 }
@@ -43,15 +44,15 @@
     display: block;
     margin-top: 1.8em;
     font-size: 0.47em;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.035em;
     line-height: 1.4;
 }
 
 .copy strong,
 .highlight {
     font-style: italic;
-    font-weight: 800;
-    letter-spacing: -0.065em;
+    font-weight: var(--editorial-weight-display, 700);
+    letter-spacing: -0.045em;
 }
 
 .highlight {
@@ -74,15 +75,19 @@
 
 .pause {
     display: inline-flex;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
+    border: 1px solid var(--editorial-line);
     border-radius: 50%;
-    background: #f1f4ec;
+    background: var(--editorial-surface);
     color: var(--overview-green);
     cursor: pointer;
+    transition:
+        background-color 180ms ease,
+        border-color 180ms ease;
 }
 
 .pause svg {
@@ -91,6 +96,7 @@
 }
 
 .pause:hover {
+    border-color: var(--overview-green);
     background: var(--overview-highlight);
 }
 
@@ -133,16 +139,17 @@
 
 .label {
     display: block;
-    padding: 0.16em 0.5em 0.2em;
+    padding: 0.22em 0.58em 0.24em;
+    border: 2px solid var(--editorial-surface);
     border-radius: 999px;
     background: var(--overview-lime);
     box-shadow:
-        0 0.16em 0.1em rgb(18 22 12 / 18%),
-        0 0.3em 0.26em rgb(18 22 12 / 12%);
-    color: #172009;
-    font-size: 0.385em;
-    font-weight: 400;
-    letter-spacing: -0.055em;
+        0 0.14em 0.28em rgb(20 20 19 / 18%),
+        0 0.06em 0.12em rgb(20 20 19 / 12%);
+    color: var(--editorial-ink);
+    font-size: 0.36em;
+    font-weight: var(--editorial-weight-label, 500);
+    letter-spacing: -0.02em;
     line-height: 1;
     white-space: nowrap;
 }

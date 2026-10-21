@@ -94,8 +94,8 @@ export function AppFooter() {
                         ref={contentRef}
                         className="footer-content w-full h-full flex flex-col justify-between items-center opacity-0 px-4 md:px-12 py-8"
                     >
-                        <div className="flex flex-col items-center gap-6 py-6 flex-1 justify-center max-w-xl mx-auto w-full">
-                            <div className="relative overflow-hidden size-64 md:size-80 shrink-0">
+                        <div className="flex flex-col items-center gap-6 py-6 flex-1 justify-center max-w-2xl mx-auto w-full">
+                            <div className="relative overflow-hidden size-56 md:size-72 shrink-0">
                                 <Image
                                     src={ArtworkImage}
                                     alt="artwork"
@@ -104,22 +104,24 @@ export function AppFooter() {
                                 />
                             </div>
                             <Typography
-                                as="h3"
-                                variant="h5"
-                                className="font-normal text-white text-center px-4 leading-relaxed"
+                                as="h2"
+                                variant="h4"
+                                className="font-semibold text-white text-center px-4 leading-tight tracking-tight"
                             >
-                                Ready to move forward? Let’s work together!
+                                Ready to move forward? Let’s work together.
                             </Typography>
                             <Button
                                 asChild
                                 variant="outline"
-                                className={`px-8 py-6 h-auto text-sm md:text-base font-semibold shadow-md cursor-pointer hover:scale-105 transition-transform ${styles.contactButton}`}
+                                className={`px-8 py-4 h-auto cursor-pointer ${styles.contactButton}`}
                             >
-                                <Link href="/contact">Contact me</Link>
+                                <Link href="/contact">
+                                    Start a conversation
+                                </Link>
                             </Button>
                         </div>
 
-                        <div className="w-full text-center pt-6 text-xs text-white/40 border-t border-white/10">
+                        <div className="w-full text-center pt-6 text-xs font-normal tracking-[0.04em] text-white/45 border-t border-white/10">
                             © {new Date().getFullYear()} {name}. All rights
                             reserved.
                         </div>

@@ -44,7 +44,15 @@ export default function ContactPage() {
             <div className={styles.inner}>
                 <header className={styles.hero}>
                     <div>
-                        <Typography as="h1" variant="h4" aria-label="Say hi.">
+                        <p className={cn(styles.eyebrow, caveat.className)}>
+                            Get in touch
+                        </p>
+                        <Typography
+                            as="h1"
+                            variant="h4"
+                            className={styles.heroTitle}
+                            aria-label="Say hi."
+                        >
                             Say{' '}
                             <span
                                 className={`${styles.highlight} ${styles.highlightYellow}`}

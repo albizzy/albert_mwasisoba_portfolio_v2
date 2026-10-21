@@ -97,9 +97,9 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
             <Component
                 ref={ref}
                 className={cn(
-                    'relative isolate w-full overflow-hidden py-20 md:py-28',
+                    'relative isolate w-full overflow-hidden py-18 md:py-24 lg:py-28',
                     toneClassName,
-                    bordered && 'border-t border-border',
+                    bordered && 'border-t border-(--editorial-line)',
                     className
                 )}
                 style={{ ...toneStyle, ...style }}

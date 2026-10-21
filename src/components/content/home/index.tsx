@@ -14,7 +14,6 @@ export const HomeContent = () => {
                 <Overview />
                 <WorkOverview />
                 <CaseStudies />
-                {/*<ExpertiseOverview />*/}
             </div>
         </AppContent>
     )

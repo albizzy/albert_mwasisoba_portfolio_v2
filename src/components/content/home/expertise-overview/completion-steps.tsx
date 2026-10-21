@@ -17,7 +17,7 @@ export function CompletionSteps({
         <div className="flex items-center justify-center">
             <div
                 ref={viewportRef}
-                className="relative size-96 overflow-hidden rounded-4xl bg-muted px-6 py-6"
+                className="relative size-96 overflow-hidden rounded-[28px] border-2 border-(--editorial-ink) bg-(--editorial-paper) px-6 py-6 shadow-[8px_8px_0_var(--editorial-line)]"
             >
                 <div
                     ref={listRef}
@@ -29,10 +29,16 @@ export function CompletionSteps({
                         return (
                             <div
                                 key={step.title}
-                                className={`flex w-fit flex-row items-center gap-2 rounded-full px-6 py-4 ${step.background}`}
+                                className={`flex w-fit flex-row items-center gap-2.5 rounded-full border-2 border-white px-5 py-3 shadow-sm ${step.background}`}
                             >
-                                <Icon aria-hidden="true" />
-                                <Typography as="span">{step.title}</Typography>
+                                <Icon aria-hidden="true" className="size-4" />
+                                <Typography
+                                    as="span"
+                                    variant="caption"
+                                    className="font-medium uppercase tracking-[0.08em] text-inherit"
+                                >
+                                    {step.title}
+                                </Typography>
                             </div>
                         )
                     })}

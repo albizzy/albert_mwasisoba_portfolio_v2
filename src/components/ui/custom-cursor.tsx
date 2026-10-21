@@ -53,7 +53,16 @@ function resolveTarget(element: Element | null): CursorTarget {
     if (!element) return fallback
     if (element.closest(HIDDEN_SELECTOR))
         return { ...fallback, state: 'hidden' }
-    if (element.closest(TEXT_SELECTOR)) return { ...fallback, state: 'text' }
+
+    const textTarget = element.closest<HTMLElement>(TEXT_SELECTOR)
+    if (textTarget) {
+        const isInvalid = textTarget.getAttribute('aria-invalid') === 'true'
+        return {
+            ...fallback,
+            state: 'text',
+            tone: isInvalid ? 'pink' : 'blue',
+        }
+    }
 
     const interactive = element.closest<HTMLElement>(INTERACTIVE_SELECTOR)
     if (!interactive) return fallback
@@ -264,6 +273,18 @@ export function CustomCursor() {
                     <path
                         className={styles.arrowShape}
                         d="M4.5 3.2 19.6 10.4c.8.4.7 1.5-.1 1.8l-6.1 1.9c-.3.1-.5.3-.6.6l-2.2 5.9c-.3.8-1.4.8-1.7 0L3.4 4.3c-.3-.7.4-1.4 1.1-1.1Z"
+                    />
+                </svg>
+                <svg
+                    className={styles.caret}
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    focusable="false"
+                >
+                    <path
+                        className={styles.caretShape}
+                        d="M8.5 4h7a1.25 1.25 0 0 1 0 2.5h-2.25v11h2.25a1.25 1.25 0 0 1 0 2.5h-7a1.25 1.25 0 0 1 0-2.5h2.25v-11H8.5a1.25 1.25 0 0 1 0-2.5Z"
                     />
                 </svg>
             </div>

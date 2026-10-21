@@ -21,15 +21,14 @@ export function NavItem({
     const active = isActive(pathname, href.toString())
 
     const baseClass =
-        'w-fit group relative flex items-center gap-2 overflow-hidden rounded-4xl p-4'
+        'w-full group relative flex items-center justify-between gap-3 overflow-hidden rounded-2xl px-4 py-3'
 
-    const transitionClass =
-        'transition-colors duration-300 ease-in-out hover:text-neutral'
+    const transitionClass = 'transition-colors duration-200 ease-out'
 
     const backgroundClass =
         type === 'nav'
-            ? 'bg-transparent hover:bg-accent/20'
-            : 'bg-transparent hover:bg-accent/5'
+            ? 'bg-transparent hover:bg-white/8'
+            : 'bg-transparent hover:bg-white/5'
 
     return (
         <Link
@@ -43,9 +42,13 @@ export function NavItem({
             )}
             {...rest}
         >
-            <span className="w-full relative z-10 text-2xl md:text-3xl font-normal tracking-tight">
+            <span className="relative z-10 text-xl md:text-2xl font-normal tracking-tight text-white/85 transition-colors group-hover:text-white group-aria-[current]:font-semibold group-aria-[current]:text-(--editorial-yellow)">
                 {children}
             </span>
+            <span
+                aria-hidden="true"
+                className="size-2 rounded-full bg-(--editorial-yellow) opacity-0 scale-75 transition-all duration-200 group-hover:opacity-60 group-aria-[current]:opacity-100 group-aria-[current]:scale-100"
+            />
         </Link>
     )
 }

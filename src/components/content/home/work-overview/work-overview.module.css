@@ -1,33 +1,41 @@
 .section {
     --stack-top: 112px;
-    --folder-tab-height: clamp(48px, 4.4vw, 72px);
+    --folder-tab-height: clamp(48px, 4.4vw, 68px);
     --folder-step: 21%;
-    --folder-padding: clamp(24px, 3.4vw, 56px);
+    --folder-padding: clamp(24px, 3.4vw, 52px);
+    padding-block: var(--section-padding-y);
 }
 
 .heading {
-    margin: 0 auto 72px;
-    padding: 0 24px;
+    max-width: var(--container-max);
+    margin: 0 auto clamp(3rem, 5vw, 4.5rem);
+    padding-inline: var(--section-padding-x);
     text-align: center;
 }
 
 .eyebrow {
-    margin-bottom: 16px;
-    letter-spacing: 0.2em;
+    margin-bottom: 0.5rem;
+    color: var(--editorial-muted);
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: var(--editorial-weight-heading);
+    letter-spacing: 0.01em;
+    line-height: 1.2;
 }
 
 .heading h2 {
-    font-size: clamp(40px, 6vw, 88px);
+    color: var(--editorial-ink);
+    font-size: clamp(2.25rem, 4.8vw, 4.25rem);
     font-weight: var(--editorial-weight-heading);
-    line-height: 1.05;
-    letter-spacing: -0.05em;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
 }
 
 .stack {
-    margin-inline: clamp(12px, 2vw, 40px);
+    width: min(calc(100% - 2 * var(--section-padding-x)), var(--container-max));
+    margin-inline: auto;
     display: flex;
     flex-direction: column;
-    gap: clamp(64px, 8vw, 128px);
+    gap: clamp(4rem, 8vw, 7.5rem);
 }
 
 .card {
@@ -86,10 +94,10 @@
     padding-inline: var(--folder-tab-height);
     background: var(--folder-color);
     border-radius: var(--editorial-radius-tab) var(--editorial-radius-tab) 0 0;
-    font-size: clamp(11px, 1vw, 16px);
+    font-size: clamp(0.6875rem, 0.9vw, 0.875rem);
     font-weight: var(--editorial-weight-label);
-    line-height: 1.5;
-    letter-spacing: 0.2em;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     white-space: nowrap;
 }
@@ -114,11 +122,12 @@
     min-height: clamp(
         420px,
         calc(100svh - var(--stack-top) - var(--folder-tab-height) - 24px),
-        727px
+        680px
     );
     padding: var(--folder-padding);
     background: var(--folder-color);
-    border-radius: 0 0 24px 24px;
+    border-radius: 0 0 var(--editorial-radius-panel)
+        var(--editorial-radius-panel);
 }
 
 .content {
@@ -131,53 +140,56 @@
 .meta {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: var(--editorial-text-label);
+    gap: 10px;
+    font-size: var(--editorial-text-small);
     font-weight: var(--editorial-weight-label);
-    line-height: 20px;
-    letter-spacing: 0.2em;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
 .meta > span {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: currentColor;
 }
 
 .title {
-    margin-top: 24px;
-    font-size: clamp(32px, 4.35vw, 72px);
+    margin-top: 1.25rem;
+    font-size: clamp(1.875rem, 3.4vw, 3.5rem);
     font-weight: var(--editorial-weight-heading);
-    line-height: 1;
-    letter-spacing: -0.025em;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
 }
 
 .description {
-    max-width: 512px;
-    margin-top: 20px;
-    font-size: clamp(15px, 1.1vw, 18px);
-    line-height: 1.625;
-    opacity: 0.9;
+    max-width: 50ch;
+    margin-top: 1.25rem;
+    font-size: clamp(0.9375rem, 1.02vw, 1.0625rem);
+    font-weight: var(--editorial-weight-body);
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    opacity: 0.92;
 }
 
 .link {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin-top: 32px;
+    margin-top: 1.75rem;
     padding-bottom: 4px;
     border-bottom: 2px solid currentColor;
-    font-size: var(--editorial-text-label);
-    font-weight: var(--editorial-weight-label);
-    line-height: 20px;
-    letter-spacing: 0.2em;
+    font-size: var(--editorial-text-small);
+    font-weight: var(--editorial-weight-heading);
+    line-height: 1.4;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
+    transition: opacity 180ms ease;
 }
 
 .link:hover {
-    opacity: 0.75;
+    opacity: 0.78;
 }
 
 .link:focus-visible {
@@ -187,18 +199,19 @@
 
 .tags {
     margin-top: auto;
-    padding-top: 24px;
+    padding-top: 1.5rem;
 }
 
 .tag {
     display: inline-block;
-    padding: 10px 16px 8px;
+    padding: 0.45rem 0.85rem;
     background: var(--folder-ink);
     color: var(--tag-ink);
     border-radius: var(--editorial-radius-tag);
-    font-size: clamp(12px, 1vw, 16px);
+    font-size: var(--editorial-text-micro);
     font-weight: var(--editorial-weight-label);
-    line-height: 24px;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
     text-transform: uppercase;
 }
 

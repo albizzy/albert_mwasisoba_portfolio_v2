@@ -3,7 +3,6 @@
 import { memo } from 'react'
 import type { WorkItem } from '@/config'
 import Image from 'next/image'
-import { WorkTags } from '@/components/content/home/work-overview/work-tags'
 import { cn } from '@/lib/utils'
 import styles from './work-overview.module.css'
 
@@ -19,8 +18,10 @@ export const WorkPreview = memo(function WorkPreview({
     return (
         <div
             className={cn(
-                'relative w-full overflow-hidden bg-muted contain-[layout_paint]',
-                isFolder ? styles.previewFrame : 'aspect-video rounded-4xl'
+                'relative w-full overflow-hidden bg-(--editorial-paper) contain-[layout_paint]',
+                isFolder
+                    ? styles.previewFrame
+                    : 'aspect-video rounded-2xl border-2 border-(--editorial-ink)'
             )}
         >
             <div
@@ -53,15 +54,6 @@ export const WorkPreview = memo(function WorkPreview({
                     className="object-cover"
                 />
             </div>
-            {!isFolder && (
-                <>
-                    <div className="pointer-events-none absolute inset-0 rounded-4xl bg-linear-to-t from-black/20 via-transparent to-black/10" />
-                    <div className="pointer-events-none absolute top-6 left-6 flex flex-row gap-2">
-                        <WorkTags items={work.types} />
-                        <WorkTags items={work.services} rounded />
-                    </div>
-                </>
-            )}
         </div>
     )
 })

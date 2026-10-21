@@ -21,8 +21,10 @@ export function WorkTags({
                         variant === 'folder'
                             ? styles.tag
                             : cn(
-                                  'work-pill w-fit bg-muted-foreground/40 p-2 text-xs text-white backdrop-blur-sm',
-                                  rounded ? 'rounded-full' : 'rounded-lg'
+                                  'work-pill inline-flex w-fit items-center border border-(--editorial-line) bg-(--editorial-surface) px-2.5 py-1 text-xs font-medium uppercase tracking-[0.08em] text-(--editorial-ink)',
+                                  rounded
+                                      ? 'rounded-full'
+                                      : 'rounded-[5px_10px_5px_5px]'
                               )
                     }
                 >

@@ -409,7 +409,11 @@ export function AppHeader() {
                         }
                         className={'hidden sm:inline-block pointer-events-none'}
                     >
-                        <Typography as={'span'} variant={'lead'}>
+                        <Typography
+                            as={'span'}
+                            variant={'caption'}
+                            className="uppercase tracking-[0.12em] font-medium text-(--editorial-muted)"
+                        >
                             {dynamicLabel}
                         </Typography>
                     </span>
@@ -424,9 +428,9 @@ export function AppHeader() {
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={toggleMenu}
-                        className={`p-4 size-16 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${styles.menuButton} ${isOpen ? styles.menuButtonOpen : ''}`}
+                        className={`p-4 size-14 sm:size-15 flex items-center justify-center cursor-pointer z-50 transition-colors duration-300 relative focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground ${styles.menuButton} ${isOpen ? styles.menuButtonOpen : ''}`}
                     >
-                        <Plus size={32} strokeWidth={'3'} />
+                        <Plus size={28} strokeWidth={2.5} />
                     </button>
 
                     <div
@@ -486,27 +490,20 @@ export function AppHeader() {
                                 ))}
                         </div>
 
-                        <div className="flex flex-col gap-4 pl-4">
+                        <div className="flex flex-col gap-5 pl-3 pt-4 border-t border-white/10">
                             <Button
                                 asChild
-                                className="h-auto rounded-full px-4 py-6"
+                                className={`px-6 py-3.5 ${styles.bookButton}`}
                             >
                                 <Link href="/schedule" onClick={closeMenu}>
                                     Book a call
                                 </Link>
                             </Button>
 
-                            <div className="flex flex-row justify-between gap-4 text-neutral-500 pr-2 pb-2">
-                                <div className="flex flex-col gap-2.5 hidden">
-                                    <Link
-                                        href="/playground"
-                                        onClick={closeMenu}
-                                        className="text-base text-neutral-500 hover:text-neutral-300 transition-colors w-fit"
-                                    >
-                                        Playground
-                                    </Link>
-                                </div>
-
+                            <div className="flex flex-row items-center justify-between gap-4 text-white/60 pr-2 pb-1">
+                                <span className="text-xs font-medium uppercase tracking-[0.12em] text-white/45">
+                                    Elsewhere
+                                </span>
                                 <SocialLinks className="flex flex-row gap-4" />
                             </div>
                         </div>

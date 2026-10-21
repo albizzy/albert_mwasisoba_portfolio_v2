@@ -25,10 +25,14 @@ export default function SchedulePage() {
             <div className={styles.inner}>
                 <header className={styles.hero}>
                     <div>
+                        <p className={cn(styles.eyebrow, caveat.className)}>
+                            Book a session
+                        </p>
                         <Typography
                             as={'h1'}
                             variant={'h4'}
                             id="schedule-title"
+                            className={styles.heroTitle}
                         >
                             Let’s{' '}
                             <span
