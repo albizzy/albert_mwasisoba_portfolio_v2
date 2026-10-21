@@ -98,6 +98,8 @@ export function CaseStudies() {
                                     href={repository}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    data-cursor-label="GitHub"
+                                    data-cursor-tone="ink"
                                 >
                                     <GithubBrandIcon /> View Source Code
                                     <ArrowUpRight aria-hidden="true" />
@@ -112,6 +114,8 @@ export function CaseStudies() {
                                 href={auditUrl}
                                 target="_blank"
                                 rel="noopener noreferrer"
+                                data-cursor-label="PageSpeed"
+                                data-cursor-tone="green"
                             >
                                 Live Performance Audit{' '}
                                 <ArrowUpRight size={16} aria-hidden="true" />

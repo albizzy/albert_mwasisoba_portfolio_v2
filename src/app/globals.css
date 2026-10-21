@@ -137,3 +137,30 @@
         @apply bg-background text-foreground;
     }
 }
+
+html.custom-cursor-active,
+html.custom-cursor-active * {
+    cursor: none !important;
+}
+
+html.custom-cursor-active
+    :is(
+        input:not(
+            [type='button'],
+            [type='checkbox'],
+            [type='color'],
+            [type='file'],
+            [type='hidden'],
+            [type='image'],
+            [type='radio'],
+            [type='range'],
+            [type='reset'],
+            [type='submit']
+        ),
+        textarea,
+        [contenteditable=''],
+        [contenteditable='true'],
+        iframe
+    ) {
+    cursor: auto !important;
+}

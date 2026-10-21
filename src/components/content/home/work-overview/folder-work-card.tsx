@@ -55,6 +55,8 @@ export function FolderWorkCard({
                         rel="noopener noreferrer"
                         className={styles.link}
                         aria-label={`View ${work.title} project (opens in a new tab)`}
+                        data-cursor-label="Visit site"
+                        data-cursor-tone={index % 4 < 2 ? 'yellow' : 'ink'}
                     >
                         View project
                         <Image

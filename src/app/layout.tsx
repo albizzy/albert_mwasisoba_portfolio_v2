@@ -4,6 +4,7 @@ import './globals.css'
 import { SmoothScrolling, ThemeProvider } from '@/providers'
 import React from 'react'
 import { siteConfig } from '@/config'
+import { CustomCursor } from '@/components/ui/custom-cursor'
 
 const unboundedSans = Unbounded({
     subsets: ['latin'],
@@ -72,6 +73,7 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <SmoothScrolling>{children}</SmoothScrolling>
+                    <CustomCursor />
                 </ThemeProvider>
             </body>
         </html>

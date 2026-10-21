@@ -220,6 +220,8 @@ export function AboutContent() {
                                 <li key={work.title}>
                                     <a
                                         className={styles.workLink}
+                                        data-cursor-label="Visit site"
+                                        data-cursor-tone="blue"
                                         href={work.link}
                                         target="_blank"
                                         rel="noopener noreferrer"
