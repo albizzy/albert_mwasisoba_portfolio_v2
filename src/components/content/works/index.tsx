@@ -1,41 +1,48 @@
-﻿'use client'
+'use client'
 
-import { Caveat } from 'next/font/google'
 import { Typography } from '@/components/ui/typography'
-import { works } from '@/config'
+import { works, type WorkItem } from '@/config'
+import { caveat } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { useState, useRef } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import { WorkCard } from '../home/work-overview/work-card'
 import { Section } from '../sections'
+import { FilterChip } from './filter-chip'
 
 gsap.registerPlugin(useGSAP)
 
-const caveat = Caveat({
-    subsets: ['latin'],
-    variable: '--font-caveat',
-    display: 'swap',
-})
+const ALL_FILTER = 'All'
+
+interface FilterGroup {
+    id: string
+    select: (work: WorkItem) => ReadonlyArray<string>
+}
+
+// Each group adds a row of filter chips drawn from the works config, and a
+// work matches when the selected value appears in any group.
+const filterGroups: ReadonlyArray<FilterGroup> = [
+    { id: 'services', select: (work) => work.services },
+    { id: 'types', select: (work) => work.types },
+]
+
+const filterOptions = filterGroups.map(({ id, select }) => ({
+    id,
+    options: Array.from(new Set(works.flatMap(select))),
+}))
+
+const matchesFilter = (work: WorkItem, filter: string) =>
+    filter === ALL_FILTER ||
+    filterGroups.some(({ select }) => select(work).includes(filter))
 
 export function WorksContent() {
-    const [activeFilter, setActiveFilter] = useState('All')
+    const [activeFilter, setActiveFilter] = useState(ALL_FILTER)
     const containerRef = useRef<HTMLDivElement>(null)
 
-    const allServices = Array.from(new Set(works.flatMap((w) => w.services)))
-    const allTypes = Array.from(new Set(works.flatMap((w) => w.types)))
-
-    const handleFilterSelect = (filter: string) => {
-        setActiveFilter(filter)
-    }
-
-    const filteredWorks = works.filter((work) => {
-        if (activeFilter === 'All') return true
-        return (
-            work.services.includes(activeFilter) ||
-            work.types.includes(activeFilter)
-        )
-    })
+    const filteredWorks = works.filter((work) =>
+        matchesFilter(work, activeFilter)
+    )
 
     useGSAP(
         () => {
@@ -112,56 +119,26 @@ export function WorksContent() {
                         role="group"
                         aria-label="Filter projects"
                     >
-                        <button
-                            type="button"
-                            onClick={() => handleFilterSelect('All')}
-                            aria-pressed={activeFilter === 'All'}
-                            className={cn(
-                                'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
-                                activeFilter === 'All'
-                                    ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                    : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
-                            )}
-                        >
-                            All Projects
-                        </button>
+                        <FilterChip
+                            label="All Projects"
+                            active={activeFilter === ALL_FILTER}
+                            onSelect={() => setActiveFilter(ALL_FILTER)}
+                        />
 
-                        {allServices.map((service) => (
-                            <button
-                                key={service}
-                                type="button"
-                                onClick={() => handleFilterSelect(service)}
-                                aria-pressed={activeFilter === service}
-                                className={cn(
-                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
-                                    activeFilter === service
-                                        ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                        : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
+                        {filterOptions.map(({ id, options }, groupIndex) => (
+                            <Fragment key={id}>
+                                {groupIndex > 0 && options.length > 0 && (
+                                    <div className="hidden sm:block h-5 w-px bg-editorial-line mx-1" />
                                 )}
-                            >
-                                {service}
-                            </button>
-                        ))}
-
-                        {allTypes.length > 0 && (
-                            <div className="hidden sm:block h-5 w-px bg-editorial-line mx-1" />
-                        )}
-
-                        {allTypes.map((type) => (
-                            <button
-                                key={type}
-                                type="button"
-                                onClick={() => handleFilterSelect(type)}
-                                aria-pressed={activeFilter === type}
-                                className={cn(
-                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
-                                    activeFilter === type
-                                        ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                        : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
-                                )}
-                            >
-                                {type}
-                            </button>
+                                {options.map((option) => (
+                                    <FilterChip
+                                        key={option}
+                                        label={option}
+                                        active={activeFilter === option}
+                                        onSelect={() => setActiveFilter(option)}
+                                    />
+                                ))}
+                            </Fragment>
                         ))}
                     </div>
                 </div>

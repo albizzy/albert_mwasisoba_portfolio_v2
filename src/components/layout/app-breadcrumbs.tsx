@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
+import { routes } from '@/config'
 import { formatSegment } from '@/helpers'
 import {
     Breadcrumb,
@@ -32,7 +33,7 @@ export function AppBreadcrumbs() {
             <BreadcrumbList>
                 <BreadcrumbItem>
                     <BreadcrumbLink asChild>
-                        <Link href="/">Home</Link>
+                        <Link href={routes.home}>Home</Link>
                     </BreadcrumbLink>
                 </BreadcrumbItem>
 

@@ -19,6 +19,24 @@
     margin-inline: auto;
 }
 
+/* Tones: an element opts in with data-tone and reads --tone / --tone-ink.
+   Add a tone with one block; highlights, hero notes, panels and meeting
+   cards all pick it up. */
+.page [data-tone='yellow'] {
+    --tone: var(--editorial-yellow);
+    --tone-ink: var(--page-ink);
+}
+
+.page [data-tone='pink'] {
+    --tone: var(--editorial-pink);
+    --tone-ink: var(--page-ink);
+}
+
+.page [data-tone='blue'] {
+    --tone: var(--editorial-blue);
+    --tone-ink: var(--editorial-surface);
+}
+
 .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.5fr);
@@ -65,22 +83,10 @@
     display: inline-block;
     padding: 0.04em 0.16em 0.08em;
     border-radius: 0.14em 0.36em 0.14em 0.14em;
-    color: var(--page-ink);
+    background: var(--tone, var(--editorial-yellow));
+    color: var(--tone-ink, var(--page-ink));
     line-height: 0.98;
     transform: rotate(-2deg);
-}
-
-.highlightYellow {
-    background: var(--editorial-yellow);
-}
-
-.highlightPink {
-    background: var(--editorial-pink);
-}
-
-.highlightBlue {
-    background: var(--editorial-blue);
-    color: var(--editorial-surface);
 }
 
 .greeting {
@@ -124,18 +130,9 @@
     justify-self: end;
     padding: 1.5rem 1.75rem 1.875rem;
     box-shadow: 0 4px 12px rgb(var(--editorial-shadow-ink) / 14%);
-    background: var(--editorial-yellow);
-    color: var(--page-ink);
+    background: var(--tone, var(--editorial-yellow));
+    color: var(--tone-ink, var(--page-ink));
     transform: rotate(3.5deg);
-}
-
-.heroNote[data-tone='pink'] {
-    background: var(--editorial-pink);
-}
-
-.heroNote[data-tone='blue'] {
-    background: var(--editorial-blue);
-    color: var(--editorial-surface);
 }
 
 .heroNote::before {
@@ -284,15 +281,7 @@
     border-radius: 0 var(--editorial-radius-panel) var(--editorial-radius-panel)
         var(--editorial-radius-panel);
     background: var(--editorial-surface);
-    box-shadow: 8px 8px 0 var(--editorial-yellow);
-}
-
-.panelPink {
-    box-shadow: 8px 8px 0 var(--editorial-pink);
-}
-
-.panelBlue {
-    box-shadow: 8px 8px 0 var(--editorial-blue);
+    box-shadow: 8px 8px 0 var(--tone, var(--editorial-yellow));
 }
 
 .panelHeader {
@@ -594,18 +583,14 @@
     border: 2px solid var(--page-ink);
     border-radius: 1.25rem;
     outline: none;
-    background: var(--editorial-yellow);
+    background: var(--tone, var(--editorial-yellow));
     box-shadow: 5px 5px 0 var(--page-ink);
-    color: var(--page-ink);
+    color: var(--tone-ink, var(--page-ink));
     text-align: left;
     cursor: pointer;
     transition:
         transform 180ms ease,
         box-shadow 180ms ease;
-}
-
-.meetingCard[data-tone='pink'] {
-    background: var(--editorial-pink);
 }
 
 .meetingCard:hover:not(:disabled) {
@@ -932,15 +917,7 @@
 
     .panel {
         padding: 1.5rem;
-        box-shadow: 5px 5px 0 var(--editorial-yellow);
-    }
-
-    .panelPink {
-        box-shadow: 5px 5px 0 var(--editorial-pink);
-    }
-
-    .panelBlue {
-        box-shadow: 5px 5px 0 var(--editorial-blue);
+        box-shadow: 5px 5px 0 var(--tone, var(--editorial-yellow));
     }
 
     .meetingCard {

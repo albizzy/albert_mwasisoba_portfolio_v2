@@ -14,131 +14,96 @@ export type RevealDirection = 'up' | 'down' | 'left' | 'right' | 'center'
 
 export type RevealPreset = RevealEffect | `${RevealEffect}-${RevealDirection}`
 
+/** How a direction shapes each effect. Add a direction by adding a profile. */
+interface DirectionProfile {
+    offset: (distance: number) => gsap.TweenVars
+    transformOrigin: string
+    clipPath: string
+    rotation: (amount: number) => gsap.TweenVars
+    skew: (amount: number) => gsap.TweenVars
+}
+
+const directionProfiles: Record<RevealDirection, DirectionProfile> = {
+    up: {
+        offset: (distance) => ({ y: distance }),
+        transformOrigin: 'center bottom',
+        clipPath: 'inset(100% 0 0 0)',
+        rotation: (amount) => ({ rotationX: -amount }),
+        skew: (amount) => ({ skewY: -amount }),
+    },
+    down: {
+        offset: (distance) => ({ y: -distance }),
+        transformOrigin: 'center top',
+        clipPath: 'inset(0 0 100% 0)',
+        rotation: (amount) => ({ rotationX: amount }),
+        skew: (amount) => ({ skewY: amount }),
+    },
+    left: {
+        offset: (distance) => ({ x: distance }),
+        transformOrigin: 'right center',
+        clipPath: 'inset(0 100% 0 0)',
+        rotation: (amount) => ({ rotationY: -amount }),
+        skew: (amount) => ({ skewX: amount }),
+    },
+    right: {
+        offset: (distance) => ({ x: -distance }),
+        transformOrigin: 'left center',
+        clipPath: 'inset(0 0 0 100%)',
+        rotation: (amount) => ({ rotationY: amount }),
+        skew: (amount) => ({ skewX: -amount }),
+    },
+    center: {
+        offset: () => ({}),
+        transformOrigin: 'center center',
+        clipPath: 'inset(50% 50% 50% 50%)',
+        rotation: (amount) => ({ rotation: -amount }),
+        skew: (amount) => ({ skewX: amount }),
+    },
+}
+
+/** Builds an effect's starting state. Add an effect by adding a resolver. */
 type PresetResolver = (
-    direction: RevealDirection,
-    distance: number
+    profile: DirectionProfile,
+    distance: number,
+    direction: RevealDirection
 ) => gsap.TweenVars
 
-const getOffset = (
-    direction: RevealDirection,
-    distance: number
-): gsap.TweenVars => {
-    switch (direction) {
-        case 'up':
-            return { y: distance }
-        case 'down':
-            return { y: -distance }
-        case 'left':
-            return { x: distance }
-        case 'right':
-            return { x: -distance }
-        default:
-            return {}
-    }
-}
-
-const getTransformOrigin = (direction: RevealDirection) => {
-    switch (direction) {
-        case 'up':
-            return 'center bottom'
-        case 'down':
-            return 'center top'
-        case 'left':
-            return 'right center'
-        case 'right':
-            return 'left center'
-        default:
-            return 'center center'
-    }
-}
-
-const getClipPath = (direction: RevealDirection) => {
-    switch (direction) {
-        case 'up':
-            return 'inset(100% 0 0 0)'
-        case 'down':
-            return 'inset(0 0 100% 0)'
-        case 'left':
-            return 'inset(0 100% 0 0)'
-        case 'right':
-            return 'inset(0 0 0 100%)'
-        default:
-            return 'inset(50% 50% 50% 50%)'
-    }
-}
-
-const getAxisRotation = (
-    direction: RevealDirection,
-    amount: number
-): gsap.TweenVars => {
-    switch (direction) {
-        case 'up':
-            return { rotationX: -amount }
-        case 'down':
-            return { rotationX: amount }
-        case 'left':
-            return { rotationY: -amount }
-        case 'right':
-            return { rotationY: amount }
-        default:
-            return { rotation: -amount }
-    }
-}
-
-const getSkew = (
-    direction: RevealDirection,
-    amount: number
-): gsap.TweenVars => {
-    switch (direction) {
-        case 'up':
-            return { skewY: -amount }
-        case 'down':
-            return { skewY: amount }
-        case 'left':
-            return { skewX: amount }
-        case 'right':
-            return { skewX: -amount }
-        default:
-            return { skewX: amount }
-    }
-}
-
 const presetResolvers: Record<RevealEffect, PresetResolver> = {
-    fade: (direction, distance) => ({
+    fade: (profile, distance) => ({
         autoAlpha: 0,
-        ...getOffset(direction, distance),
+        ...profile.offset(distance),
     }),
-    slide: (direction, distance) => ({
-        ...getOffset(direction, distance),
+    slide: (profile, distance, direction) => ({
+        ...profile.offset(distance),
         ...(direction === 'center' ? { scale: 0.96 } : {}),
     }),
-    scale: (direction) => ({
+    scale: (profile) => ({
         scale: 0.88,
-        transformOrigin: getTransformOrigin(direction),
+        transformOrigin: profile.transformOrigin,
     }),
-    skew: (direction, distance) => ({
-        ...getOffset(direction, distance * 0.75),
-        ...getSkew(direction, 7),
-        transformOrigin: getTransformOrigin(direction),
+    skew: (profile, distance) => ({
+        ...profile.offset(distance * 0.75),
+        ...profile.skew(7),
+        transformOrigin: profile.transformOrigin,
     }),
-    clip: (direction) => ({
-        clipPath: getClipPath(direction),
+    clip: (profile) => ({
+        clipPath: profile.clipPath,
     }),
-    rotate: (direction, distance) => ({
-        ...getOffset(direction, distance * 0.4),
-        ...getAxisRotation(direction, 10),
-        transformOrigin: getTransformOrigin(direction),
+    rotate: (profile, distance) => ({
+        ...profile.offset(distance * 0.4),
+        ...profile.rotation(10),
+        transformOrigin: profile.transformOrigin,
         transformPerspective: 800,
     }),
-    blur: (direction, distance) => ({
+    blur: (profile, distance) => ({
         autoAlpha: 0,
         filter: 'blur(14px)',
-        ...getOffset(direction, distance * 0.5),
+        ...profile.offset(distance * 0.5),
     }),
-    flip: (direction) => ({
+    flip: (profile) => ({
         autoAlpha: 0,
-        ...getAxisRotation(direction, 75),
-        transformOrigin: getTransformOrigin(direction),
+        ...profile.rotation(75),
+        transformOrigin: profile.transformOrigin,
         transformPerspective: 1000,
     }),
 }
@@ -152,9 +117,13 @@ export function getRevealPresetVars(
         RevealEffect,
         RevealDirection?,
     ]
+    const resolvedDirection = presetDirection ?? direction
+    const profile =
+        directionProfiles[resolvedDirection] ?? directionProfiles.center
 
     return presetResolvers[effect](
-        presetDirection ?? direction,
-        Math.abs(distance)
+        profile,
+        Math.abs(distance),
+        resolvedDirection
     )
 }

@@ -2,22 +2,26 @@
 
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
+import { REDUCED_MOTION_QUERY } from '@/lib/motion'
+import { isEditorialTone, type EditorialTone } from '@/lib/tones'
 import styles from './custom-cursor.module.css'
 
 type CursorState = 'default' | 'interactive' | 'text' | 'hidden'
 
-const CURSOR_TONES = ['ink', 'yellow', 'pink', 'blue', 'green'] as const
-type CursorTone = (typeof CURSOR_TONES)[number]
-
 interface CursorTarget {
     state: CursorState
     label: string
-    tone: CursorTone
+    tone: EditorialTone
 }
 
 const ACTIVE_CLASS = 'custom-cursor-active'
-const DEFAULT_TONE: CursorTone = 'yellow'
+const DEFAULT_TONE: EditorialTone = 'yellow'
 const SUPPORT_QUERY = '(any-pointer: fine) and (forced-colors: none)'
+const DEFAULT_TARGET: CursorTarget = {
+    state: 'default',
+    label: '',
+    tone: DEFAULT_TONE,
+}
 
 const INTERACTIVE_SELECTOR = [
     'a[href]',
@@ -41,38 +45,49 @@ const TEXT_SELECTOR = [
 
 const HIDDEN_SELECTOR = 'iframe, [data-cursor="none"]'
 
-const isCursorTone = (value: string | undefined): value is CursorTone =>
-    CURSOR_TONES.includes(value as CursorTone)
+interface CursorRule {
+    selector: string
+    resolve: (match: HTMLElement) => CursorTarget
+}
+
+// Checked in order against the element under the pointer; the first rule
+// with a matching ancestor wins. Add a cursor appearance by adding a rule.
+const CURSOR_RULES: ReadonlyArray<CursorRule> = [
+    {
+        selector: HIDDEN_SELECTOR,
+        resolve: () => ({ ...DEFAULT_TARGET, state: 'hidden' }),
+    },
+    {
+        selector: TEXT_SELECTOR,
+        resolve: (match) => ({
+            ...DEFAULT_TARGET,
+            state: 'text',
+            tone:
+                match.getAttribute('aria-invalid') === 'true' ? 'pink' : 'blue',
+        }),
+    },
+    {
+        selector: INTERACTIVE_SELECTOR,
+        resolve: (match) => {
+            const { cursorLabel, cursorTone } = match.dataset
+            return {
+                state: 'interactive',
+                label: cursorLabel?.trim() ?? '',
+                tone: isEditorialTone(cursorTone) ? cursorTone : DEFAULT_TONE,
+            }
+        },
+    },
+]
 
 function resolveTarget(element: Element | null): CursorTarget {
-    const fallback: CursorTarget = {
-        state: 'default',
-        label: '',
-        tone: DEFAULT_TONE,
-    }
-    if (!element) return fallback
-    if (element.closest(HIDDEN_SELECTOR))
-        return { ...fallback, state: 'hidden' }
+    if (!element) return DEFAULT_TARGET
 
-    const textTarget = element.closest<HTMLElement>(TEXT_SELECTOR)
-    if (textTarget) {
-        const isInvalid = textTarget.getAttribute('aria-invalid') === 'true'
-        return {
-            ...fallback,
-            state: 'text',
-            tone: isInvalid ? 'pink' : 'blue',
-        }
+    for (const rule of CURSOR_RULES) {
+        const match = element.closest<HTMLElement>(rule.selector)
+        if (match) return rule.resolve(match)
     }
 
-    const interactive = element.closest<HTMLElement>(INTERACTIVE_SELECTOR)
-    if (!interactive) return fallback
-
-    const { cursorLabel, cursorTone } = interactive.dataset
-    return {
-        state: 'interactive',
-        label: cursorLabel?.trim() ?? '',
-        tone: isCursorTone(cursorTone) ? cursorTone : DEFAULT_TONE,
-    }
+    return DEFAULT_TARGET
 }
 
 export function CustomCursor() {
@@ -90,9 +105,7 @@ export function CustomCursor() {
 
         const html = document.documentElement
         const support = window.matchMedia(SUPPORT_QUERY)
-        const reducedMotion = window.matchMedia(
-            '(prefers-reduced-motion: reduce)'
-        )
+        const reducedMotion = window.matchMedia(REDUCED_MOTION_QUERY)
 
         // The arrow tracks the pointer 1:1; only the label trails behind.
         const setArrowX = gsap.quickSetter(arrow, 'x', 'px')
@@ -113,11 +126,7 @@ export function CustomCursor() {
         let pointerY = 0
         let lastTarget: EventTarget | null = null
         let scrollFrame = 0
-        let current: CursorTarget = {
-            state: 'default',
-            label: '',
-            tone: DEFAULT_TONE,
-        }
+        let current: CursorTarget = DEFAULT_TARGET
 
         const apply = (next: CursorTarget) => {
             if (next.state !== current.state) root.dataset.state = next.state

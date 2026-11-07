@@ -1,11 +1,18 @@
 import { Blocks, Brush, Code, Compass, Handshake, Rocket } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import type { EditorialTone } from '@/lib/tones'
+
+export type ServicePillarTone = Extract<
+    EditorialTone,
+    'yellow' | 'blue' | 'green'
+>
 
 export interface ServicePillar {
     title: string
     description: string
     capabilities: ReadonlyArray<string>
     icon: LucideIcon
+    tone: ServicePillarTone
 }
 
 export interface ApproachStep {
@@ -29,6 +36,7 @@ export const servicePillars: ReadonlyArray<ServicePillar> = [
             'CI/CD Pipelines',
         ],
         icon: Blocks,
+        tone: 'yellow',
     },
     {
         title: 'Design & Branding',
@@ -43,6 +51,7 @@ export const servicePillars: ReadonlyArray<ServicePillar> = [
             'Motion Design',
         ],
         icon: Brush,
+        tone: 'blue',
     },
     {
         title: 'Web Development',
@@ -57,6 +66,7 @@ export const servicePillars: ReadonlyArray<ServicePillar> = [
             'Web Performance',
         ],
         icon: Code,
+        tone: 'green',
     },
 ]
 

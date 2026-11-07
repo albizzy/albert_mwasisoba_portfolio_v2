@@ -3,6 +3,8 @@
 import { useActionState, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { routes } from '@/config/routes'
+import { siteConfig } from '@/config/site'
 import { getReplyRecipient, submitBrandedReply } from '../actions'
 import { initialFormState, type FormState } from '../schema'
 import { FormField } from './form-field'
@@ -79,7 +81,7 @@ export function ReplyForm() {
                     email. Links expire after seven days. If a link has expired,
                     reply directly from your inbox.
                 </p>
-                <Link href="/">Back to the portfolio</Link>
+                <Link href={routes.home}>Back to the portfolio</Link>
             </div>
         )
 
@@ -112,9 +114,9 @@ export function ReplyForm() {
                         </summary>
                         <div className={styles.previewContent}>
                             <div className={styles.previewTop}>
-                                <strong>Albert Mwasisoba.</strong>
+                                <strong>{siteConfig.name}.</strong>
                                 <p className={styles.previewKicker}>
-                                    Consultant &amp; Engineer
+                                    {siteConfig.tagline}
                                 </p>
                             </div>
                             <div className={styles.previewBody}>

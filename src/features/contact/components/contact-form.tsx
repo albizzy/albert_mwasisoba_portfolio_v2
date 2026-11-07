@@ -4,8 +4,15 @@ import { useActionState, useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { routes } from '@/config/routes'
 import { submitContact } from '../actions'
-import { contactLimits, initialFormState, type FormState } from '../schema'
+import {
+    contactFields,
+    emptyContactValues,
+    initialFormState,
+    type ContactValues,
+    type FormState,
+} from '../schema'
 import { FormField } from './form-field'
 import { Turnstile } from './turnstile'
 import styles from '@/styles/correspondence.module.css'
@@ -22,7 +29,7 @@ export function ContactForm({
     const formRef = useRef<HTMLFormElement>(null)
     const feedbackRef = useRef<HTMLDivElement>(null)
     const submission = useRef<{ id: string; createdAt: number } | null>(null)
-    const [values, setValues] = useState({ name: '', email: '', message: '' })
+    const [values, setValues] = useState<ContactValues>(emptyContactValues)
     const [token, setToken] = useState('')
     const [attempt, setAttempt] = useState(0)
     const [state, action, pending] = useActionState(
@@ -77,7 +84,7 @@ export function ContactForm({
                     variant="outline"
                     className={styles.secondaryButton}
                 >
-                    <Link href="/schedule">
+                    <Link href={routes.schedule}>
                         Book a call <ArrowUpRight aria-hidden="true" />
                     </Link>
                 </Button>
@@ -95,55 +102,39 @@ export function ContactForm({
                 <legend className="sr-only">
                     Tell me what you’re building
                 </legend>
-                <FormField
-                    id="contact-name"
-                    name="name"
-                    label="Name"
-                    autoComplete="name"
-                    placeholder="Your name"
-                    required
-                    maxLength={contactLimits.name}
-                    value={values.name}
-                    onChange={(event) =>
-                        setValues({ ...values, name: event.target.value })
-                    }
-                    error={state.errors?.name}
-                />
-                <FormField
-                    id="contact-email"
-                    name="email"
-                    label="Email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="you@company.com"
-                    required
-                    maxLength={contactLimits.email}
-                    value={values.email}
-                    onChange={(event) =>
-                        setValues({ ...values, email: event.target.value })
-                    }
-                    error={state.errors?.email}
-                />
-                <div className={styles.fullWidth}>
-                    <FormField
-                        id="contact-message"
-                        name="message"
-                        label="Message"
-                        multiline
-                        placeholder="What are you working on, and how can I help?"
-                        required
-                        minLength={10}
-                        maxLength={contactLimits.message}
-                        value={values.message}
-                        onChange={(event) =>
-                            setValues({
-                                ...values,
-                                message: event.target.value,
-                            })
-                        }
-                        error={state.errors?.message}
-                    />
-                </div>
+                {contactFields.map((field) => {
+                    const control = (
+                        <FormField
+                            key={field.name}
+                            id={`contact-${field.name}`}
+                            name={field.name}
+                            label={field.label}
+                            type={field.type}
+                            autoComplete={field.autoComplete}
+                            multiline={field.multiline}
+                            placeholder={field.placeholder}
+                            required={field.required}
+                            minLength={field.minLength}
+                            maxLength={field.maxLength}
+                            value={values[field.name]}
+                            onChange={(event) =>
+                                setValues((current) => ({
+                                    ...current,
+                                    [field.name]: event.target.value,
+                                }))
+                            }
+                            error={state.errors?.[field.name]}
+                        />
+                    )
+
+                    return field.fullWidth ? (
+                        <div key={field.name} className={styles.fullWidth}>
+                            {control}
+                        </div>
+                    ) : (
+                        control
+                    )
+                })}
             </fieldset>
             <div className="hidden" aria-hidden="true">
                 <label htmlFor="contact-website">Leave this field empty</label>
@@ -170,7 +161,7 @@ export function ContactForm({
                                 Email me directly
                             </a>
                         ) : (
-                            <Link href="/schedule">
+                            <Link href={routes.schedule}>
                                 Check call availability
                             </Link>
                         )}

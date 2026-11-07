@@ -1,21 +1,22 @@
 'use client'
 
-import type { ComponentType, SVGProps } from 'react'
 import {
+    type BrandIcon,
     FigmaBrandIcon,
     NextjsBrandIcon,
     TailwindCssBrandIcon,
     TypescriptBrandIcon,
 } from '@/components/ui/brand-icons'
+import type { EditorialTone } from '@/lib/tones'
 import type { FloatingSkillMotion } from './hooks'
 import styles from './hero-section.module.css'
 
 export interface HeroSkillBubble {
     id: string
     label: string
-    tone: 'yellow' | 'blue' | 'green' | 'pink'
+    tone: Exclude<EditorialTone, 'ink'>
     position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-    icon: ComponentType<SVGProps<SVGSVGElement>>
+    icon: BrandIcon
     motion: FloatingSkillMotion
 }
 

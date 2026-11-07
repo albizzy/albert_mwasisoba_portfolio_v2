@@ -11,7 +11,7 @@ import ArtworkImage from '@/assets/images/bizzy_scribble.png'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { siteConfig } from '@/config'
+import { siteConfig, routes } from '@/config'
 import styles from './app-footer.module.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -111,7 +111,7 @@ export function AppFooter() {
                                 Ready to move forward? Let’s work together.
                             </Typography>
                             <Button asChild variant="editorial" size="pill">
-                                <Link href="/contact">
+                                <Link href={routes.contact}>
                                     Start a conversation
                                 </Link>
                             </Button>

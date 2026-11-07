@@ -1,19 +1,13 @@
 import type { Metadata } from 'next'
 import { AboutContent } from '@/components/content/about'
+import { routes } from '@/config'
+import { createPageMetadata } from '@/lib/metadata'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
     title: 'About',
     description: 'How I solve complex architectural and business challenges.',
-    alternates: {
-        canonical: '/about',
-    },
-    openGraph: {
-        title: 'About',
-        description:
-            'How I solve complex architectural and business challenges.',
-        url: '/about',
-    },
-}
+    path: routes.about,
+})
 
 export default function About() {
     return <AboutContent />

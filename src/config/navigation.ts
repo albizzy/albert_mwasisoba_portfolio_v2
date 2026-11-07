@@ -1,4 +1,5 @@
 import { Briefcase, LayoutGrid, LucideIcon, Send } from 'lucide-react'
+import { routes } from './routes'
 
 export type MainNavLink = {
     labelKey: string
@@ -7,17 +8,23 @@ export type MainNavLink = {
     icon?: LucideIcon
 }
 
+// The header menu renders these in order. Section links ('/#id') are
+// highlighted while their section is targeted; no header changes needed.
 export const mainNavigation: ReadonlyArray<MainNavLink> = [
     {
+        labelKey: 'Home',
+        href: routes.home,
+    },
+    {
         labelKey: 'About',
-        href: '/about',
+        href: routes.about,
         description:
             'How I solve complex architectural and business challenges.',
         icon: LayoutGrid,
     },
     {
         labelKey: 'Works',
-        href: '/#featured-work',
+        href: routes.featuredWork,
         description: 'Selected projects and the work behind them.',
         icon: Briefcase,
     },
@@ -29,7 +36,7 @@ export const mainNavigation: ReadonlyArray<MainNavLink> = [
     // },
     {
         labelKey: 'Contact',
-        href: '/contact',
+        href: routes.contact,
         description: 'Book a discovery call or start a project inquiry.',
         icon: Send,
     },

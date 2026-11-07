@@ -5,9 +5,18 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { routes } from '@/config/routes'
+import { cycle, toSequenceLabel } from '@/helpers'
+import type { EditorialTone } from '@/lib/tones'
 import { cn } from '@/lib/utils'
 import styles from '@/styles/correspondence.module.css'
 import type { MeetingType } from './types'
+
+// Meeting cards cycle through these tones (styled in correspondence.module.css).
+const MEETING_TONES = [
+    'yellow',
+    'pink',
+] as const satisfies ReadonlyArray<EditorialTone>
 
 const CalBooking = dynamic(
     () => import('./cal-booking').then((module) => module.CalBooking),
@@ -63,12 +72,11 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                                 disabled={!meeting.calLink}
                                 onClick={() => setSelected(meeting)}
                                 className={styles.meetingCard}
-                                data-tone={index % 2 === 1 ? 'pink' : 'yellow'}
+                                data-tone={cycle(MEETING_TONES, index)}
                             >
                                 <span className={styles.meetingTop}>
                                     <span className={styles.meetingIndex}>
-                                        Conversation /{' '}
-                                        {String(index + 1).padStart(2, '0')}
+                                        Conversation / {toSequenceLabel(index)}
                                     </span>
                                     <ArrowUpRight
                                         className={styles.meetingArrow}
@@ -103,7 +111,9 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                         ) : (
                             <>
                                 Online booking is being prepared.{' '}
-                                <Link href="/contact">Send me a message</Link>{' '}
+                                <Link href={routes.contact}>
+                                    Send me a message
+                                </Link>{' '}
                                 to arrange a conversation.
                             </>
                         )}

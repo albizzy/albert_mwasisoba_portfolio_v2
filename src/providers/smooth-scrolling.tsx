@@ -1,6 +1,7 @@
 'use client'
 
-import { ReactNode, useEffect, useRef } from 'react'
+import { ReactNode, useEffect, useMemo, useRef } from 'react'
+import type { LenisOptions } from 'lenis'
 import { ReactLenis, type LenisRef, useLenis } from 'lenis/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -10,8 +11,25 @@ if (typeof window !== 'undefined') {
     ScrollTrigger.config({ ignoreMobileResize: true })
 }
 
-export function SmoothScrolling({ children }: { children: ReactNode }) {
+const DEFAULT_LENIS_OPTIONS: LenisOptions = {
+    lerp: 0.1,
+    duration: 1.5,
+    smoothWheel: true,
+}
+
+interface SmoothScrollingProps {
+    children: ReactNode
+    /** Overrides for the default Lenis options. */
+    options?: LenisOptions
+}
+
+export function SmoothScrolling({ children, options }: SmoothScrollingProps) {
     const lenisRef = useRef<LenisRef>(null)
+    // GSAP's ticker drives Lenis below, so Lenis never runs its own RAF loop.
+    const lenisOptions = useMemo(
+        () => ({ ...DEFAULT_LENIS_OPTIONS, ...options, autoRaf: false }),
+        [options]
+    )
 
     useLenis(ScrollTrigger.update)
 
@@ -29,16 +47,7 @@ export function SmoothScrolling({ children }: { children: ReactNode }) {
     }, [])
 
     return (
-        <ReactLenis
-            ref={lenisRef}
-            root
-            options={{
-                lerp: 0.1,
-                duration: 1.5,
-                smoothWheel: true,
-                autoRaf: false,
-            }}
-        >
+        <ReactLenis ref={lenisRef} root options={lenisOptions}>
             {children}
         </ReactLenis>
     )

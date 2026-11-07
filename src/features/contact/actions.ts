@@ -1,12 +1,16 @@
 'use server'
 
 import { createHash } from 'node:crypto'
+import { routes } from '@/config/routes'
+import { siteConfig } from '@/config/site'
 import { brandedEmail } from './email-template'
 import { type FormState, readSubmission, validateContact } from './schema'
 import { getEmailConfig } from './server/config'
 import { createReplyToken, verifyReplyToken } from './server/reply-token'
 import { sendEmail } from './server/resend'
 import { verifyTurnstile } from './server/turnstile'
+
+const REPLY_LINK_LIFETIME_MS = 7 * 24 * 60 * 60 * 1000
 
 const digest = (value: string) =>
     createHash('sha256').update(value).digest('hex')
@@ -54,7 +58,7 @@ export async function submitContact(
             inquiryId: submission.id,
             name: values.name,
             email: values.email,
-            expiresAt: submission.createdAt + 7 * 24 * 60 * 60 * 1000,
+            expiresAt: submission.createdAt + REPLY_LINK_LIFETIME_MS,
         },
         config.replySecret
     )
@@ -64,7 +68,7 @@ export async function submitContact(
         message: values.message,
         action: {
             label: 'Reply with branding',
-            url: `${config.origin}/contact/reply#token=${token}`,
+            url: `${config.origin}${routes.contactReply}#token=${token}`,
         },
         origin: config.origin,
     })
@@ -96,7 +100,7 @@ export async function submitContact(
             message: 'Here’s a copy of your message:\n\n' + values.message,
             action: {
                 label: 'Book a conversation',
-                url: `${config.origin}/schedule`,
+                url: `${config.origin}${routes.schedule}`,
             },
             origin: config.origin,
         })
@@ -105,7 +109,7 @@ export async function submitContact(
                 ...acknowledgement,
                 to: values.email,
                 replyTo: config.to,
-                subject: 'Thanks for reaching out — Albert Mwasisoba',
+                subject: `Thanks for reaching out — ${siteConfig.name}`,
             },
             `contact-receipt-${key}`
         )
@@ -171,7 +175,7 @@ export async function submitBrandedReply(
                 ...email,
                 to: claims.email,
                 replyTo: config.to,
-                subject: 'Your portfolio inquiry — Albert Mwasisoba',
+                subject: `Your portfolio inquiry — ${siteConfig.name}`,
             },
             `contact-reply-${digest(token + '\n' + message.trim())}`
         )

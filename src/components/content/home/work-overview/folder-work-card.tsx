@@ -2,35 +2,53 @@ import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Typography } from '@/components/ui/typography'
+import { cycle, toSequenceLabel } from '@/helpers'
+import type { EditorialTone } from '@/lib/tones'
 import { WorkCardProps, WorkPreview } from './work-item'
 import { WorkTags } from './work-tags'
 import styles from './work-overview.module.css'
 import { cn } from '@/lib/utils'
 
+interface FolderTone {
+    tone: EditorialTone
+    /** Variant of the spark and arrow artwork that reads on this folder. */
+    icons: 'light' | 'dark'
+    cursorTone: EditorialTone
+}
+
+// Cards cycle through these folder colours. Add a tone here plus a matching
+// `.card[data-tone]` rule in work-overview.module.css.
+const FOLDER_TONES: ReadonlyArray<FolderTone> = [
+    { tone: 'blue', icons: 'light', cursorTone: 'yellow' },
+    { tone: 'ink', icons: 'light', cursorTone: 'yellow' },
+    { tone: 'yellow', icons: 'dark', cursorTone: 'ink' },
+    { tone: 'pink', icons: 'dark', cursorTone: 'ink' },
+]
+
 export function FolderWorkCard({
     work,
     index,
 }: WorkCardProps & { index: number }) {
-    const iconTone = index % 4 < 2 ? 'light' : 'dark'
+    const { tone, icons, cursorTone } = cycle(FOLDER_TONES, index)
 
     return (
         <article
             className={styles.card}
             data-work-card
-            data-tone={index % 4}
+            data-tone={tone}
             aria-labelledby={`featured-project-${index}`}
             style={{ '--card-index': index } as CSSProperties}
         >
             <div className={styles.tab}>
                 <Image
-                    src={`/images/work-overview/spark-${iconTone}.svg`}
+                    src={`/images/work-overview/spark-${icons}.svg`}
                     width={16}
                     height={16}
                     alt=""
                 />
                 <span>
                     <span className={cn(styles.tabLabel)}>Project </span>
-                    {String(index + 1).padStart(2, '0')}
+                    {toSequenceLabel(index)}
                 </span>
             </div>
             <div className={styles.body}>
@@ -56,11 +74,11 @@ export function FolderWorkCard({
                         className={styles.link}
                         aria-label={`View ${work.title} project (opens in a new tab)`}
                         data-cursor-label="Visit site"
-                        data-cursor-tone={index % 4 < 2 ? 'yellow' : 'ink'}
+                        data-cursor-tone={cursorTone}
                     >
                         View project
                         <Image
-                            src={`/images/work-overview/arrow-${iconTone}.svg`}
+                            src={`/images/work-overview/arrow-${icons}.svg`}
                             width={16}
                             height={16}
                             alt=""

@@ -23,14 +23,17 @@
 
 .page [data-tone='yellow'] {
     --section-color: var(--editorial-yellow);
+    --section-ink: var(--editorial-ink);
 }
 
 .page [data-tone='pink'] {
     --section-color: var(--editorial-pink);
+    --section-ink: var(--editorial-ink);
 }
 
 .page [data-tone='blue'] {
     --section-color: var(--editorial-blue);
+    --section-ink: var(--editorial-surface);
 }
 
 .navigation {
@@ -59,7 +62,7 @@
     border-radius: 14px;
     box-shadow: 3px 3px 0 var(--editorial-ink);
     background: var(--section-color);
-    color: var(--editorial-ink);
+    color: var(--section-ink, var(--editorial-ink));
     font-size: var(--editorial-text-micro);
     font-weight: var(--editorial-weight-label);
     text-transform: uppercase;
@@ -70,10 +73,6 @@
         padding 180ms ease,
         transform 180ms ease,
         box-shadow 180ms ease;
-}
-
-.tab[data-tone='blue'] {
-    color: var(--editorial-surface);
 }
 
 .tab:hover,
@@ -114,7 +113,7 @@
     border-bottom: 0;
     border-radius: var(--editorial-radius-tab) var(--editorial-radius-tab) 0 0;
     background: var(--section-color);
-    color: var(--editorial-ink);
+    color: var(--section-ink, var(--editorial-ink));
     font-size: var(--editorial-text-small);
     font-weight: var(--editorial-weight-label);
     line-height: 1.4;
@@ -125,10 +124,6 @@
 .sectionLabel:focus-visible {
     outline: 2px solid var(--editorial-blue);
     outline-offset: 5px;
-}
-
-.section[data-tone='blue'] .sectionLabel {
-    color: var(--editorial-surface);
 }
 
 .panel {

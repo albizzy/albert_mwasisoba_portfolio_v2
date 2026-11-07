@@ -62,7 +62,7 @@ CAL_COM_INTRO_PATH=your-username/intro
 CAL_COM_WORKING_SESSION_PATH=your-username/working-session
 ```
 
-The site has a themed conversation selector followed by Cal.com’s official embedded booking flow. Cal.com owns the live dates, slots, timezone conversion, attendee details, conflict checking, and confirmation. It is intentionally not a custom calendar with invented slots. The site does not report success before the provider confirms the booking. A direct calendar link remains available when embedding is blocked. Missing or malformed event paths disable the corresponding meeting card.
+The site has a themed conversation selector followed by Cal.com’s official embedded booking flow. Cal.com owns the live dates, slots, timezone conversion, attendee details, conflict checking, and confirmation. It is intentionally not a custom calendar with invented slots. The site does not report success before the provider confirms the booking. A direct calendar link remains available when embedding is blocked. Missing or malformed event paths disable the corresponding meeting card. To offer another conversation type, add an entry with its own environment variable to `meetingDefinitions` in `src/features/scheduling/config.ts`.
 
 Cal.com’s free individual plan supports multiple event types. Provider branding and booking-email customization remain subject to its plan; the Resend contact template does not replace Cal.com’s invitation emails. Account availability rules and connected calendars must be set up in Cal.com itself.
 

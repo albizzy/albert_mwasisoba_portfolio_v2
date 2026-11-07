@@ -8,13 +8,7 @@ import { getIndefiniteArticle } from '@/helpers'
 import { useFloatingSkills } from './hooks'
 import { HERO_SKILL_MOTIONS, SkillBubbles } from './skill-bubbles'
 import styles from './hero-section.module.css'
-import { Caveat } from 'next/font/google'
-
-export const caveat = Caveat({
-    subsets: ['latin'],
-    variable: '--font-caveat',
-    display: 'swap',
-})
+import { caveat } from '@/lib/fonts'
 
 const roles = siteConfig.roles.map((role) => ({
     text: role.title,

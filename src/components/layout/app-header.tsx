@@ -10,11 +10,13 @@ import React, {
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useLenis } from 'lenis/react'
-import { mainNavigation, siteConfig } from '@/config'
+import { mainNavigation, routes, siteConfig } from '@/config'
 import { AppLogo } from '@/components/layout/app-logo'
 import { Typography } from '@/components/ui/typography'
 import { Button } from '@/components/ui/button'
 import { SocialLinks } from '@/components/ui/social-links'
+import { getNavigationCurrent } from '@/helpers'
+import { scrollToTarget } from '@/lib/scroll'
 import { Plus } from 'lucide-react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
@@ -30,6 +32,24 @@ function subscribeToScroll(onChange: () => void) {
 
 const getScrolledSnapshot = () => window.scrollY > 0
 const getServerScrolledSnapshot = () => false
+
+// Menu label states. The label hides upward on the home page and slides
+// right elsewhere; both return a fresh object for each tween.
+const labelShown = (): gsap.TweenVars => ({
+    x: 0,
+    y: 0,
+    opacity: 1,
+    duration: 0.4,
+    ease: 'power3.out',
+})
+
+const labelHidden = (isHome: boolean): gsap.TweenVars => ({
+    x: isHome ? 0 : 15,
+    y: isHome ? -10 : 0,
+    opacity: 0,
+    duration: 0.3,
+    ease: 'power3.inOut',
+})
 
 export function AppHeader() {
     const headerRef = useRef<HTMLElement>(null)
@@ -51,6 +71,8 @@ export function AppHeader() {
     const lenis = useLenis()
     const isHome = pathname === '/'
     const isScrolled = !isHome && hasScrolled
+    // The label rests hidden on the home page and once other pages scroll.
+    const labelRevealsOnHover = isHome || isScrolled
 
     useEffect(() => {
         const footer = document.querySelector<HTMLElement>('[data-app-footer]')
@@ -98,51 +120,15 @@ export function AppHeader() {
 
     const handleMouseEnter = () => {
         contextSafe(() => {
-            if (isOpen) return
-            if (isHome) {
-                gsap.to(menuRef.current, {
-                    x: 0,
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: 'power3.out',
-                })
-            } else {
-                if (isScrolled) {
-                    gsap.to(menuRef.current, {
-                        x: 0,
-                        y: 0,
-                        opacity: 1,
-                        duration: 0.4,
-                        ease: 'power3.out',
-                    })
-                }
-            }
+            if (isOpen || !labelRevealsOnHover) return
+            gsap.to(menuRef.current, labelShown())
         })()
     }
 
     const handleMouseLeave = () => {
         contextSafe(() => {
-            if (isOpen) return
-            if (isHome) {
-                gsap.to(menuRef.current, {
-                    x: 0,
-                    y: -10,
-                    opacity: 0,
-                    duration: 0.3,
-                    ease: 'power3.inOut',
-                })
-            } else {
-                if (isScrolled) {
-                    gsap.to(menuRef.current, {
-                        x: 15,
-                        y: 0,
-                        opacity: 0,
-                        duration: 0.3,
-                        ease: 'power3.inOut',
-                    })
-                }
-            }
+            if (isOpen || !labelRevealsOnHover) return
+            gsap.to(menuRef.current, labelHidden(isHome))
         })()
     }
 
@@ -166,32 +152,14 @@ export function AppHeader() {
             const target = document.getElementById(id)
             if (!target) return false
 
-            const offset = -(headerRef.current?.offsetHeight ?? 96)
-            const reducedMotion = window.matchMedia(
-                '(prefers-reduced-motion: reduce)'
-            ).matches
-            const focusHeading = () => {
-                target.querySelector<HTMLElement>('h1, h2, h3')?.focus({
-                    preventScroll: true,
-                })
-            }
-
-            if (lenis) {
-                lenis.scrollTo(target, {
-                    offset,
-                    immediate: reducedMotion,
-                    onComplete: focusHeading,
-                })
-            } else {
-                window.scrollTo({
-                    top:
-                        window.scrollY +
-                        target.getBoundingClientRect().top +
-                        offset,
-                    behavior: reducedMotion ? 'instant' : 'smooth',
-                })
-                focusHeading()
-            }
+            scrollToTarget(target, {
+                lenis,
+                offset: -(headerRef.current?.offsetHeight ?? 96),
+                onComplete: () =>
+                    target.querySelector<HTMLElement>('h1, h2, h3')?.focus({
+                        preventScroll: true,
+                    }),
+            })
 
             return true
         },
@@ -252,17 +220,7 @@ export function AppHeader() {
                 window.history.pushState(null, '', destination)
             }
             setCurrentHash('')
-            const reducedMotion = window.matchMedia(
-                '(prefers-reduced-motion: reduce)'
-            ).matches
-            if (lenis) {
-                lenis.scrollTo(0, { immediate: reducedMotion })
-            } else {
-                window.scrollTo({
-                    top: 0,
-                    behavior: reducedMotion ? 'instant' : 'smooth',
-                })
-            }
+            scrollToTarget(0, { lenis })
             return
         }
 
@@ -307,11 +265,8 @@ export function AppHeader() {
 
             if (isOpen) {
                 gsap.to(menuRef.current, {
-                    x: isHome ? 0 : 15,
-                    y: isHome ? -10 : 0,
-                    opacity: 0,
+                    ...labelHidden(isHome),
                     duration: 0.2,
-                    ease: 'power3.inOut',
                 })
 
                 gsap.set(overlayRef.current, { display: 'flex' })
@@ -335,33 +290,10 @@ export function AppHeader() {
                     ease: 'power3.out',
                 })
             } else {
-                if (isHome) {
-                    gsap.to(menuRef.current, {
-                        x: 0,
-                        y: -10,
-                        opacity: 0,
-                        duration: 0.3,
-                        ease: 'power3.inOut',
-                    })
-                } else {
-                    if (isScrolled) {
-                        gsap.to(menuRef.current, {
-                            x: 15,
-                            y: 0,
-                            opacity: 0,
-                            duration: 0.3,
-                            ease: 'power3.inOut',
-                        })
-                    } else {
-                        gsap.to(menuRef.current, {
-                            x: 0,
-                            y: 0,
-                            opacity: 1,
-                            duration: 0.4,
-                            ease: 'power3.out',
-                        })
-                    }
-                }
+                gsap.to(
+                    menuRef.current,
+                    labelRevealsOnHover ? labelHidden(isHome) : labelShown()
+                )
 
                 gsap.to(overlayRef.current, {
                     clipPath: 'circle(0% at calc(100% - 40px) 40px)',
@@ -444,55 +376,38 @@ export function AppHeader() {
                         className={`absolute -top-2 -right-2 overflow-y-auto p-8 pt-24 pb-6 z-40 shadow-2xl flex flex-col justify-between gap-2 ${styles.navigationPanel}`}
                     >
                         <div className="flex flex-col gap-0 text-left pl-2">
-                            <NavItem
-                                href="/"
-                                aria-current={
-                                    isHome && currentHash !== '#featured-work'
-                                        ? 'page'
-                                        : undefined
-                                }
-                                onClick={(event) =>
-                                    handleNavigationClick(event, '/')
-                                }
-                            >
-                                Home
-                            </NavItem>
-                            {mainNavigation &&
-                                mainNavigation.map((navigationItem, index) => (
-                                    <NavItem
-                                        key={index}
-                                        href={navigationItem.href}
-                                        scroll={
-                                            navigationItem.href.includes('#')
-                                                ? false
-                                                : undefined
-                                        }
-                                        {...(navigationItem.href ===
-                                        '/#featured-work'
-                                            ? {
-                                                  'aria-current':
-                                                      isHome &&
-                                                      currentHash ===
-                                                          '#featured-work'
-                                                          ? 'location'
-                                                          : undefined,
-                                              }
-                                            : {})}
-                                        onClick={(event) =>
-                                            handleNavigationClick(
-                                                event,
-                                                navigationItem.href
-                                            )
-                                        }
-                                    >
-                                        {navigationItem.labelKey}
-                                    </NavItem>
-                                ))}
+                            {mainNavigation.map((navigationItem) => (
+                                <NavItem
+                                    key={navigationItem.href}
+                                    href={navigationItem.href}
+                                    scroll={
+                                        navigationItem.href.includes('#')
+                                            ? false
+                                            : undefined
+                                    }
+                                    aria-current={getNavigationCurrent(
+                                        navigationItem.href,
+                                        { pathname, hash: currentHash },
+                                        mainNavigation
+                                    )}
+                                    onClick={(event) =>
+                                        handleNavigationClick(
+                                            event,
+                                            navigationItem.href
+                                        )
+                                    }
+                                >
+                                    {navigationItem.labelKey}
+                                </NavItem>
+                            ))}
                         </div>
 
                         <div className="flex flex-col gap-5 pl-3 pt-4 border-t border-white/10">
                             <Button asChild variant="editorial" size="pill">
-                                <Link href="/schedule" onClick={closeMenu}>
+                                <Link
+                                    href={routes.schedule}
+                                    onClick={closeMenu}
+                                >
                                     Book a call
                                 </Link>
                             </Button>

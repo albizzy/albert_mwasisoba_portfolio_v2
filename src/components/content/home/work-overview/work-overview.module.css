@@ -64,17 +64,19 @@
     flex-shrink: 0;
 }
 
-.card[data-tone='1'] {
+/* Folder tones, keyed by the FOLDER_TONES ids in folder-work-card.tsx.
+   Blue is the .card default. */
+.card[data-tone='ink'] {
     --folder-color: var(--editorial-ink);
 }
 
-.card[data-tone='2'] {
+.card[data-tone='yellow'] {
     --folder-color: var(--editorial-yellow);
     --folder-ink: var(--editorial-ink);
     --tag-ink: var(--editorial-surface);
 }
 
-.card[data-tone='3'] {
+.card[data-tone='pink'] {
     --folder-color: var(--editorial-pink);
     --folder-ink: var(--editorial-ink);
     --tag-ink: var(--editorial-surface);

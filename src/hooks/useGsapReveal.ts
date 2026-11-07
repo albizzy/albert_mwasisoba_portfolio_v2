@@ -9,6 +9,7 @@ import {
     type RevealDirection,
     type RevealPreset,
 } from './gsap-reveal-presets'
+import { prefersReducedMotion } from '@/lib/motion'
 
 export type {
     RevealDirection,
@@ -48,10 +49,7 @@ export function useGsapReveal<T extends HTMLElement>(
 ) {
     useGSAP(
         () => {
-            if (
-                typeof window === 'undefined' ||
-                window.matchMedia('(prefers-reduced-motion: reduce)').matches
-            ) {
+            if (typeof window === 'undefined' || prefersReducedMotion()) {
                 return
             }
 

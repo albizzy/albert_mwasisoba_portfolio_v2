@@ -1,76 +1,48 @@
 import type { Metadata } from 'next'
-import { Caveat } from 'next/font/google'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
+import {
+    CorrespondenceHero,
+    CorrespondencePage,
+    CorrespondencePanel,
+} from '@/components/content/correspondence'
+import { routes } from '@/config'
 import { ReplyForm } from '@/features/contact/components/reply-form'
+import { createPageMetadata, withSiteName } from '@/lib/metadata'
 import styles from '@/styles/correspondence.module.css'
-import { Typography } from '@/components/ui/typography'
-import { cn } from '@/lib/utils'
 
 export const maxDuration = 60
-export const metadata: Metadata = {
-    title: 'Private Reply — Albert Mwasisoba',
+export const metadata: Metadata = createPageMetadata({
+    title: withSiteName('Private Reply'),
     robots: { index: false, follow: false, noarchive: true },
     referrer: 'no-referrer',
-}
-
-const caveat = Caveat({
-    subsets: ['latin'],
-    variable: '--font-caveat',
-    display: 'swap',
 })
 
 export default function ReplyPage() {
     return (
-        <main className={`${styles.page} ${styles.privatePage}`}>
-            <div className={`${styles.inner} ${styles.replyShell}`}>
-                <Link href="/" className={styles.backLink}>
-                    <ArrowLeft size={16} aria-hidden="true" />
-                    Back to portfolio
-                </Link>
-                <header className={styles.hero}>
-                    <div>
-                        <p className={cn(styles.eyebrow, caveat.className)}>
-                            Private correspondence
-                        </p>
-                        <Typography
-                            as={'h1'}
-                            variant={'h4'}
-                            className={styles.heroTitle}
-                        >
-                            Direct{' '}
-                            <span
-                                className={`${styles.highlight} ${styles.highlightBlue}`}
-                            >
-                                reply.
-                            </span>
-                        </Typography>
-                        <p className={styles.lead}>
-                            A private line to follow up and continue the
-                            conversation.
-                        </p>
-                    </div>
-                    <div
-                        className={styles.heroNote}
-                        data-tone="blue"
-                        aria-hidden="true"
-                    >
-                        <span className={cn(caveat.className)}>
-                            Private thread
-                        </span>
-                        <strong>Delivered directly to my inbox.</strong>
-                    </div>
-                </header>
-                <section
-                    className={styles.panelShell}
-                    aria-label="Private reply"
-                >
-                    <span className={styles.panelTab}>Private thread</span>
-                    <div className={`${styles.panel} ${styles.panelBlue}`}>
-                        <ReplyForm />
-                    </div>
-                </section>
-            </div>
-        </main>
+        <CorrespondencePage variant="private">
+            <Link href={routes.home} className={styles.backLink}>
+                <ArrowLeft size={16} aria-hidden="true" />
+                Back to portfolio
+            </Link>
+            <CorrespondenceHero
+                eyebrow="Private correspondence"
+                title="Direct"
+                highlight="reply."
+                tone="blue"
+                lead="A private line to follow up and continue the conversation."
+                note={{
+                    label: 'Private thread',
+                    text: 'Delivered directly to my inbox.',
+                }}
+            />
+            <CorrespondencePanel
+                tab="Private thread"
+                tone="blue"
+                label="Private reply"
+            >
+                <ReplyForm />
+            </CorrespondencePanel>
+        </CorrespondencePage>
     )
 }

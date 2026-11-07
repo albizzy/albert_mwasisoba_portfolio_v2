@@ -1,27 +1,35 @@
 ﻿'use client'
 
-import { Caveat } from 'next/font/google'
 import { useGsapReveal, type GsapRevealConfig } from '@/hooks'
 import { Section } from '../sections'
 import { Typography } from '@/components/ui/typography'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { servicePillars, approachSteps, technologies } from '@/config'
+import {
+    servicePillars,
+    approachSteps,
+    technologies,
+    routes,
+    type ServicePillarTone,
+} from '@/config'
+import { toSequenceLabel } from '@/helpers'
 import { ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
+import { caveat } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
 
-const caveat = Caveat({
-    subsets: ['latin'],
-    variable: '--font-caveat',
-    display: 'swap',
-})
-
-const pillarTones = [
-    'var(--editorial-yellow)',
-    'var(--editorial-blue)',
-    'var(--editorial-green)',
-] as const
+// Accent per pillar tone. The icon colour follows the tone, not the position.
+const pillarToneStyles: Record<
+    ServicePillarTone,
+    { accent: string; iconClassName: string }
+> = {
+    yellow: {
+        accent: 'var(--editorial-yellow)',
+        iconClassName: 'text-editorial-ink',
+    },
+    blue: { accent: 'var(--editorial-blue)', iconClassName: 'text-white' },
+    green: { accent: 'var(--editorial-green)', iconClassName: 'text-white' },
+}
 
 const expertiseAnimations: ReadonlyArray<GsapRevealConfig> = [
     {
@@ -124,8 +132,8 @@ export function ExpertiseContent() {
                 <div className="grid gap-6 lg:grid-cols-3">
                     {servicePillars.map((service, index) => {
                         const Icon = service.icon
-                        const accentColor =
-                            pillarTones[index % pillarTones.length]
+                        const { accent: accentColor, iconClassName } =
+                            pillarToneStyles[service.tone]
 
                         return (
                             <article
@@ -140,9 +148,7 @@ export function ExpertiseContent() {
                                         style={{ backgroundColor: accentColor }}
                                         className={cn(
                                             'flex size-12 items-center justify-center rounded-full border-2 border-editorial-ink',
-                                            index === 0
-                                                ? 'text-editorial-ink'
-                                                : 'text-white'
+                                            iconClassName
                                         )}
                                     >
                                         <Icon
@@ -151,7 +157,7 @@ export function ExpertiseContent() {
                                         />
                                     </div>
                                     <span className="text-xs font-medium uppercase tracking-[0.12em] text-editorial-muted">
-                                        0{index + 1}
+                                        {toSequenceLabel(index)}
                                     </span>
                                 </div>
                                 <div className="flex flex-col gap-6">
@@ -337,7 +343,7 @@ export function ExpertiseContent() {
                         size="pill"
                         className="mt-2"
                     >
-                        <Link href="/contact">
+                        <Link href={routes.contact}>
                             Discuss a project
                             <ArrowUpRight aria-hidden="true" />
                         </Link>

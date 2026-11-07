@@ -39,11 +39,12 @@ export function brandedEmail({
     action?: { label: string; url: string }
     origin: string
 }) {
-    const name = siteConfig.name
-    const text = `${name}\nConsultant & Engineer\n\n${title}\n\n${intro}\n\n${message}${action ? `\n\n${action.label}: ${action.url}` : ''}\n\n${origin}`
+    const { name, tagline } = siteConfig
+    const text = `${name}\n${tagline}\n\n${title}\n\n${intro}\n\n${message}${action ? `\n\n${action.label}: ${action.url}` : ''}\n\n${origin}`
     const safeTitle = escapeHtml(title)
     const safeOrigin = escapeHtml(origin)
     const safeName = escapeHtml(name)
+    const safeTagline = escapeHtml(tagline)
     const safeIntro = escapeHtml(intro)
     const safeMessage = escapeHtml(message).replace(/\r?\n/g, '<br>')
     const actionHtml = action
@@ -75,7 +76,7 @@ export function brandedEmail({
                 <tr><td bgcolor="${emailPalette.ink}" style="padding:28px 32px 26px;border-radius:0 18px 0 0;background-color:${emailPalette.ink};color:#ffffff">
                     <p style="margin:0 0 14px;color:${emailPalette.yellow};font-family:${emailFont};font-size:11px;font-weight:600;line-height:1.5;letter-spacing:2px;text-transform:uppercase">Correspondence / Direct line</p>
                     <a href="${safeOrigin}" style="color:#ffffff;font-family:${emailFont};font-size:20px;font-weight:600;line-height:1.3;letter-spacing:-0.8px;text-decoration:none">${safeName}<span style="color:${emailPalette.pink}">.</span></a>
-                    <p style="margin:8px 0 0;color:#e6e6e2;font-family:${emailFont};font-size:11px;font-weight:400;line-height:1.6;letter-spacing:1.3px;text-transform:uppercase">Consultant &amp; Engineer</p>
+                    <p style="margin:8px 0 0;color:#e6e6e2;font-family:${emailFont};font-size:11px;font-weight:400;line-height:1.6;letter-spacing:1.3px;text-transform:uppercase">${safeTagline}</p>
                 </td></tr>
                 <tr><td style="padding:0;font-size:0;line-height:0">
                     <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%"><tr>

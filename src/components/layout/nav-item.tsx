@@ -7,8 +7,13 @@ import { cn } from '@/lib/utils'
 import { isActive } from '@/helpers'
 
 export type NavItemProps = React.ComponentProps<typeof Link> & {
-    type?: 'nav' | 'footer'
+    type?: keyof typeof backgroundClasses
 }
+
+const backgroundClasses = {
+    nav: 'bg-transparent hover:bg-white/8',
+    footer: 'bg-transparent hover:bg-white/5',
+} as const
 
 export function NavItem({
     children,
@@ -25,11 +30,6 @@ export function NavItem({
 
     const transitionClass = 'transition-colors duration-200 ease-out'
 
-    const backgroundClass =
-        type === 'nav'
-            ? 'bg-transparent hover:bg-white/8'
-            : 'bg-transparent hover:bg-white/5'
-
     return (
         <Link
             href={href}
@@ -37,7 +37,7 @@ export function NavItem({
             className={cn(
                 baseClass,
                 transitionClass,
-                backgroundClass,
+                backgroundClasses[type],
                 className
             )}
             {...rest}

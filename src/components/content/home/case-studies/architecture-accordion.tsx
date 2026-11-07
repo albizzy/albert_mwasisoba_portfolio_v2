@@ -4,17 +4,12 @@ import { useId, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ArrowUpRight, Plus } from 'lucide-react'
+import type { ArchitectureNote } from '@/config'
+import { toSequenceLabel } from '@/helpers'
+import { prefersReducedMotion } from '@/lib/motion'
 import styles from './case-studies.module.css'
 
 gsap.registerPlugin(useGSAP)
-
-interface ArchitectureNote {
-    title: string
-    summary: string
-    description: string
-    href: string
-    link: string
-}
 
 export function ArchitectureAccordion({
     notes,
@@ -76,7 +71,7 @@ export function ArchitectureAccordion({
         activeRef.current = nextIndex
         setActiveIndex(nextIndex)
 
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        if (prefersReducedMotion()) {
             gsap.set(previousPanel, { height: 0 })
             gsap.set(nextPanel, { height: 'auto' })
             gsap.set(previousToggle, { rotation: 0 })
@@ -136,7 +131,7 @@ export function ArchitectureAccordion({
                                     className={styles.number}
                                     aria-hidden="true"
                                 >
-                                    0{index + 1}
+                                    {toSequenceLabel(index)}
                                 </span>
                                 <span className={styles.noteHeading}>
                                     <span className={styles.noteTitle}>

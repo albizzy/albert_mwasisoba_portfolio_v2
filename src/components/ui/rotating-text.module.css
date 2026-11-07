@@ -1,4 +1,8 @@
-.root {
+/* Defaults that consumers extend through className props are wrapped in
+   :where() so any consumer class overrides them, whatever order the CSS
+   chunks load in. Rules that must win (reduced-motion hiding) keep their
+   specificity. */
+:where(.root) {
     display: inline-flex;
     align-items: center;
     gap: 0.28em;
@@ -20,7 +24,7 @@
     position: relative;
     visibility: visible;
 }
-.control {
+:where(.control) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -30,25 +34,25 @@
     border-radius: 50%;
     cursor: pointer;
 }
-.control svg {
+:where(.control) svg {
     width: 14px;
     height: 14px;
 }
-.control:focus-visible {
+:where(.control):focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 4px;
 }
-.reduced {
+:where(.reduced) {
     display: none;
 }
 @media (prefers-reduced-motion: reduce) {
-    .control {
+    :where(.control) {
         display: none;
     }
     .hasReduced .animated {
         display: none;
     }
-    .reduced {
+    :where(.reduced) {
         display: inline;
     }
 }

@@ -29,7 +29,7 @@ bun run start
 - **App Router:** `src/app` owns routes, layouts and metadata. Server components compose pages; interactive features declare their client boundary.
 - **Feature boundaries:** `src/features` contains contact and scheduling logic. `src/components/content` composes page sections, `src/components/layout` provides the shell, and `src/components/ui` holds shared primitives.
 - **Typed primitives:** [`Button`](src/components/ui/button.tsx) uses Radix Slot for composition and Class Variance Authority for typed variants. [`tsconfig.json`](tsconfig.json) enables `strict: true`.
-- **Content and presentation:** Project data lives in `src/config/works.ts`; complex section styling lives in adjacent CSS modules. The technical case study is in `src/components/content/home/case-studies`.
+- **Content and presentation:** Site identity, routes, navigation, social profiles, projects and the case study live in `src/config`; complex section styling lives in adjacent CSS modules. The technical case study renders from `src/config/case-study.ts` in `src/components/content/home/case-studies`.
 
 ### Considered motion
 
@@ -54,16 +54,38 @@ To record reproducible results:
 3. Save the HTML/JSON reports under `docs/benchmarks/` and add measured scores, FCP, LCP, CLS and Total Blocking Time here. Report variability across runs.
 4. Treat lab scores separately from field Core Web Vitals; report field INP only when real-user data is available. Include manual keyboard and reduced-motion checks alongside automated accessibility results.
 
+## Extending the portfolio
+
+The codebase follows the open–closed principle: new content and variants are added as new entries or files, and the code that renders them stays unchanged.
+
+| To add…                        | Add it in                                                                                                                 |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| A project                      | `works` in `src/config/works.ts`                                                                                          |
+| A menu link or in-page section | `mainNavigation` in `src/config/navigation.ts`; `/#id` links highlight automatically                                      |
+| An internal path               | `routes` in `src/config/routes.ts`; link with `routes.*`, not string literals                                             |
+| A social profile               | `socialProfiles` in `src/config/social.ts` (new marks: `createBrandIcon` in `src/components/ui/brand-icons.tsx`)          |
+| A page                         | A route that exports `createPageMetadata(...)` from `src/lib/metadata.ts`                                                 |
+| A contact or scheduling page   | Compose `CorrespondencePage`, `CorrespondenceHero` and `CorrespondencePanel` from `src/components/content/correspondence` |
+| An About section               | A component in `about/sections` and an entry in `about/about-sections.ts`                                                 |
+| A contact form field           | `fieldDefinitions` in `src/features/contact/schema.ts`; validation and rendering read it                                  |
+| A meeting type                 | `meetingDefinitions` in `src/features/scheduling/config.ts`, plus its environment variable                                |
+| A works-archive filter         | `filterGroups` in `src/components/content/works/index.tsx`                                                                |
+| A reveal animation             | A resolver in `presetResolvers` or a direction in `directionProfiles` (`src/hooks/gsap-reveal-presets.ts`)                |
+| A cursor appearance            | A rule in `CURSOR_RULES` (`src/components/ui/custom-cursor.tsx`) and its styles                                           |
+| A colour tone                  | The `[data-tone]` token block of the stylesheet that should support it; tone names are typed in `src/lib/tones.ts`        |
+
+Shared behaviour has one home: fonts in `src/lib/fonts.ts`, reduced-motion checks in `src/lib/motion.ts`, smooth scrolling in `src/lib/scroll.ts` and section scroll-spy in `src/hooks/useSectionNavigation.ts`.
+
 ## Validation
 
 ```sh
 bunx tsc --noEmit
 bun run lint
-bun run test:contact
+bun run test
 bun run build
 ```
 
-Contact tests cover validation and server-side behavior; they do not replace visual, keyboard or production performance checks.
+Tests cover contact validation, server-side behaviour and the extension points above; they do not replace visual, keyboard or production performance checks.
 
 ## Licence
 

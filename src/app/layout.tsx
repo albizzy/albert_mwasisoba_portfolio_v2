@@ -6,15 +6,18 @@ import React from 'react'
 import { siteConfig } from '@/config'
 import { CustomCursor } from '@/components/ui/custom-cursor'
 
-const unboundedSans = Unbounded({
+// Defined here rather than in lib/fonts: importing a module shared with pages
+// would change how CSS chunks are ordered relative to globals.css.
+const unbounded = Unbounded({
     subsets: ['latin'],
 })
 
+const siteTitle = `${siteConfig.name} — ${siteConfig.tagline}`
+
 export const metadata: Metadata = {
-    metadataBase: new URL('https://albert-mwasisoba-portfolio-v2.vercel.app'),
-    title: 'Albert Mwasisoba — Consultant & Engineer',
-    description:
-        'Engineering Scalable Systems for Modern Business. Specializing in frontend, design, and AI integration.',
+    metadataBase: new URL(siteConfig.url),
+    title: siteTitle,
+    description: siteConfig.description,
     icons: {
         icon: [
             { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -37,20 +40,17 @@ export const metadata: Metadata = {
 
     manifest: '/site.webmanifest',
     openGraph: {
-        title: 'Albert Mwasisoba — Consultant & Engineer',
-        description:
-            'Engineering Scalable Systems for Modern Business. Specializing in frontend, design, and AI integration.',
-        url: 'https://albert-mwasisoba-portfolio-v2.vercel.app/',
-        siteName: 'Albert Mwasisoba',
+        title: siteTitle,
+        description: siteConfig.description,
+        url: `${siteConfig.url}/`,
+        siteName: siteConfig.name,
         images: [
             {
-                url: '/albert_og_image.png',
-                width: 1200,
-                height: 630,
-                alt: 'Albert Mwasisoba — Consultant & Engineer',
+                ...siteConfig.ogImage,
+                alt: siteTitle,
             },
         ],
-        locale: 'en_US',
+        locale: siteConfig.locale,
         type: 'website',
     },
 }
@@ -65,7 +65,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body className={`${unboundedSans.className} antialiased`}>
+            <body className={`${unbounded.className} antialiased`}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme={theme?.colorScheme}

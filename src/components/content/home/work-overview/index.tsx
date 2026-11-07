@@ -6,15 +6,9 @@ import { useWorkOverviewAnimation } from './hooks'
 import { FolderWorkCard } from './folder-work-card'
 import styles from './work-overview.module.css'
 
-import { Caveat } from 'next/font/google'
 import { Typography } from '@/components/ui/typography'
+import { caveat } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
-
-export const caveat = Caveat({
-    subsets: ['latin'],
-    variable: '--font-caveat',
-    display: 'swap',
-})
 
 export function WorkOverview() {
     const sectionRef = useWorkOverviewAnimation()

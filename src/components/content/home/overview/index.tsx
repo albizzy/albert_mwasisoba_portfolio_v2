@@ -5,6 +5,14 @@ import { Section } from '@/components/content/sections'
 import { RotatingSpecialties } from './rotating-specialties'
 import styles from './overview.module.css'
 
+// Decorative stickers around the statement. Add one with a placement class
+// in overview.module.css and an entry here.
+const stickers = [
+    { label: 'Clean architecture', placement: styles.strategy, icon: 'start' },
+    { label: 'Design-system driven', placement: styles.meaning, icon: 'start' },
+    { label: 'Built for speed', placement: styles.scale, icon: 'end' },
+] as const
+
 export function Overview() {
     return (
         <Section
@@ -29,29 +37,21 @@ export function Overview() {
                         </span>
                     </p>
 
-                    <div
-                        className={`${styles.sticker} ${styles.strategy}`}
-                        aria-hidden="true"
-                    >
-                        <Goal className={styles.target} />
-                        <span className={styles.label}>Clean architecture</span>
-                    </div>
-                    <div
-                        className={`${styles.sticker} ${styles.meaning}`}
-                        aria-hidden="true"
-                    >
-                        <Goal className={styles.target} />
-                        <span className={styles.label}>
-                            Design-system driven
-                        </span>
-                    </div>
-                    <div
-                        className={`${styles.sticker} ${styles.scale}`}
-                        aria-hidden="true"
-                    >
-                        <span className={styles.label}>Built for speed</span>
-                        <Goal className={styles.target} />
-                    </div>
+                    {stickers.map(({ label, placement, icon }) => (
+                        <div
+                            key={label}
+                            className={`${styles.sticker} ${placement}`}
+                            aria-hidden="true"
+                        >
+                            {icon === 'start' && (
+                                <Goal className={styles.target} />
+                            )}
+                            <span className={styles.label}>{label}</span>
+                            {icon === 'end' && (
+                                <Goal className={styles.target} />
+                            )}
+                        </div>
+                    ))}
                 </div>
             </div>
         </Section>

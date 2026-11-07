@@ -7,6 +7,8 @@ export interface WorkingPrinciple {
     number: string
     title: string
     description: string
+    /** Handwritten aside shown next to the principle. */
+    annotation: string
 }
 
 export const aboutDisciplines: ReadonlyArray<AboutDiscipline> = [
@@ -38,17 +40,20 @@ export const workingPrinciples: ReadonlyArray<WorkingPrinciple> = [
         title: 'Start with context',
         description:
             'Understand the people, constraints, and business goal before deciding what the solution should be.',
+        annotation: 'context before code.',
     },
     {
         number: '02',
         title: 'Make the complex clear',
         description:
             'Use systems thinking and careful design to reduce friction without hiding important detail.',
+        annotation: 'make it feel obvious.',
     },
     {
         number: '03',
         title: 'Build in the open',
         description:
             'Share progress early, invite useful feedback, and keep decisions visible throughout the work.',
+        annotation: 'better together.',
     },
 ]

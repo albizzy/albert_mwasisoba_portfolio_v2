@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { ArrowUpRight, ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Typography } from '@/components/ui/typography'
+import { routes } from '@/config'
 import { cn } from '@/lib/utils'
 import type { ProblemSolution } from './expertise-data'
 import { useProblemSolutionChat } from './hooks'
@@ -116,7 +117,7 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                             size="pill-sm"
                             className="uppercase tracking-[0.08em]"
                         >
-                            <Link href="/contact">
+                            <Link href={routes.contact}>
                                 Let&apos;s work together
                                 <ArrowUpRight aria-hidden="true" />
                             </Link>
