@@ -117,31 +117,6 @@
     margin-top: 2rem;
 }
 
-.sourceButton {
-    min-height: 3.375rem;
-    height: auto;
-    padding: 0.85rem 1.5rem;
-    border: 2px solid var(--editorial-ink);
-    border-radius: 999px;
-    background: var(--editorial-ink);
-    color: var(--editorial-surface);
-    font-size: var(--editorial-text-small);
-    font-weight: var(--editorial-weight-heading);
-    letter-spacing: -0.01em;
-    box-shadow: 4px 4px 0 var(--editorial-green);
-    transition:
-        transform 180ms ease,
-        box-shadow 180ms ease,
-        background-color 180ms ease;
-}
-
-.sourceButton:hover {
-    background: var(--editorial-ink);
-    color: var(--editorial-surface);
-    box-shadow: 2px 2px 0 var(--editorial-green);
-    transform: translate(2px, 2px);
-}
-
 .auditLink {
     display: inline-flex;
     min-height: 44px;
@@ -369,7 +344,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .sourceButton,
     .toggle {
         transition: none;
     }

@@ -1,5 +1,5 @@
 .socialLink {
-    color: white;
+    color: var(--editorial-surface);
     transition: transform 150ms ease;
 }
 

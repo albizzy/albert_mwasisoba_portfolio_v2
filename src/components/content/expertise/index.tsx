@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { Caveat } from 'next/font/google'
 import { useGsapReveal, type GsapRevealConfig } from '@/hooks'
@@ -63,10 +63,7 @@ export function ExpertiseContent() {
     useGsapReveal(pageRef, expertiseAnimations)
 
     return (
-        <div
-            ref={pageRef}
-            className="flex w-full flex-col text-(--editorial-ink)"
-        >
+        <div ref={pageRef} className="flex w-full flex-col text-editorial-ink">
             <Section
                 className="py-16 md:py-24"
                 aria-labelledby="expertise-title"
@@ -75,7 +72,7 @@ export function ExpertiseContent() {
                     <p
                         className={cn(
                             caveat.className,
-                            'expertise-hero-copy text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                            'expertise-hero-copy text-2xl md:text-3xl font-semibold text-editorial-muted'
                         )}
                     >
                         Capabilities &amp; craft
@@ -84,14 +81,14 @@ export function ExpertiseContent() {
                         id="expertise-title"
                         as="h1"
                         variant="h2"
-                        className="expertise-hero-copy max-w-4xl font-semibold tracking-tight leading-[1.08] text-(--editorial-ink)"
+                        className="expertise-hero-copy max-w-4xl font-semibold tracking-tight leading-[1.08] text-editorial-ink"
                     >
                         Digital products built from the system to the surface.
                     </Typography>
                     <Typography
                         as="p"
                         variant="lead"
-                        className="expertise-hero-copy mt-2 max-w-2xl text-(--editorial-muted)"
+                        className="expertise-hero-copy mt-2 max-w-2xl text-editorial-muted"
                     >
                         I combine technical architecture, product thinking, and
                         visual design to create digital work that is useful,
@@ -102,14 +99,14 @@ export function ExpertiseContent() {
 
             <Section
                 bordered
-                className="bg-(--editorial-paper)"
+                className="bg-editorial-paper"
                 aria-labelledby="services-title"
             >
                 <div className="flex max-w-3xl flex-col gap-2">
                     <p
                         className={cn(
                             caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
                         )}
                     >
                         What I do
@@ -118,7 +115,7 @@ export function ExpertiseContent() {
                         id="services-title"
                         as="h2"
                         variant="h3"
-                        className="font-semibold text-(--editorial-ink)"
+                        className="font-semibold text-editorial-ink"
                     >
                         Three capabilities, designed to work together.
                     </Typography>
@@ -136,15 +133,15 @@ export function ExpertiseContent() {
                                 style={{
                                     boxShadow: `6px 6px 0 ${accentColor}`,
                                 }}
-                                className="service-card flex flex-col justify-between gap-10 rounded-[28px] border-2 border-(--editorial-ink) bg-(--editorial-surface) p-6 md:p-8"
+                                className="service-card flex flex-col justify-between gap-10 rounded-editorial-panel border-2 border-editorial-ink bg-editorial-surface p-6 md:p-8"
                             >
                                 <div className="flex items-center justify-between">
                                     <div
                                         style={{ backgroundColor: accentColor }}
                                         className={cn(
-                                            'flex size-12 items-center justify-center rounded-full border-2 border-(--editorial-ink)',
+                                            'flex size-12 items-center justify-center rounded-full border-2 border-editorial-ink',
                                             index === 0
-                                                ? 'text-(--editorial-ink)'
+                                                ? 'text-editorial-ink'
                                                 : 'text-white'
                                         )}
                                     >
@@ -153,7 +150,7 @@ export function ExpertiseContent() {
                                             className="size-5"
                                         />
                                     </div>
-                                    <span className="text-xs font-medium uppercase tracking-[0.12em] text-(--editorial-muted)">
+                                    <span className="text-xs font-medium uppercase tracking-[0.12em] text-editorial-muted">
                                         0{index + 1}
                                     </span>
                                 </div>
@@ -162,27 +159,27 @@ export function ExpertiseContent() {
                                         <Typography
                                             as="h3"
                                             variant="h5"
-                                            className="font-semibold text-(--editorial-ink)"
+                                            className="font-semibold text-editorial-ink"
                                         >
                                             {service.title}
                                         </Typography>
                                         <Typography
                                             as="p"
                                             variant="body"
-                                            className="text-(--editorial-muted) leading-relaxed"
+                                            className="text-editorial-muted leading-relaxed"
                                         >
                                             {service.description}
                                         </Typography>
                                     </div>
                                     <ul
-                                        className="flex flex-wrap gap-2 pt-2 border-t border-(--editorial-line)"
+                                        className="flex flex-wrap gap-2 pt-2 border-t border-editorial-line"
                                         aria-label={`${service.title} capabilities`}
                                     >
                                         {service.capabilities.map(
                                             (capability) => (
                                                 <li
                                                     key={capability}
-                                                    className="rounded-[5px_10px_5px_5px] border border-(--editorial-line) bg-(--editorial-paper) px-2.5 py-1 text-xs font-medium uppercase tracking-[0.06em] text-(--editorial-ink)"
+                                                    className="rounded-editorial-tag border border-editorial-line bg-editorial-paper px-2.5 py-1 text-xs font-medium uppercase tracking-[0.06em] text-editorial-ink"
                                                 >
                                                     {capability}
                                                 </li>
@@ -202,7 +199,7 @@ export function ExpertiseContent() {
                         <p
                             className={cn(
                                 caveat.className,
-                                'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                                'text-2xl md:text-3xl font-semibold text-editorial-muted'
                             )}
                         >
                             My approach
@@ -211,14 +208,14 @@ export function ExpertiseContent() {
                             id="approach-title"
                             as="h2"
                             variant="h3"
-                            className="font-semibold text-(--editorial-ink)"
+                            className="font-semibold text-editorial-ink"
                         >
                             A clear path through complex work.
                         </Typography>
                         <Typography
                             as="p"
                             variant="body"
-                            className="mt-1 max-w-md text-(--editorial-muted) leading-relaxed"
+                            className="mt-1 max-w-md text-editorial-muted leading-relaxed"
                         >
                             The shape of every project changes, but the work
                             stays collaborative, iterative, and focused on
@@ -226,35 +223,35 @@ export function ExpertiseContent() {
                         </Typography>
                     </div>
 
-                    <ol className="flex flex-col rounded-[28px] border-2 border-(--editorial-ink) bg-(--editorial-paper) p-6 md:p-8 shadow-[8px_8px_0_var(--editorial-line)]">
+                    <ol className="flex flex-col rounded-editorial-panel border-2 border-editorial-ink bg-editorial-paper p-6 md:p-8 shadow-[8px_8px_0_var(--editorial-line)]">
                         {approachSteps.map((step) => {
                             const Icon = step.icon
 
                             return (
                                 <li
                                     key={step.number}
-                                    className="approach-step grid gap-4 border-t border-(--editorial-line) py-7 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[3.5rem_1fr_auto]"
+                                    className="approach-step grid gap-4 border-t border-editorial-line py-7 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[3.5rem_1fr_auto]"
                                 >
-                                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-(--editorial-green) pt-1">
+                                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-editorial-green pt-1">
                                         {step.number}
                                     </span>
                                     <div className="flex flex-col gap-2">
                                         <Typography
                                             as="h3"
                                             variant="h6"
-                                            className="font-semibold text-(--editorial-ink)"
+                                            className="font-semibold text-editorial-ink"
                                         >
                                             {step.title}
                                         </Typography>
                                         <Typography
                                             as="p"
                                             variant="body"
-                                            className="max-w-xl text-(--editorial-muted) leading-relaxed"
+                                            className="max-w-xl text-editorial-muted leading-relaxed"
                                         >
                                             {step.description}
                                         </Typography>
                                     </div>
-                                    <div className="flex size-11 items-center justify-center rounded-full border border-(--editorial-line) bg-(--editorial-surface) text-(--editorial-ink)">
+                                    <div className="flex size-11 items-center justify-center rounded-full border border-editorial-line bg-editorial-surface text-editorial-ink">
                                         <Icon
                                             aria-hidden="true"
                                             className="size-5"
@@ -269,7 +266,7 @@ export function ExpertiseContent() {
 
             <Section
                 bordered
-                className="bg-(--editorial-paper)"
+                className="bg-editorial-paper"
                 aria-labelledby="toolkit-title"
             >
                 <div className="grid gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
@@ -277,7 +274,7 @@ export function ExpertiseContent() {
                         <p
                             className={cn(
                                 caveat.className,
-                                'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                                'text-2xl md:text-3xl font-semibold text-editorial-muted'
                             )}
                         >
                             Toolkit
@@ -286,7 +283,7 @@ export function ExpertiseContent() {
                             id="toolkit-title"
                             as="h2"
                             variant="h3"
-                            className="font-semibold text-(--editorial-ink)"
+                            className="font-semibold text-editorial-ink"
                         >
                             Tools chosen for the job.
                         </Typography>
@@ -295,7 +292,7 @@ export function ExpertiseContent() {
                         {technologies.map((technology) => (
                             <li
                                 key={technology}
-                                className="technology-pill rounded-full border-1.5 border-(--editorial-ink) bg-(--editorial-surface) px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-line)]"
+                                className="technology-pill rounded-full border-[1.5px] border-editorial-ink bg-editorial-surface px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-editorial-ink shadow-[3px_3px_0_var(--editorial-line)]"
                             >
                                 {technology}
                             </li>
@@ -313,7 +310,7 @@ export function ExpertiseContent() {
                     <p
                         className={cn(
                             caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
                         )}
                     >
                         Next step
@@ -322,21 +319,23 @@ export function ExpertiseContent() {
                         id="expertise-cta-title"
                         as="h2"
                         variant="h3"
-                        className="font-semibold text-(--editorial-ink)"
+                        className="font-semibold text-editorial-ink"
                     >
                         Need more than a polished surface?
                     </Typography>
                     <Typography
                         as="p"
                         variant="lead"
-                        className="max-w-xl text-(--editorial-muted)"
+                        className="max-w-xl text-editorial-muted"
                     >
                         Let&apos;s shape the product, the system, and the path
                         to delivery together.
                     </Typography>
                     <Button
                         asChild
-                        className="mt-2 min-h-14 h-auto rounded-full border-2 border-(--editorial-ink) bg-(--editorial-ink) px-7 py-3.5 text-sm font-semibold text-white shadow-[4px_4px_0_var(--editorial-yellow)] transition-all duration-200 hover:bg-(--editorial-ink) hover:text-white hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_var(--editorial-yellow)]"
+                        variant="editorialDark"
+                        size="pill"
+                        className="mt-2"
                     >
                         <Link href="/contact">
                             Discuss a project

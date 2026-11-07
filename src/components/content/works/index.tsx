@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { Caveat } from 'next/font/google'
 import { Typography } from '@/components/ui/typography'
@@ -78,13 +78,13 @@ export function WorksContent() {
     )
 
     return (
-        <div ref={containerRef} className="w-full text-(--editorial-ink)">
+        <div ref={containerRef} className="w-full text-editorial-ink">
             <Section className="py-16 md:py-24">
                 <div className="works-title flex flex-col gap-3 max-w-4xl">
                     <p
                         className={cn(
                             caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-(--editorial-muted)'
+                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
                         )}
                     >
                         Selected archive
@@ -92,14 +92,14 @@ export function WorksContent() {
                     <Typography
                         as="h1"
                         variant="h2"
-                        className="font-semibold text-(--editorial-ink) tracking-tight leading-[1.08]"
+                        className="font-semibold text-editorial-ink tracking-tight leading-[1.08]"
                     >
                         Digital products engineered for clarity and scale.
                     </Typography>
                     <Typography
                         as="p"
                         variant="lead"
-                        className="mt-2 max-w-2xl text-(--editorial-muted)"
+                        className="mt-2 max-w-2xl text-editorial-muted"
                     >
                         A curated index of frontend systems, design direction,
                         and production web applications.
@@ -117,10 +117,10 @@ export function WorksContent() {
                             onClick={() => handleFilterSelect('All')}
                             aria-pressed={activeFilter === 'All'}
                             className={cn(
-                                'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
+                                'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
                                 activeFilter === 'All'
-                                    ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                    : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
+                                    ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                    : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
                             )}
                         >
                             All Projects
@@ -133,10 +133,10 @@ export function WorksContent() {
                                 onClick={() => handleFilterSelect(service)}
                                 aria-pressed={activeFilter === service}
                                 className={cn(
-                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
+                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
                                     activeFilter === service
-                                        ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                        : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
+                                        ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                        : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
                                 )}
                             >
                                 {service}
@@ -144,7 +144,7 @@ export function WorksContent() {
                         ))}
 
                         {allTypes.length > 0 && (
-                            <div className="hidden sm:block h-5 w-px bg-(--editorial-line) mx-1" />
+                            <div className="hidden sm:block h-5 w-px bg-editorial-line mx-1" />
                         )}
 
                         {allTypes.map((type) => (
@@ -154,10 +154,10 @@ export function WorksContent() {
                                 onClick={() => handleFilterSelect(type)}
                                 aria-pressed={activeFilter === type}
                                 className={cn(
-                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-1.5 cursor-pointer select-none',
+                                    'px-4 py-2 rounded-full text-xs font-medium uppercase tracking-[0.08em] transition-all duration-200 border-[1.5px] cursor-pointer select-none',
                                     activeFilter === type
-                                        ? 'bg-(--editorial-ink) text-white border-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                        : 'bg-(--editorial-paper) hover:bg-(--editorial-surface) text-(--editorial-muted) hover:text-(--editorial-ink) border-(--editorial-line)'
+                                        ? 'bg-editorial-ink text-white border-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                        : 'bg-editorial-paper hover:bg-editorial-surface text-editorial-muted hover:text-editorial-ink border-editorial-line'
                                 )}
                             >
                                 {type}
@@ -173,7 +173,7 @@ export function WorksContent() {
                         ))
                     ) : (
                         <div className="col-span-2 flex flex-col items-center justify-center py-20 text-center">
-                            <Typography className="text-(--editorial-muted)">
+                            <Typography className="text-editorial-muted">
                                 No works found matching the selected filter.
                             </Typography>
                         </div>

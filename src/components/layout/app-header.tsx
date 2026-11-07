@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React, {
     useCallback,
@@ -412,7 +412,7 @@ export function AppHeader() {
                         <Typography
                             as={'span'}
                             variant={'caption'}
-                            className="uppercase tracking-[0.12em] font-medium text-(--editorial-muted)"
+                            className="uppercase tracking-[0.12em] font-medium text-editorial-muted"
                         >
                             {dynamicLabel}
                         </Typography>
@@ -491,10 +491,7 @@ export function AppHeader() {
                         </div>
 
                         <div className="flex flex-col gap-5 pl-3 pt-4 border-t border-white/10">
-                            <Button
-                                asChild
-                                className={`px-6 py-3.5 ${styles.bookButton}`}
-                            >
+                            <Button asChild variant="editorial" size="pill">
                                 <Link href="/schedule" onClick={closeMenu}>
                                     Book a call
                                 </Link>

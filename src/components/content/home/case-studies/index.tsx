@@ -93,7 +93,11 @@ export function CaseStudies() {
                             </li>
                         </ul>
                         <div className={styles.actions}>
-                            <Button asChild className={styles.sourceButton}>
+                            <Button
+                                asChild
+                                variant="editorialGreen"
+                                size="pill"
+                            >
                                 <a
                                     href={repository}
                                     target="_blank"

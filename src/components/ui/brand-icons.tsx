@@ -29,7 +29,7 @@ export function LinkedinBrandIcon(props: BrandIconProps) {
             width="24"
             height="24"
             viewBox="0 0 448 512"
-            fill="white"
+            fill="currentColor"
             aria-hidden="true"
             focusable="false"
             {...props}

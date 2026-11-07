@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { memo } from 'react'
 import type { WorkItem } from '@/config'
@@ -18,10 +18,10 @@ export const WorkPreview = memo(function WorkPreview({
     return (
         <div
             className={cn(
-                'relative w-full overflow-hidden bg-(--editorial-paper) contain-[layout_paint]',
+                'relative w-full overflow-hidden bg-editorial-paper contain-[layout_paint]',
                 isFolder
                     ? styles.previewFrame
-                    : 'aspect-video rounded-2xl border-2 border-(--editorial-ink)'
+                    : 'aspect-video rounded-2xl border-2 border-editorial-ink'
             )}
         >
             <div

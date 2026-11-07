@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
 import { ArrowUpRight, ChevronLeft } from 'lucide-react'
@@ -21,14 +21,14 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
         <div
             ref={containerRef}
             className={cn(
-                'relative flex flex-col gap-8 overflow-hidden rounded-[28px] border-2 border-(--editorial-ink) bg-(--editorial-paper) p-6 md:gap-10 md:p-10 shadow-[8px_8px_0_var(--editorial-line)]',
+                'relative flex flex-col gap-8 overflow-hidden rounded-editorial-panel border-2 border-editorial-ink bg-editorial-paper p-6 md:gap-10 md:p-10 shadow-[8px_8px_0_var(--editorial-line)]',
                 selectedIndex === null && 'transition-all duration-300'
             )}
         >
             <Typography
                 as="h2"
                 variant="h5"
-                className="mx-auto max-w-sm text-center font-semibold text-(--editorial-ink)"
+                className="mx-auto max-w-sm text-center font-semibold text-editorial-ink"
             >
                 How can I help you?
             </Typography>
@@ -37,7 +37,7 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                 <Typography
                     as="span"
                     variant="caption"
-                    className="chat-subtitle ml-4 uppercase tracking-[0.1em] text-(--editorial-muted)"
+                    className="chat-subtitle ml-4 uppercase tracking-[0.1em] text-editorial-muted"
                 >
                     Choose what fits your needs
                 </Typography>
@@ -54,13 +54,13 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                                 onClick={() => selectProblem(index)}
                                 disabled={isAnySelected && !isSelected}
                                 className={cn(
-                                    'problem-item w-fit cursor-pointer rounded-2xl border-1.5 border-(--editorial-line) bg-(--editorial-surface) p-4 text-left md:p-5',
+                                    'problem-item w-fit cursor-pointer rounded-2xl border-[1.5px] border-editorial-line bg-editorial-surface p-4 text-left md:p-5',
                                     `problem-item-${index}`,
                                     selectedIndex === null &&
                                         'transition-all duration-300',
                                     isSelected
-                                        ? 'pointer-events-none w-full cursor-default border-(--editorial-ink) text-(--editorial-ink) shadow-[3px_3px_0_var(--editorial-yellow)]'
-                                        : 'hover:border-(--editorial-ink) hover:bg-(--editorial-surface)',
+                                        ? 'pointer-events-none w-full cursor-default border-editorial-ink text-editorial-ink shadow-[3px_3px_0_var(--editorial-yellow)]'
+                                        : 'hover:border-editorial-ink hover:bg-editorial-surface',
                                     isAnySelected &&
                                         !isSelected &&
                                         'pointer-events-none opacity-50'
@@ -69,7 +69,7 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                                 <Typography
                                     as="h3"
                                     variant="body"
-                                    className="font-medium text-(--editorial-ink)"
+                                    className="font-medium text-editorial-ink"
                                 >
                                     {item.problem}
                                 </Typography>
@@ -83,7 +83,7 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                         {selectedItem.solutions.map((solution) => (
                             <div
                                 key={solution}
-                                className="solution-bubble hidden w-fit max-w-[85%] translate-y-4 self-end rounded-2xl border-2 border-(--editorial-ink) bg-(--editorial-blue) p-4 text-white opacity-0 md:p-5 shadow-[3px_3px_0_var(--editorial-ink)]"
+                                className="solution-bubble hidden w-fit max-w-[85%] translate-y-4 self-end rounded-2xl border-2 border-editorial-ink bg-editorial-blue p-4 text-white opacity-0 md:p-5 shadow-[3px_3px_0_var(--editorial-ink)]"
                             >
                                 <Typography
                                     as="p"
@@ -98,11 +98,11 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                 )}
 
                 {selectedItem && (
-                    <div className="chat-footer mt-4 hidden w-full translate-y-4 items-center justify-between opacity-0 pt-2 border-t border-(--editorial-line)">
+                    <div className="chat-footer mt-4 hidden w-full translate-y-4 items-center justify-between opacity-0 pt-2 border-t border-editorial-line">
                         <button
                             type="button"
                             onClick={resetChat}
-                            className="flex cursor-pointer items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-(--editorial-ink) transition-opacity hover:opacity-75"
+                            className="flex cursor-pointer items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.1em] text-editorial-ink transition-opacity hover:opacity-75"
                         >
                             <ChevronLeft
                                 aria-hidden="true"
@@ -112,8 +112,9 @@ export function ProblemSolutionChat({ items }: ProblemSolutionChatProps) {
                         </button>
                         <Button
                             asChild
-                            variant="default"
-                            className="min-h-12 h-auto cursor-pointer rounded-full border-2 border-(--editorial-ink) bg-(--editorial-ink) px-6 py-3 text-xs font-semibold uppercase tracking-[0.08em] text-white shadow-[3px_3px_0_var(--editorial-yellow)] transition-all duration-200 hover:bg-(--editorial-ink) hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[1px_1px_0_var(--editorial-yellow)]"
+                            variant="editorialDark"
+                            size="pill-sm"
+                            className="uppercase tracking-[0.08em]"
                         >
                             <Link href="/contact">
                                 Let&apos;s work together

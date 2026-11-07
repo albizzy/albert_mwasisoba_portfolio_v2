@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import type { CSSProperties, ElementType, HTMLAttributes } from 'react'
 import { forwardRef } from 'react'
@@ -99,7 +99,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
                 className={cn(
                     'relative isolate w-full overflow-hidden py-18 md:py-24 lg:py-28',
                     toneClassName,
-                    bordered && 'border-t border-(--editorial-line)',
+                    bordered && 'border-t border-editorial-line',
                     className
                 )}
                 style={{ ...toneStyle, ...style }}

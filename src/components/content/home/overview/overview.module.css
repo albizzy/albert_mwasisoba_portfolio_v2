@@ -144,8 +144,8 @@
     border-radius: 999px;
     background: var(--overview-lime);
     box-shadow:
-        0 0.14em 0.28em rgb(20 20 19 / 18%),
-        0 0.06em 0.12em rgb(20 20 19 / 12%);
+        0 0.14em 0.28em rgb(var(--editorial-shadow-ink) / 18%),
+        0 0.06em 0.12em rgb(var(--editorial-shadow-ink) / 12%);
     color: var(--editorial-ink);
     font-size: 0.36em;
     font-weight: var(--editorial-weight-label, 500);

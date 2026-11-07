@@ -45,6 +45,31 @@
     --radius-2xl: calc(var(--radius) + 8px);
     --radius-3xl: calc(var(--radius) + 12px);
     --radius-4xl: calc(var(--radius) + 16px);
+
+    /* Editorial palette & radii surfaced as first-class utilities
+       (bg-editorial-*, text-editorial-*, border-editorial-*,
+        rounded-editorial-*). */
+    --color-editorial-ink: var(--editorial-ink);
+    --color-editorial-muted: var(--editorial-muted);
+    --color-editorial-line: var(--editorial-line);
+    --color-editorial-paper: var(--editorial-paper);
+    --color-editorial-surface: var(--editorial-surface);
+    --color-editorial-yellow: var(--editorial-yellow);
+    --color-editorial-yellow-soft: var(--editorial-yellow-soft);
+    --color-editorial-pink: var(--editorial-pink);
+    --color-editorial-pink-soft: var(--editorial-pink-soft);
+    --color-editorial-blue: var(--editorial-blue);
+    --color-editorial-blue-soft: var(--editorial-blue-soft);
+    --color-editorial-green: var(--editorial-green);
+    --color-editorial-green-soft: var(--editorial-green-soft);
+    --color-editorial-olive: var(--editorial-olive);
+    --color-editorial-olive-wash: var(--editorial-olive-wash);
+    --color-editorial-danger: var(--editorial-danger);
+    --color-editorial-outline: var(--editorial-outline);
+    --radius-editorial-panel: var(--editorial-radius-panel);
+    --radius-editorial-tab: var(--editorial-radius-tab);
+    --radius-editorial-tag: var(--editorial-radius-tag);
+    --radius-editorial-pill: var(--editorial-radius-pill);
 }
 
 :root {
@@ -72,9 +97,21 @@
     --editorial-olive-wash: #edf0df;
     --editorial-danger: #b4234e;
 
+    /* Primitive surface tokens: the sticker outline and the single ink shadow
+       hue used for every raised "scrapbook" element. Raw RGB triples so call
+       sites can set their own alpha (rgb(var(--editorial-shadow-ink) / 28%)). */
+    --editorial-outline: #ffffff;
+    --editorial-shadow-ink: 20 20 19;
+    --editorial-white: 255 255 255;
+
+    /* Motion: the two curves every editorial transition shares. */
+    --editorial-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --editorial-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
     --editorial-radius-panel: 28px;
     --editorial-radius-tab: 20px;
     --editorial-radius-tag: 5px 10px 5px 5px;
+    --editorial-radius-pill: 999px;
     --editorial-text-fine: 0.6875rem;
     --editorial-text-micro: 0.75rem;
     --editorial-text-small: 0.8125rem;

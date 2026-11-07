@@ -110,11 +110,7 @@ export function AppFooter() {
                             >
                                 Ready to move forward? Let’s work together.
                             </Typography>
-                            <Button
-                                asChild
-                                variant="outline"
-                                className={`px-8 py-4 h-auto cursor-pointer ${styles.contactButton}`}
-                            >
+                            <Button asChild variant="editorial" size="pill">
                                 <Link href="/contact">
                                     Start a conversation
                                 </Link>

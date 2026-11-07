@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import React from 'react'
 import Link from 'next/link'
@@ -42,12 +42,12 @@ export function NavItem({
             )}
             {...rest}
         >
-            <span className="relative z-10 text-xl md:text-2xl font-normal tracking-tight text-white/85 transition-colors group-hover:text-white group-aria-[current]:font-semibold group-aria-[current]:text-(--editorial-yellow)">
+            <span className="relative z-10 text-xl md:text-2xl font-normal tracking-tight text-white/85 transition-colors group-hover:text-white group-aria-[current]:font-semibold group-aria-[current]:text-editorial-yellow">
                 {children}
             </span>
             <span
                 aria-hidden="true"
-                className="size-2 rounded-full bg-(--editorial-yellow) opacity-0 scale-75 transition-all duration-200 group-hover:opacity-60 group-aria-[current]:opacity-100 group-aria-[current]:scale-100"
+                className="size-2 rounded-full bg-editorial-yellow opacity-0 scale-75 transition-all duration-200 group-hover:opacity-60 group-aria-[current]:opacity-100 group-aria-[current]:scale-100"
             />
         </Link>
     )

@@ -177,7 +177,7 @@
 .note {
     position: relative;
     background: var(--about-note-yellow);
-    box-shadow: 2px 6px 12px rgb(17 18 18 / 16%);
+    box-shadow: 2px 6px 12px rgb(var(--editorial-shadow-ink) / 16%);
 }
 
 .note::before,
@@ -189,8 +189,8 @@
     z-index: 1;
     width: 64px;
     height: 20px;
-    background: rgb(255 255 255 / 58%);
-    box-shadow: 0 1px 3px rgb(17 18 18 / 14%);
+    background: rgb(var(--editorial-white) / 58%);
+    box-shadow: 0 1px 3px rgb(var(--editorial-shadow-ink) / 14%);
     pointer-events: none;
 }
 
@@ -221,7 +221,7 @@
 .photo {
     padding: 8px 8px 4px;
     background: var(--editorial-surface);
-    box-shadow: 0 6px 18px rgb(17 18 18 / 20%);
+    box-shadow: 0 6px 18px rgb(var(--editorial-shadow-ink) / 20%);
     transform: rotate(6deg);
 }
 
@@ -275,8 +275,8 @@
     background: var(--section-color);
     color: var(--editorial-ink);
     box-shadow:
-        0 5px 12px rgb(20 20 19 / 22%),
-        0 2px 4px rgb(20 20 19 / 14%);
+        0 5px 12px rgb(var(--editorial-shadow-ink) / 22%),
+        0 2px 4px rgb(var(--editorial-shadow-ink) / 14%);
     font-size: var(--editorial-text-micro);
     font-weight: var(--editorial-weight-label);
     line-height: 1.4;

@@ -123,7 +123,7 @@
     width: min(100%, 300px);
     justify-self: end;
     padding: 1.5rem 1.75rem 1.875rem;
-    box-shadow: 0 4px 12px rgb(17 18 18 / 14%);
+    box-shadow: 0 4px 12px rgb(var(--editorial-shadow-ink) / 14%);
     background: var(--editorial-yellow);
     color: var(--page-ink);
     transform: rotate(3.5deg);
@@ -145,8 +145,8 @@
     left: 36%;
     width: 76px;
     height: 22px;
-    background: rgb(255 255 255 / 62%);
-    box-shadow: 0 1px 3px rgb(17 18 18 / 14%);
+    background: rgb(var(--editorial-white) / 62%);
+    box-shadow: 0 1px 3px rgb(var(--editorial-shadow-ink) / 14%);
     transform: rotate(-10deg);
 }
 

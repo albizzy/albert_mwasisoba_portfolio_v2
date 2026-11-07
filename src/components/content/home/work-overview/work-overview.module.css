@@ -1,4 +1,4 @@
-.section {
+﻿.section {
     --stack-top: 112px;
     --folder-tab-height: clamp(48px, 4.4vw, 68px);
     --folder-step: 21%;
@@ -40,7 +40,7 @@
 
 .card {
     --folder-color: var(--editorial-blue);
-    --folder-ink: #fff;
+    --folder-ink: var(--editorial-surface);
     --tag-ink: var(--editorial-ink);
     position: sticky;
     /* One shared offset keeps the folder tabs aligned. It only drops above
@@ -71,13 +71,13 @@
 .card[data-tone='2'] {
     --folder-color: var(--editorial-yellow);
     --folder-ink: var(--editorial-ink);
-    --tag-ink: #fff;
+    --tag-ink: var(--editorial-surface);
 }
 
 .card[data-tone='3'] {
     --folder-color: var(--editorial-pink);
     --folder-ink: var(--editorial-ink);
-    --tag-ink: #fff;
+    --tag-ink: var(--editorial-surface);
 }
 
 .tab {
@@ -228,8 +228,8 @@
     top: -12px;
     width: clamp(64px, 5.8vw, 96px);
     height: 24px;
-    background: rgb(255 255 255 / 55%);
-    box-shadow: 0 1px 3px rgb(17 18 18 / 15%);
+    background: rgb(var(--editorial-white) / 55%);
+    box-shadow: 0 1px 3px rgb(var(--editorial-shadow-ink) / 15%);
     pointer-events: none;
 }
 

@@ -1,4 +1,4 @@
-.section {
+﻿.section {
     position: relative;
     display: flex;
     width: 100%;
@@ -99,25 +99,25 @@
 .skillBubble[data-tone='yellow'] {
     --sticker-bg: var(--editorial-yellow, #dfad49);
     --sticker-fg: var(--editorial-ink, #141413);
-    --sticker-icon-bg: rgb(20 20 19 / 12%);
+    --sticker-icon-bg: rgb(var(--editorial-shadow-ink) / 12%);
 }
 
 .skillBubble[data-tone='blue'] {
     --sticker-bg: var(--editorial-blue, #3b6b88);
-    --sticker-fg: #ffffff;
-    --sticker-icon-bg: rgb(255 255 255 / 18%);
+    --sticker-fg: var(--editorial-surface);
+    --sticker-icon-bg: rgb(var(--editorial-white) / 18%);
 }
 
 .skillBubble[data-tone='green'] {
     --sticker-bg: var(--editorial-green, #3a6b35);
-    --sticker-fg: #ffffff;
-    --sticker-icon-bg: rgb(255 255 255 / 18%);
+    --sticker-fg: var(--editorial-surface);
+    --sticker-icon-bg: rgb(var(--editorial-white) / 18%);
 }
 
 .skillBubble[data-tone='pink'] {
     --sticker-bg: var(--editorial-pink, #eb4f68);
-    --sticker-fg: #ffffff;
-    --sticker-icon-bg: rgb(255 255 255 / 20%);
+    --sticker-fg: var(--editorial-surface);
+    --sticker-icon-bg: rgb(var(--editorial-white) / 20%);
 }
 
 .skillBubble[data-position='top-left'] {
@@ -155,13 +155,13 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.32rem 0.85rem 0.32rem 0.4rem;
-    border: 3px solid #ffffff;
+    border: 3px solid var(--editorial-outline);
     border-radius: 999px;
     background: var(--sticker-bg);
     color: var(--sticker-fg);
     box-shadow:
-        0 5px 12px rgb(20 20 19 / 22%),
-        0 2px 4px rgb(20 20 19 / 14%);
+        0 5px 12px rgb(var(--editorial-shadow-ink) / 22%),
+        0 2px 4px rgb(var(--editorial-shadow-ink) / 14%);
     font-size: clamp(0.6875rem, 0.85vw, 0.8125rem);
     font-weight: var(--editorial-weight-label, 500);
     line-height: 1;
@@ -179,8 +179,8 @@
     transform: rotate(calc(var(--sticker-tilt, 0deg) * 0.3)) translateY(-3px)
         scale(1.07);
     box-shadow:
-        0 10px 20px rgb(20 20 19 / 26%),
-        0 3px 6px rgb(20 20 19 / 16%);
+        0 10px 20px rgb(var(--editorial-shadow-ink) / 26%),
+        0 3px 6px rgb(var(--editorial-shadow-ink) / 16%);
 }
 
 .skillIcon {
