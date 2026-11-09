@@ -1,0 +1,43 @@
+@layer components {
+    .link {
+        color: var(--editorial-ink);
+        font-weight: var(--editorial-weight-label);
+        text-decoration: underline;
+        text-decoration-color: var(--tone, var(--editorial-yellow));
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        overflow-wrap: anywhere;
+        transition:
+            text-decoration-color 180ms ease,
+            opacity 180ms ease;
+    }
+
+    .link:hover {
+        text-decoration-color: currentColor;
+    }
+
+    .link[data-variant='action'] {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 4px;
+        border-bottom: 2px solid currentColor;
+        color: inherit;
+        font-size: var(--editorial-text-small);
+        font-weight: var(--editorial-weight-heading);
+        letter-spacing: var(--editorial-tracking-label);
+        line-height: 1.4;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .link[data-variant='action']:hover {
+        opacity: 0.72;
+    }
+
+    .link[data-variant='action'] svg {
+        width: 1rem;
+        height: 1rem;
+        flex: none;
+    }
+}

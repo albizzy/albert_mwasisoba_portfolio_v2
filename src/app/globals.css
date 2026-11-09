@@ -117,11 +117,42 @@
     --editorial-text-small: 0.8125rem;
     --editorial-text-label: 0.875rem;
     --editorial-text-body: 1rem;
-    --editorial-text-lead: 1.125rem;
+    --editorial-text-lead: clamp(1rem, 1.08vw, 1.125rem);
+    --editorial-text-prose: clamp(0.9375rem, 1vw, 1.0625rem);
+    --editorial-text-eyebrow: clamp(1.5rem, 2.2vw, 2rem);
     --editorial-weight-body: 400;
     --editorial-weight-label: 500;
     --editorial-weight-heading: 600;
     --editorial-weight-display: 700;
+
+    /* Type scale. Every heading on the site uses one of these four sizes. */
+    --editorial-title-page: clamp(2.25rem, 4.8vw, 4.25rem);
+    --editorial-title-section: clamp(1.875rem, 3.6vw, 3.25rem);
+    --editorial-title-panel: clamp(1.5rem, 2.6vw, 2.25rem);
+    --editorial-title-item: clamp(1.125rem, 1.5vw, 1.375rem);
+    --editorial-leading-title: 1.08;
+    --editorial-leading-body: 1.7;
+    --editorial-tracking-title: -0.04em;
+    --editorial-tracking-body: -0.01em;
+    --editorial-tracking-label: 0.12em;
+    --editorial-tracking-tag: 0.08em;
+
+    /* Surfaces. Sheets hold a page's main content; cards sit in grids or
+       inside sheets. Shadows stay neutral: colour belongs to accents. */
+    --editorial-border: 2px solid var(--editorial-ink);
+    --editorial-hairline: 1px solid var(--editorial-line);
+    --editorial-radius-card: 20px;
+    --editorial-radius-control: 14px;
+    --editorial-shadow-sheet: 8px 8px 0 var(--editorial-line);
+    --editorial-shadow-card: 5px 5px 0 var(--editorial-line);
+    --editorial-shadow-sticker:
+        0 5px 12px rgb(var(--editorial-shadow-ink) / 22%),
+        0 2px 4px rgb(var(--editorial-shadow-ink) / 14%);
+
+    /* Rhythm */
+    --container-narrow: 56rem;
+    --page-padding-top: clamp(3rem, 7vw, 6rem);
+    --editorial-header-gap: clamp(3rem, 5vw, 4.5rem);
     --background: oklch(1 0 0);
     --foreground: oklch(0.141 0.005 285.823);
     --card: oklch(1 0 0);
@@ -190,6 +221,45 @@
         @apply bg-background text-foreground;
     }
 
+    /* Tones: any element with data-tone exposes --tone (the accent),
+       --tone-soft (its tint) and --tone-ink (legible text on --tone).
+       Components read these instead of naming colours. */
+    [data-tone='ink'] {
+        --tone: var(--editorial-ink);
+        --tone-soft: var(--editorial-line);
+        --tone-ink: var(--editorial-surface);
+    }
+
+    [data-tone='yellow'] {
+        --tone: var(--editorial-yellow);
+        --tone-soft: var(--editorial-yellow-soft);
+        --tone-ink: var(--editorial-ink);
+    }
+
+    [data-tone='pink'] {
+        --tone: var(--editorial-pink);
+        --tone-soft: var(--editorial-pink-soft);
+        --tone-ink: var(--editorial-ink);
+    }
+
+    [data-tone='blue'] {
+        --tone: var(--editorial-blue);
+        --tone-soft: var(--editorial-blue-soft);
+        --tone-ink: var(--editorial-surface);
+    }
+
+    [data-tone='green'] {
+        --tone: var(--editorial-green);
+        --tone-soft: var(--editorial-green-soft);
+        --tone-ink: var(--editorial-surface);
+    }
+
+    /* Default focus ring for anything a component hasn't styled itself. */
+    :focus-visible {
+        outline: 2px solid var(--editorial-blue);
+        outline-offset: 4px;
+    }
+
     ::selection {
         background-color: color-mix(
             in oklab,
@@ -245,4 +315,10 @@ html.custom-cursor-active * {
 
 html.custom-cursor-active iframe {
     cursor: auto !important;
+}
+
+/* The one content column: header, sections and pages all align to it. */
+@utility page-container {
+    width: min(100% - 2 * var(--section-padding-x), var(--container-max));
+    margin-inline: auto;
 }

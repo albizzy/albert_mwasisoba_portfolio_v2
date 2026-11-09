@@ -1,0 +1,43 @@
+@layer components {
+    .card {
+        position: relative;
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        gap: 1.25rem;
+        padding: clamp(1.25rem, 2.6vw, 1.75rem);
+        border-radius: var(--editorial-radius-card);
+    }
+
+    .card[data-variant='outline'] {
+        border: var(--editorial-border);
+        background: var(--editorial-surface);
+        box-shadow: var(--editorial-shadow-card);
+    }
+
+    .card[data-variant='soft'] {
+        background: var(--tone-soft, var(--editorial-yellow-soft));
+        color: var(--editorial-ink);
+    }
+
+    .card[data-interactive] {
+        transition:
+            transform 200ms var(--editorial-ease),
+            box-shadow 200ms var(--editorial-ease);
+    }
+
+    .card[data-interactive]:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 7px 7px 0 var(--tone, var(--editorial-yellow));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .card[data-interactive] {
+            transition: none;
+        }
+
+        .card[data-interactive]:hover {
+            transform: none;
+        }
+    }
+}

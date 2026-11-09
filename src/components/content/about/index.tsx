@@ -1,64 +1,56 @@
 'use client'
 
-import Image from 'next/image'
-import { Section } from '@/components/content/sections'
+import { PageShell } from '@/components/layout'
+import { PageHeader } from '@/components/content/sections'
+import { Chip } from '@/components/ui/chip'
+import { Panel } from '@/components/ui/panel'
 import { useSectionNavigation } from '@/hooks'
 import { aboutSectionIds, aboutSections } from './about-sections'
 import styles from './about.module.css'
-import { cn } from '@/lib/utils'
 
 export function AboutContent() {
     const { containerRef, activeSection, scrollToSection } =
         useSectionNavigation(aboutSectionIds)
 
     return (
-        <div ref={containerRef} className={cn(styles.page)}>
-            <nav className={styles.navigation} aria-label="About sections">
-                {aboutSections.map(({ id, label, icon, tone }) => (
-                    <button
-                        key={id}
-                        type="button"
-                        className={styles.tab}
-                        data-tone={tone}
-                        aria-controls={id}
-                        aria-current={
-                            activeSection === id ? 'location' : undefined
-                        }
-                        onClick={() => scrollToSection(id)}
-                    >
-                        <Image
-                            src={`/images/about/${icon}.svg`}
-                            alt=""
-                            width={14}
-                            height={14}
-                        />
-                        {label}
-                    </button>
-                ))}
-            </nav>
+        <PageShell>
+            <PageHeader eyebrow="Meet Albert" title="Frontend engineer" />
 
-            <div className={styles.content}>
-                {aboutSections.map(({ id, label, tone, Content }) => (
-                    <Section
-                        key={id}
-                        id={id}
-                        aria-labelledby={`${id}-title`}
-                        tone="transparent"
-                        withDefaultContainer={false}
-                        className={styles.section}
-                        data-tone={tone}
-                    >
-                        <h2
-                            id={`${id}-title`}
-                            tabIndex={-1}
-                            className={styles.sectionLabel}
+            <div ref={containerRef} className={styles.layout}>
+                <nav className={styles.navigation} aria-label="About sections">
+                    {aboutSections.map(({ id, label }) => (
+                        <Chip
+                            key={id}
+                            active={activeSection === id}
+                            aria-controls={id}
+                            aria-current={
+                                activeSection === id ? 'location' : undefined
+                            }
+                            onClick={() => scrollToSection(id)}
                         >
                             {label}
-                        </h2>
-                        <Content />
-                    </Section>
-                ))}
+                        </Chip>
+                    ))}
+                </nav>
+
+                <div className={styles.content}>
+                    {aboutSections.map(({ id, label, Content }) => (
+                        <Panel
+                            key={id}
+                            id={id}
+                            aria-labelledby={`${id}-title`}
+                            className={styles.section}
+                            tab={
+                                <h2 id={`${id}-title`} tabIndex={-1}>
+                                    {label}
+                                </h2>
+                            }
+                        >
+                            <Content />
+                        </Panel>
+                    ))}
+                </div>
             </div>
-        </div>
+        </PageShell>
     )
 }

@@ -1,39 +1,25 @@
-﻿'use client'
+'use client'
 
+import type { LucideIcon } from 'lucide-react'
 import { useGsapReveal, type GsapRevealConfig } from '@/hooks'
-import { Section } from '../sections'
-import { Typography } from '@/components/ui/typography'
+import { PageShell } from '@/components/layout'
+import { PageHeader, Section, SectionHeading } from '../sections'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import {
-    servicePillars,
-    approachSteps,
-    technologies,
-    routes,
-    type ServicePillarTone,
-} from '@/config'
+import { Card } from '@/components/ui/card'
+import { NumberedList } from '@/components/ui/numbered-list'
+import { Panel } from '@/components/ui/panel'
+import { Tag } from '@/components/ui/tag'
+import { servicePillars, approachSteps, technologies, routes } from '@/config'
 import { toSequenceLabel } from '@/helpers'
 import { ArrowUpRight } from 'lucide-react'
 import { useRef } from 'react'
-import { caveat } from '@/lib/fonts'
 import { cn } from '@/lib/utils'
-
-// Accent per pillar tone. The icon colour follows the tone, not the position.
-const pillarToneStyles: Record<
-    ServicePillarTone,
-    { accent: string; iconClassName: string }
-> = {
-    yellow: {
-        accent: 'var(--editorial-yellow)',
-        iconClassName: 'text-editorial-ink',
-    },
-    blue: { accent: 'var(--editorial-blue)', iconClassName: 'text-white' },
-    green: { accent: 'var(--editorial-green)', iconClassName: 'text-white' },
-}
+import styles from './expertise.module.css'
 
 const expertiseAnimations: ReadonlyArray<GsapRevealConfig> = [
     {
-        target: '.expertise-hero-copy',
+        target: '.expertise-hero > *',
         preset: 'fade-up',
         duration: 1,
         stagger: 0.12,
@@ -65,284 +51,138 @@ const expertiseAnimations: ReadonlyArray<GsapRevealConfig> = [
     },
 ]
 
+function IconBadge({ icon: Icon }: { icon: LucideIcon }) {
+    return (
+        <span className={styles.stepIcon}>
+            <Icon aria-hidden="true" />
+        </span>
+    )
+}
+
+const steps = approachSteps.map((step) => ({
+    id: step.number,
+    title: step.title,
+    description: step.description,
+    aside: <IconBadge icon={step.icon} />,
+}))
+
 export function ExpertiseContent() {
     const pageRef = useRef<HTMLDivElement>(null)
 
     useGsapReveal(pageRef, expertiseAnimations)
 
     return (
-        <div ref={pageRef} className="flex w-full flex-col text-editorial-ink">
-            <Section
-                className="py-16 md:py-24"
-                aria-labelledby="expertise-title"
-            >
-                <div className="flex max-w-4xl flex-col gap-4">
-                    <p
-                        className={cn(
-                            caveat.className,
-                            'expertise-hero-copy text-2xl md:text-3xl font-semibold text-editorial-muted'
-                        )}
-                    >
-                        Capabilities &amp; craft
-                    </p>
-                    <Typography
-                        id="expertise-title"
-                        as="h1"
-                        variant="h2"
-                        className="expertise-hero-copy max-w-4xl font-semibold tracking-tight leading-[1.08] text-editorial-ink"
-                    >
-                        Digital products built from the system to the surface.
-                    </Typography>
-                    <Typography
-                        as="p"
-                        variant="lead"
-                        className="expertise-hero-copy mt-2 max-w-2xl text-editorial-muted"
-                    >
-                        I combine technical architecture, product thinking, and
-                        visual design to create digital work that is useful,
-                        expressive, and ready to grow.
-                    </Typography>
-                </div>
-            </Section>
+        <div ref={pageRef} className="flex w-full flex-col">
+            <PageShell className={styles.hero}>
+                <PageHeader
+                    className="expertise-hero mb-0"
+                    eyebrow="Capabilities & craft"
+                    title="Digital products built from the system to the surface."
+                    lead="I combine technical architecture, product thinking, and visual design to create digital work that is useful, expressive, and ready to grow."
+                />
+            </PageShell>
 
-            <Section
-                bordered
-                className="bg-editorial-paper"
-                aria-labelledby="services-title"
-            >
-                <div className="flex max-w-3xl flex-col gap-2">
-                    <p
-                        className={cn(
-                            caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
-                        )}
-                    >
-                        What I do
-                    </p>
-                    <Typography
-                        id="services-title"
-                        as="h2"
-                        variant="h3"
-                        className="font-semibold text-editorial-ink"
-                    >
-                        Three capabilities, designed to work together.
-                    </Typography>
-                </div>
+            <Section tone="paper" bordered aria-labelledby="services-title">
+                <SectionHeading
+                    eyebrow="What I do"
+                    title="Three capabilities, designed to work together."
+                    titleId="services-title"
+                />
 
-                <div className="grid gap-6 lg:grid-cols-3">
+                <div className={styles.services}>
                     {servicePillars.map((service, index) => {
                         const Icon = service.icon
-                        const { accent: accentColor, iconClassName } =
-                            pillarToneStyles[service.tone]
 
                         return (
-                            <article
+                            <Card
+                                as="article"
                                 key={service.title}
-                                style={{
-                                    boxShadow: `6px 6px 0 ${accentColor}`,
-                                }}
-                                className="service-card flex flex-col justify-between gap-10 rounded-editorial-panel border-2 border-editorial-ink bg-editorial-surface p-6 md:p-8"
+                                className={cn('service-card', styles.service)}
                             >
-                                <div className="flex items-center justify-between">
-                                    <div
-                                        style={{ backgroundColor: accentColor }}
-                                        className={cn(
-                                            'flex size-12 items-center justify-center rounded-full border-2 border-editorial-ink',
-                                            iconClassName
-                                        )}
+                                <div className={styles.serviceTop}>
+                                    <span
+                                        className={styles.serviceIcon}
+                                        data-tone={service.tone}
                                     >
-                                        <Icon
-                                            aria-hidden="true"
-                                            className="size-5"
-                                        />
-                                    </div>
-                                    <span className="text-xs font-medium uppercase tracking-[0.12em] text-editorial-muted">
+                                        <Icon aria-hidden="true" />
+                                    </span>
+                                    <span className={styles.serviceNumber}>
                                         {toSequenceLabel(index)}
                                     </span>
                                 </div>
-                                <div className="flex flex-col gap-6">
-                                    <div className="flex flex-col gap-3">
-                                        <Typography
-                                            as="h3"
-                                            variant="h5"
-                                            className="font-semibold text-editorial-ink"
-                                        >
-                                            {service.title}
-                                        </Typography>
-                                        <Typography
-                                            as="p"
-                                            variant="body"
-                                            className="text-editorial-muted leading-relaxed"
-                                        >
-                                            {service.description}
-                                        </Typography>
-                                    </div>
-                                    <ul
-                                        className="flex flex-wrap gap-2 pt-2 border-t border-editorial-line"
-                                        aria-label={`${service.title} capabilities`}
-                                    >
-                                        {service.capabilities.map(
-                                            (capability) => (
-                                                <li
-                                                    key={capability}
-                                                    className="rounded-editorial-tag border border-editorial-line bg-editorial-paper px-2.5 py-1 text-xs font-medium uppercase tracking-[0.06em] text-editorial-ink"
-                                                >
-                                                    {capability}
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
+                                <div className={styles.serviceCopy}>
+                                    <h3 className={styles.serviceTitle}>
+                                        {service.title}
+                                    </h3>
+                                    <p className={styles.serviceText}>
+                                        {service.description}
+                                    </p>
                                 </div>
-                            </article>
+                                <ul
+                                    className={styles.capabilities}
+                                    aria-label={`${service.title} capabilities`}
+                                >
+                                    {service.capabilities.map((capability) => (
+                                        <Tag as="li" key={capability}>
+                                            {capability}
+                                        </Tag>
+                                    ))}
+                                </ul>
+                            </Card>
                         )
                     })}
                 </div>
             </Section>
 
             <Section bordered aria-labelledby="approach-title">
-                <div className="grid gap-10 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
-                    <div className="flex flex-col gap-3">
-                        <p
-                            className={cn(
-                                caveat.className,
-                                'text-2xl md:text-3xl font-semibold text-editorial-muted'
-                            )}
-                        >
-                            My approach
-                        </p>
-                        <Typography
-                            id="approach-title"
-                            as="h2"
-                            variant="h3"
-                            className="font-semibold text-editorial-ink"
-                        >
-                            A clear path through complex work.
-                        </Typography>
-                        <Typography
-                            as="p"
-                            variant="body"
-                            className="mt-1 max-w-md text-editorial-muted leading-relaxed"
-                        >
-                            The shape of every project changes, but the work
-                            stays collaborative, iterative, and focused on
-                            useful outcomes.
-                        </Typography>
-                    </div>
-
-                    <ol className="flex flex-col rounded-editorial-panel border-2 border-editorial-ink bg-editorial-paper p-6 md:p-8 shadow-[8px_8px_0_var(--editorial-line)]">
-                        {approachSteps.map((step) => {
-                            const Icon = step.icon
-
-                            return (
-                                <li
-                                    key={step.number}
-                                    className="approach-step grid gap-4 border-t border-editorial-line py-7 first:border-t-0 first:pt-0 last:pb-0 sm:grid-cols-[3.5rem_1fr_auto]"
-                                >
-                                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-editorial-green pt-1">
-                                        {step.number}
-                                    </span>
-                                    <div className="flex flex-col gap-2">
-                                        <Typography
-                                            as="h3"
-                                            variant="h6"
-                                            className="font-semibold text-editorial-ink"
-                                        >
-                                            {step.title}
-                                        </Typography>
-                                        <Typography
-                                            as="p"
-                                            variant="body"
-                                            className="max-w-xl text-editorial-muted leading-relaxed"
-                                        >
-                                            {step.description}
-                                        </Typography>
-                                    </div>
-                                    <div className="flex size-11 items-center justify-center rounded-full border border-editorial-line bg-editorial-surface text-editorial-ink">
-                                        <Icon
-                                            aria-hidden="true"
-                                            className="size-5"
-                                        />
-                                    </div>
-                                </li>
-                            )
-                        })}
-                    </ol>
+                <div className={styles.split}>
+                    <SectionHeading
+                        align="start"
+                        eyebrow="My approach"
+                        title="A clear path through complex work."
+                        titleId="approach-title"
+                        lead="The shape of every project changes, but the work stays collaborative, iterative, and focused on useful outcomes."
+                    />
+                    <Panel as="div">
+                        <NumberedList
+                            items={steps}
+                            itemClassName="approach-step"
+                        />
+                    </Panel>
                 </div>
             </Section>
 
-            <Section
-                bordered
-                className="bg-editorial-paper"
-                aria-labelledby="toolkit-title"
-            >
-                <div className="grid gap-8 md:grid-cols-[0.85fr_1.15fr] md:gap-16">
-                    <div className="flex flex-col gap-2">
-                        <p
-                            className={cn(
-                                caveat.className,
-                                'text-2xl md:text-3xl font-semibold text-editorial-muted'
-                            )}
-                        >
-                            Toolkit
-                        </p>
-                        <Typography
-                            id="toolkit-title"
-                            as="h2"
-                            variant="h3"
-                            className="font-semibold text-editorial-ink"
-                        >
-                            Tools chosen for the job.
-                        </Typography>
-                    </div>
-                    <ul className="flex flex-wrap content-start gap-3">
+            <Section tone="paper" bordered aria-labelledby="toolkit-title">
+                <div className={styles.split}>
+                    <SectionHeading
+                        align="start"
+                        eyebrow="Toolkit"
+                        title="Tools chosen for the job."
+                        titleId="toolkit-title"
+                    />
+                    <ul className={styles.toolkit}>
                         {technologies.map((technology) => (
-                            <li
+                            <Tag
+                                as="li"
                                 key={technology}
-                                className="technology-pill rounded-full border-[1.5px] border-editorial-ink bg-editorial-surface px-4 py-2.5 text-xs md:text-sm font-medium uppercase tracking-[0.08em] text-editorial-ink shadow-[3px_3px_0_var(--editorial-line)]"
+                                className="technology-pill"
                             >
                                 {technology}
-                            </li>
+                            </Tag>
                         ))}
                     </ul>
                 </div>
             </Section>
 
-            <Section
-                bordered
-                containerClassName="items-center text-center"
-                aria-labelledby="expertise-cta-title"
-            >
-                <div className="expertise-cta flex max-w-3xl flex-col items-center gap-5">
-                    <p
-                        className={cn(
-                            caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
-                        )}
-                    >
-                        Next step
-                    </p>
-                    <Typography
-                        id="expertise-cta-title"
-                        as="h2"
-                        variant="h3"
-                        className="font-semibold text-editorial-ink"
-                    >
-                        Need more than a polished surface?
-                    </Typography>
-                    <Typography
-                        as="p"
-                        variant="lead"
-                        className="max-w-xl text-editorial-muted"
-                    >
-                        Let&apos;s shape the product, the system, and the path
-                        to delivery together.
-                    </Typography>
-                    <Button
-                        asChild
-                        variant="editorialDark"
-                        size="pill"
-                        className="mt-2"
-                    >
+            <Section bordered aria-labelledby="expertise-cta-title">
+                <div className={cn('expertise-cta', styles.cta)}>
+                    <SectionHeading
+                        eyebrow="Next step"
+                        title="Need more than a polished surface?"
+                        titleId="expertise-cta-title"
+                        lead="Let’s shape the product, the system, and the path to delivery together."
+                    />
+                    <Button asChild variant="editorialDark" size="pill">
                         <Link href={routes.contact}>
                             Discuss a project
                             <ArrowUpRight aria-hidden="true" />

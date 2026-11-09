@@ -1,0 +1,11 @@
+@layer components {
+    .highlight {
+        display: inline-block;
+        padding: 0.06em 0.2em 0.1em;
+        border-radius: 0.16em 0.42em 0.16em 0.16em;
+        background: var(--tone, var(--editorial-ink));
+        color: var(--tone-ink, var(--editorial-surface));
+        line-height: 1;
+        white-space: nowrap;
+    }
+}

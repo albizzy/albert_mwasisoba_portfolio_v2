@@ -1,0 +1,39 @@
+@layer components {
+    .frame {
+        /* Tape reads on dark or colour by default; set --frame-tape on light
+           backgrounds. */
+        --frame-tape: rgb(var(--editorial-white) / 55%);
+        position: relative;
+    }
+
+    .frame::before,
+    .frame::after {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: -12px;
+        width: clamp(56px, 30%, 96px);
+        height: 24px;
+        background: var(--frame-tape);
+        box-shadow: 0 1px 3px rgb(var(--editorial-shadow-ink) / 15%);
+        pointer-events: none;
+    }
+
+    .frame::before {
+        left: -16px;
+        transform: rotate(-9deg);
+    }
+
+    .frame::after {
+        right: -16px;
+        transform: rotate(9deg);
+    }
+
+    .inner {
+        position: relative;
+        overflow: hidden;
+        border: var(--editorial-border);
+        border-radius: 16px;
+        background: var(--editorial-paper);
+    }
+}

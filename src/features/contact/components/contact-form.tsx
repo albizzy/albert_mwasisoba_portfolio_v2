@@ -4,6 +4,7 @@ import { useActionState, useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { TextLink } from '@/components/ui/text-link'
 import { routes } from '@/config/routes'
 import { submitContact } from '../actions'
 import {
@@ -79,11 +80,7 @@ export function ContactForm({
                 </span>
                 <h2 className={styles.successTitle}>A conversation started.</h2>
                 <p className={styles.status}>{state.message}</p>
-                <Button
-                    asChild
-                    variant="outline"
-                    className={styles.secondaryButton}
-                >
+                <Button asChild variant="editorial" size="pill">
                     <Link href={routes.schedule}>
                         Book a call <ArrowUpRight aria-hidden="true" />
                     </Link>
@@ -157,13 +154,13 @@ export function ContactForm({
                     <p role="status" className={styles.status}>
                         The message form is temporarily unavailable.{' '}
                         {publicEmail ? (
-                            <a href={`mailto:${publicEmail}`}>
+                            <TextLink href={`mailto:${publicEmail}`}>
                                 Email me directly
-                            </a>
+                            </TextLink>
                         ) : (
-                            <Link href={routes.schedule}>
+                            <TextLink href={routes.schedule}>
                                 Check call availability
-                            </Link>
+                            </TextLink>
                         )}
                         .
                     </p>
@@ -181,7 +178,8 @@ export function ContactForm({
                 <Button
                     disabled={pending || !ready || !token}
                     type="submit"
-                    className={styles.primaryButton}
+                    variant="editorialDark"
+                    size="pill"
                 >
                     {pending ? (
                         <>

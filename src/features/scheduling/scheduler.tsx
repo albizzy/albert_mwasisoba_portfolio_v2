@@ -1,22 +1,24 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowUpRight, Clock3 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { ChipLabel } from '@/components/ui/chip'
+import { TextLink } from '@/components/ui/text-link'
 import { routes } from '@/config/routes'
 import { cycle, toSequenceLabel } from '@/helpers'
 import type { EditorialTone } from '@/lib/tones'
-import { cn } from '@/lib/utils'
 import styles from '@/styles/correspondence.module.css'
 import type { MeetingType } from './types'
 
-// Meeting cards cycle through these tones (styled in correspondence.module.css).
+// Meeting cards cycle through these tones.
 const MEETING_TONES = [
     'yellow',
     'pink',
 ] as const satisfies ReadonlyArray<EditorialTone>
+
+const BOOKING_STEPS = ['Conversation', 'Date, time & details'] as const
 
 const CalBooking = dynamic(
     () => import('./cal-booking').then((module) => module.CalBooking),
@@ -48,18 +50,19 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
     return (
         <div>
             <ol aria-label="Booking process" className={styles.steps}>
-                <li
-                    aria-current={!selected ? 'step' : undefined}
-                    className={cn(styles.step, !selected && styles.stepActive)}
-                >
-                    01 / Conversation
-                </li>
-                <li
-                    aria-current={selected ? 'step' : undefined}
-                    className={cn(styles.step, selected && styles.stepActive)}
-                >
-                    02 / Date, time &amp; details
-                </li>
+                {BOOKING_STEPS.map((step, index) => {
+                    const current = index === (selected ? 1 : 0)
+                    return (
+                        <li
+                            key={step}
+                            aria-current={current ? 'step' : undefined}
+                        >
+                            <ChipLabel active={current}>
+                                {toSequenceLabel(index)} / {step}
+                            </ChipLabel>
+                        </li>
+                    )
+                })}
             </ol>
 
             {!selected ? (
@@ -111,9 +114,9 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                         ) : (
                             <>
                                 Online booking is being prepared.{' '}
-                                <Link href={routes.contact}>
+                                <TextLink href={routes.contact} tone="blue">
                                     Send me a message
-                                </Link>{' '}
+                                </TextLink>{' '}
                                 to arrange a conversation.
                             </>
                         )}
@@ -133,15 +136,15 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                             </span>
                         </h2>
                         <Button
-                            variant="outline"
+                            variant="editorialOutline"
+                            size="pill-sm"
                             onClick={() => setSelected(null)}
-                            className={styles.secondaryButton}
                         >
                             <ArrowLeft aria-hidden="true" />
                             Change conversation
                         </Button>
                     </div>
-                    <p className={styles.panelHint}>
+                    <p className={styles.calendarHint}>
                         Choose a date and time, then add your details below.
                         Your booking is complete when Cal.com shows its
                         confirmation.
@@ -151,15 +154,16 @@ export function Scheduler({ meetings }: { meetings: MeetingType[] }) {
                         namespace={`portfolio-${selected.id}`}
                         calLink={selected.calLink!}
                     />
-                    <a
+                    <TextLink
                         href={`https://cal.com/${selected.calLink}`}
+                        variant="action"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.externalLink}
                     >
                         Open calendar in a new tab
-                        <ArrowUpRight size={16} aria-hidden="true" />
-                    </a>
+                        <ArrowUpRight aria-hidden="true" />
+                    </TextLink>
                 </>
             )}
         </div>

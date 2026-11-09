@@ -1,7 +1,7 @@
 /**
- * Named accents of the editorial palette (the --editorial-* tokens in
- * globals.css). Components accept a subset of these as `tone` props and
- * expose it as `data-tone`; each stylesheet maps a tone to its own tokens.
+ * Named accents of the editorial palette. Components take a `tone` prop and
+ * render it as `data-tone`; globals.css turns that into the --tone,
+ * --tone-soft and --tone-ink custom properties their styles read.
  */
 export const EDITORIAL_TONES = [
     'ink',

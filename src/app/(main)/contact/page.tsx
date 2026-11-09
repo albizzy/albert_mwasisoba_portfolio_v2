@@ -1,12 +1,14 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
-import {
-    CorrespondenceHero,
-    CorrespondencePage,
-    CorrespondencePanel,
-} from '@/components/content/correspondence'
+import { PageShell } from '@/components/layout'
+import { PageHeader } from '@/components/content/sections'
+import { Button } from '@/components/ui/button'
+import { Highlight } from '@/components/ui/highlight'
+import { Panel } from '@/components/ui/panel'
 import { RotatingText } from '@/components/ui/rotating-text'
+import { Tag } from '@/components/ui/tag'
+import { TextLink } from '@/components/ui/text-link'
 import { routes } from '@/config'
 import { ContactForm } from '@/features/contact/components/contact-form'
 import {
@@ -38,27 +40,28 @@ export default function ContactPage() {
     const publicEmail = getPublicContactEmail()
 
     return (
-        <CorrespondencePage>
-            <CorrespondenceHero
+        <PageShell>
+            <PageHeader
                 eyebrow="Get in touch"
-                title="Say"
                 titleLabel="Say hi."
-                highlight={
-                    <RotatingText
-                        items={greetings}
-                        className={styles.greeting}
-                        controlClassName={styles.greetingControl}
-                        accessibleText="hi."
-                        reducedText="hi."
-                        controlLabel="greetings"
-                        holdDuration={3.5}
-                    />
+                title={
+                    <>
+                        Say{' '}
+                        <Highlight tone="yellow">
+                            <RotatingText
+                                items={greetings}
+                                className={styles.greeting}
+                                controlClassName={styles.greetingControl}
+                                accessibleText="hi."
+                                reducedText="hi."
+                                controlLabel="greetings"
+                                holdDuration={3.5}
+                            />
+                        </Highlight>
+                    </>
                 }
                 lead="Open for engineering roles, contracts, and modern web collaborations."
-                note={{
-                    label: 'Response time',
-                    text: 'Usually within 24 hours.',
-                }}
+                meta={<Tag dot>Usually replies within 24 hours</Tag>}
             />
 
             <div className={styles.contactGrid}>
@@ -75,35 +78,33 @@ export default function ContactPage() {
                             delivery.
                         </p>
                     </div>
-                    <Link href={routes.schedule} className={styles.callCard}>
-                        <span>
-                            <small>Introductory chat</small>
-                            <strong>Book a call</strong>
-                        </span>
-                        <ArrowUpRight aria-hidden="true" />
-                    </Link>
+                    <Button asChild variant="editorial" size="pill">
+                        <Link href={routes.schedule}>
+                            Book a call <ArrowUpRight aria-hidden="true" />
+                        </Link>
+                    </Button>
                     {publicEmail && (
                         <p className={styles.emailNote}>
-                            Prefer email?
-                            <a
+                            Prefer email?{' '}
+                            <TextLink
                                 href={`mailto:${publicEmail}`}
-                                className={styles.emailLink}
+                                tone="pink"
                             >
                                 {publicEmail}
-                            </a>
+                            </TextLink>
                         </p>
                     )}
                 </aside>
 
-                <CorrespondencePanel
+                <Panel
                     tab="Direct message"
                     title="How can I help?"
                     titleId="contact-form-title"
                     hint="Brief notes on scope, timeline, or team fit."
                 >
                     <ContactForm {...availability} publicEmail={publicEmail} />
-                </CorrespondencePanel>
+                </Panel>
             </div>
-        </CorrespondencePage>
+        </PageShell>
     )
 }

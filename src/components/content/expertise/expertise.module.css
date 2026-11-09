@@ -1,0 +1,119 @@
+.hero {
+    padding-bottom: var(--editorial-header-gap);
+}
+
+.services {
+    display: grid;
+    gap: clamp(1.5rem, 2.5vw, 2rem);
+}
+
+.service {
+    gap: 2rem;
+}
+
+.serviceTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.serviceIcon {
+    display: flex;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    border: var(--editorial-border);
+    border-radius: 50%;
+    background: var(--tone);
+    color: var(--tone-ink);
+}
+
+.serviceIcon svg,
+.stepIcon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.serviceNumber {
+    color: var(--editorial-muted);
+    font-size: var(--editorial-text-micro);
+    font-weight: var(--editorial-weight-label);
+    letter-spacing: var(--editorial-tracking-label);
+}
+
+.serviceCopy {
+    display: grid;
+    gap: 0.75rem;
+}
+
+.serviceTitle {
+    color: var(--editorial-ink);
+    font-size: var(--editorial-title-panel);
+    font-weight: var(--editorial-weight-heading);
+    line-height: 1.18;
+    letter-spacing: var(--editorial-tracking-title);
+}
+
+.serviceText {
+    color: var(--editorial-muted);
+    font-size: var(--editorial-text-prose);
+    line-height: var(--editorial-leading-body);
+    letter-spacing: var(--editorial-tracking-body);
+}
+
+.capabilities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: var(--editorial-hairline);
+    list-style: none;
+}
+
+.split {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    align-items: start;
+    gap: clamp(2.5rem, 6vw, 4rem);
+}
+
+.stepIcon {
+    display: flex;
+    width: 2.75rem;
+    height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    border: var(--editorial-hairline);
+    border-radius: 50%;
+    background: var(--editorial-paper);
+    color: var(--editorial-ink);
+}
+
+.toolkit {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+    gap: 0.625rem;
+    list-style: none;
+}
+
+.cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+    .services {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .split {
+        grid-template-columns: 1fr;
+    }
+}

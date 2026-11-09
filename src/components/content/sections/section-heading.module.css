@@ -1,0 +1,60 @@
+@layer components {
+    .heading[data-align='center'] {
+        text-align: center;
+    }
+
+    .title {
+        color: var(--editorial-ink);
+        font-weight: var(--editorial-weight-heading);
+        line-height: var(--editorial-leading-title);
+        letter-spacing: var(--editorial-tracking-title);
+        text-wrap: balance;
+        outline-offset: 8px;
+    }
+
+    .title[data-size='page'] {
+        font-size: var(--editorial-title-page);
+    }
+
+    .title[data-size='section'] {
+        font-size: var(--editorial-title-section);
+    }
+
+    .lead {
+        max-width: 52ch;
+        margin-top: clamp(1rem, 2vw, 1.5rem);
+        color: var(--editorial-muted);
+        font-size: var(--editorial-text-lead);
+        font-weight: var(--editorial-weight-body);
+        line-height: var(--editorial-leading-body);
+        letter-spacing: var(--editorial-tracking-body);
+        text-wrap: pretty;
+    }
+
+    .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.625rem;
+        margin-top: 1.5rem;
+    }
+
+    .heading[data-align='center'] .lead {
+        margin-inline: auto;
+    }
+
+    .heading[data-align='center'] .meta {
+        justify-content: center;
+    }
+
+    .page {
+        margin-bottom: var(--editorial-header-gap);
+    }
+
+    .page .title {
+        max-width: 20ch;
+    }
+
+    .page[data-align='center'] .title {
+        margin-inline: auto;
+    }
+}

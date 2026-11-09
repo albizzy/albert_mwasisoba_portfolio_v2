@@ -1,0 +1,109 @@
+@layer components {
+    .list {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
+    }
+
+    .item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 3rem minmax(0, 1fr) auto;
+        align-items: start;
+        gap: 1rem;
+        padding-block: 1.75rem;
+        border-top: var(--editorial-hairline);
+    }
+
+    .item:first-child {
+        padding-top: 0;
+        border-top: 0;
+    }
+
+    .item:last-child {
+        padding-bottom: 0;
+    }
+
+    .number {
+        padding-top: 0.2rem;
+        color: var(--editorial-green);
+        font-size: var(--editorial-text-small);
+        font-weight: var(--editorial-weight-heading);
+        letter-spacing: var(--editorial-tracking-label);
+        line-height: 1.5;
+    }
+
+    .body {
+        display: grid;
+        min-width: 0;
+        gap: 0.5rem;
+    }
+
+    .title {
+        color: var(--editorial-ink);
+        font-size: var(--editorial-title-item);
+        font-weight: var(--editorial-weight-heading);
+        line-height: 1.3;
+        letter-spacing: -0.02em;
+    }
+
+    .description {
+        max-width: 60ch;
+        color: var(--editorial-muted);
+        font-size: var(--editorial-text-label);
+        line-height: var(--editorial-leading-body);
+        letter-spacing: var(--editorial-tracking-body);
+    }
+
+    .meta {
+        color: var(--editorial-muted);
+        font-size: var(--editorial-text-micro);
+        line-height: 1.5;
+    }
+
+    .aside {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding-top: 0.15rem;
+    }
+
+    /* Linked rows: the title link stretches over the whole row. */
+    .link {
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+        transition: text-decoration-color 180ms ease;
+    }
+
+    .link::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    .item[data-linked]:hover .link {
+        text-decoration-color: var(--editorial-yellow);
+    }
+
+    .link:focus-visible {
+        outline: none;
+    }
+
+    .item[data-linked]:has(.link:focus-visible) {
+        outline: 2px solid var(--editorial-blue);
+        outline-offset: 6px;
+        border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+        .item {
+            grid-template-columns: 2.25rem minmax(0, 1fr);
+        }
+
+        .aside {
+            grid-column: 2;
+        }
+    }
+}

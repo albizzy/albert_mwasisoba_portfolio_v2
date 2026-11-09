@@ -1,15 +1,15 @@
 'use client'
 
 import { Typography } from '@/components/ui/typography'
+import { Chip } from '@/components/ui/chip'
+import { PageShell } from '@/components/layout'
 import { works, type WorkItem } from '@/config'
-import { caveat } from '@/lib/fonts'
-import { cn } from '@/lib/utils'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
-import { Fragment, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { WorkCard } from '../home/work-overview/work-card'
-import { Section } from '../sections'
-import { FilterChip } from './filter-chip'
+import { PageHeader } from '../sections'
+import styles from './works.module.css'
 
 gsap.registerPlugin(useGSAP)
 
@@ -17,20 +17,28 @@ const ALL_FILTER = 'All'
 
 interface FilterGroup {
     id: string
+    label: string
     select: (work: WorkItem) => ReadonlyArray<string>
 }
 
-// Each group adds a row of filter chips drawn from the works config, and a
-// work matches when the selected value appears in any group.
+// Each group adds a labelled row of filter chips drawn from the works
+// config; a work matches when the selected value appears in any group.
 const filterGroups: ReadonlyArray<FilterGroup> = [
-    { id: 'services', select: (work) => work.services },
-    { id: 'types', select: (work) => work.types },
+    { id: 'services', label: 'Tools & craft', select: (work) => work.services },
+    { id: 'types', label: 'Role & sector', select: (work) => work.types },
 ]
 
-const filterOptions = filterGroups.map(({ id, select }) => ({
-    id,
-    options: Array.from(new Set(works.flatMap(select))),
-}))
+// A value shared by several groups is offered once, in the first group.
+const offered = new Set<string>()
+const filterOptions = filterGroups
+    .map(({ id, label, select }) => {
+        const options = Array.from(new Set(works.flatMap(select))).filter(
+            (option) => !offered.has(option)
+        )
+        options.forEach((option) => offered.add(option))
+        return { id, label, options }
+    })
+    .filter(({ options }) => options.length > 0)
 
 const matchesFilter = (work: WorkItem, filter: string) =>
     filter === ALL_FILTER ||
@@ -84,79 +92,67 @@ export function WorksContent() {
         { dependencies: [activeFilter], scope: containerRef }
     )
 
+    const renderChip = (value: string, label = value) => (
+        <Chip
+            key={value}
+            active={activeFilter === value}
+            aria-pressed={activeFilter === value}
+            onClick={() => setActiveFilter(value)}
+        >
+            {label}
+        </Chip>
+    )
+
     return (
-        <div ref={containerRef} className="w-full text-editorial-ink">
-            <Section className="py-16 md:py-24">
-                <div className="works-title flex flex-col gap-3 max-w-4xl">
-                    <p
-                        className={cn(
-                            caveat.className,
-                            'text-2xl md:text-3xl font-semibold text-editorial-muted'
-                        )}
-                    >
-                        Selected archive
-                    </p>
-                    <Typography
-                        as="h1"
-                        variant="h2"
-                        className="font-semibold text-editorial-ink tracking-tight leading-[1.08]"
-                    >
-                        Digital products engineered for clarity and scale.
-                    </Typography>
-                    <Typography
-                        as="p"
-                        variant="lead"
-                        className="mt-2 max-w-2xl text-editorial-muted"
-                    >
-                        A curated index of frontend systems, design direction,
-                        and production web applications.
-                    </Typography>
+        <PageShell>
+            <div ref={containerRef}>
+                <PageHeader
+                    className="works-title"
+                    eyebrow="Selected archive"
+                    title="Digital products engineered for clarity and scale."
+                    lead="A curated index of frontend systems, design direction, and production web applications."
+                />
+
+                <div
+                    className={`works-filter-container ${styles.filters}`}
+                    role="group"
+                    aria-label="Filter projects"
+                >
+                    {renderChip(ALL_FILTER, 'All projects')}
+                    {filterOptions.map(({ id, label, options }) => (
+                        <div
+                            key={id}
+                            className={styles.filterGroup}
+                            role="group"
+                            aria-labelledby={`works-filter-${id}`}
+                        >
+                            <span
+                                id={`works-filter-${id}`}
+                                className={styles.filterLabel}
+                            >
+                                {label}
+                            </span>
+                            <div className={styles.filterOptions}>
+                                {options.map((option) => renderChip(option))}
+                            </div>
+                        </div>
+                    ))}
                 </div>
 
-                <div className="works-filter-container flex flex-col gap-4">
-                    <div
-                        className="flex flex-wrap gap-2.5 items-center"
-                        role="group"
-                        aria-label="Filter projects"
-                    >
-                        <FilterChip
-                            label="All Projects"
-                            active={activeFilter === ALL_FILTER}
-                            onSelect={() => setActiveFilter(ALL_FILTER)}
-                        />
-
-                        {filterOptions.map(({ id, options }, groupIndex) => (
-                            <Fragment key={id}>
-                                {groupIndex > 0 && options.length > 0 && (
-                                    <div className="hidden sm:block h-5 w-px bg-editorial-line mx-1" />
-                                )}
-                                {options.map((option) => (
-                                    <FilterChip
-                                        key={option}
-                                        label={option}
-                                        active={activeFilter === option}
-                                        onSelect={() => setActiveFilter(option)}
-                                    />
-                                ))}
-                            </Fragment>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 min-h-75">
+                <div className={styles.grid}>
                     {filteredWorks.length > 0 ? (
                         filteredWorks.map((work) => (
                             <WorkCard key={work.title} work={work} />
                         ))
                     ) : (
-                        <div className="col-span-2 flex flex-col items-center justify-center py-20 text-center">
+                        <div className={styles.empty}>
                             <Typography className="text-editorial-muted">
                                 No works found matching the selected filter.
                             </Typography>
                         </div>
                     )}
                 </div>
-            </Section>
-        </div>
+            </div>
+        </PageShell>
     )
 }

@@ -1,0 +1,36 @@
+@layer components {
+    .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        width: fit-content;
+        padding: 0.4rem 0.75rem;
+        border: var(--editorial-hairline);
+        border-radius: var(--editorial-radius-tag);
+        background: var(--editorial-surface);
+        color: var(--editorial-ink);
+        font-size: var(--editorial-text-micro);
+        font-weight: var(--editorial-weight-label);
+        letter-spacing: var(--editorial-tracking-tag);
+        line-height: 1.4;
+        text-transform: uppercase;
+    }
+
+    .tag[data-variant='solid'] {
+        border-color: transparent;
+        background: var(--tone, var(--editorial-ink));
+        color: var(--tone-ink, var(--editorial-surface));
+    }
+
+    .dot {
+        width: 6px;
+        height: 6px;
+        flex: none;
+        border-radius: 50%;
+        background: var(--tone, var(--editorial-green));
+    }
+
+    .tag[data-variant='solid'] .dot {
+        background: currentColor;
+    }
+}

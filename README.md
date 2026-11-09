@@ -31,6 +31,29 @@ bun run start
 - **Typed primitives:** [`Button`](src/components/ui/button.tsx) uses Radix Slot for composition and Class Variance Authority for typed variants. [`tsconfig.json`](tsconfig.json) enables `strict: true`.
 - **Content and presentation:** Site identity, routes, navigation, social profiles, projects and the case study live in `src/config`; complex section styling lives in adjacent CSS modules. The technical case study renders from `src/config/case-study.ts` in `src/components/content/home/case-studies`.
 
+### Design system
+
+Every page is built from the same tokens and primitives, taken from the home page, so interior pages read like the same publication.
+
+- **Tokens** (`src/app/globals.css`): the editorial palette; a four-step title scale (`--editorial-title-page`, `-section`, `-panel`, `-item`); text sizes, tracking and radii; and two surfaces: `--editorial-border` with a neutral offset shadow for sheets and cards, `--editorial-hairline` for dividers. Colour is reserved for accents.
+- **Tones:** `data-tone="ink|yellow|pink|blue|green"` exposes `--tone`, `--tone-soft` and `--tone-ink` to any component, so components never name colours directly.
+- **Layout:** the `page-container` utility is the one content column shared by the header, sections and pages. [`PageShell`](src/components/layout/page-shell.tsx) frames every interior page.
+- **Primitives** (`src/components/ui`; styles sit in `@layer components`, so page styles and utilities can override them):
+
+| Primitive                                                                              | Use                                                                      |
+| -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [`PageHeader` / `SectionHeading`](src/components/content/sections/section-heading.tsx) | Eyebrow, title, lead and status tags; every page opens with `PageHeader` |
+| `Eyebrow`                                                                              | The handwritten line above a title or under a photo                      |
+| `Highlight`                                                                            | The tinted pill behind one word of a title                               |
+| `Panel`                                                                                | Bordered sheet with an optional folder tab: the main content container   |
+| `Card`                                                                                 | Outline cards in grids; tinted callouts                                  |
+| `Tag` / `Chip`                                                                         | Metadata labels / pill toggles for filters and in-page navigation        |
+| `NumberedList`                                                                         | Hairline-divided rows led by 01, 02, 03                                  |
+| `TextLink` / `Button`                                                                  | Inline and uppercase action links; pill buttons with an accent shadow    |
+| `Frame`                                                                                | Bordered photo frame taped at the corners, as on project previews        |
+
+Conventions: one heading pattern per page, handwritten type only for eyebrows and captions, neutral shadows on surfaces, and tones only on accents such as highlights, tags, buttons and project folders.
+
 ### Considered motion
 
 [`RotatingText`](src/components/ui/rotating-text.tsx) shares the hero and overview animation logic through `@gsap/react`, with scoped timelines, font/resize measurements and cleanup. It supports pause/resume, reduced-motion fallbacks, off-screen playback control via `IntersectionObserver`, and document-visibility handling.
@@ -58,21 +81,20 @@ To record reproducible results:
 
 The codebase follows the open–closed principle: new content and variants are added as new entries or files, and the code that renders them stays unchanged.
 
-| To add…                        | Add it in                                                                                                                 |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| A project                      | `works` in `src/config/works.ts`                                                                                          |
-| A menu link or in-page section | `mainNavigation` in `src/config/navigation.ts`; `/#id` links highlight automatically                                      |
-| An internal path               | `routes` in `src/config/routes.ts`; link with `routes.*`, not string literals                                             |
-| A social profile               | `socialProfiles` in `src/config/social.ts` (new marks: `createBrandIcon` in `src/components/ui/brand-icons.tsx`)          |
-| A page                         | A route that exports `createPageMetadata(...)` from `src/lib/metadata.ts`                                                 |
-| A contact or scheduling page   | Compose `CorrespondencePage`, `CorrespondenceHero` and `CorrespondencePanel` from `src/components/content/correspondence` |
-| An About section               | A component in `about/sections` and an entry in `about/about-sections.ts`                                                 |
-| A contact form field           | `fieldDefinitions` in `src/features/contact/schema.ts`; validation and rendering read it                                  |
-| A meeting type                 | `meetingDefinitions` in `src/features/scheduling/config.ts`, plus its environment variable                                |
-| A works-archive filter         | `filterGroups` in `src/components/content/works/index.tsx`                                                                |
-| A reveal animation             | A resolver in `presetResolvers` or a direction in `directionProfiles` (`src/hooks/gsap-reveal-presets.ts`)                |
-| A cursor appearance            | A rule in `CURSOR_RULES` (`src/components/ui/custom-cursor.tsx`) and its styles                                           |
-| A colour tone                  | The `[data-tone]` token block of the stylesheet that should support it; tone names are typed in `src/lib/tones.ts`        |
+| To add…                        | Add it in                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| A project                      | `works` in `src/config/works.ts`                                                                                   |
+| A menu link or in-page section | `mainNavigation` in `src/config/navigation.ts`; `/#id` links highlight automatically                               |
+| An internal path               | `routes` in `src/config/routes.ts`; link with `routes.*`, not string literals                                      |
+| A social profile               | `socialProfiles` in `src/config/social.ts` (new marks: `createBrandIcon` in `src/components/ui/brand-icons.tsx`)   |
+| A page                         | A route that renders `PageShell` and `PageHeader` and exports `createPageMetadata(...)` from `src/lib/metadata.ts` |
+| An About section               | A component in `about/sections` and an entry in `about/about-sections.ts`                                          |
+| A contact form field           | `fieldDefinitions` in `src/features/contact/schema.ts`; validation and rendering read it                           |
+| A meeting type                 | `meetingDefinitions` in `src/features/scheduling/config.ts`, plus its environment variable                         |
+| A works-archive filter         | A labelled entry in `filterGroups` in `src/components/content/works/index.tsx`                                     |
+| A reveal animation             | A resolver in `presetResolvers` or a direction in `directionProfiles` (`src/hooks/gsap-reveal-presets.ts`)         |
+| A cursor appearance            | A rule in `CURSOR_RULES` (`src/components/ui/custom-cursor.tsx`) and its styles                                    |
+| A colour tone                  | A `[data-tone]` block in `src/app/globals.css` and its name in `EDITORIAL_TONES` (`src/lib/tones.ts`)              |
 
 Shared behaviour has one home: fonts in `src/lib/fonts.ts`, reduced-motion checks in `src/lib/motion.ts`, smooth scrolling in `src/lib/scroll.ts` and section scroll-spy in `src/hooks/useSectionNavigation.ts`.
 

@@ -47,20 +47,11 @@
     min-width: 0;
 }
 
-.eyebrow {
-    margin-bottom: 0.5rem;
-    color: var(--editorial-muted);
-    font-size: clamp(1.5rem, 2.2vw, 2rem);
-    font-weight: var(--editorial-weight-heading);
-    letter-spacing: 0.01em;
-    line-height: 1.2;
-}
-
 .context h2 {
-    font-size: clamp(2rem, 3.6vw, 3.5rem);
+    font-size: var(--editorial-title-section);
     line-height: 1.12;
     font-weight: var(--editorial-weight-heading);
-    letter-spacing: -0.04em;
+    letter-spacing: var(--editorial-tracking-title);
     outline-offset: 8px;
 }
 
@@ -85,28 +76,6 @@
     margin-top: 1.5rem;
     list-style: none;
     padding: 0;
-}
-
-.badges li {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 0.4rem 0.75rem;
-    border: 1px solid var(--editorial-line);
-    border-radius: var(--editorial-radius-tag);
-    text-transform: uppercase;
-    background: var(--editorial-surface);
-    font-size: var(--editorial-text-micro);
-    font-weight: var(--editorial-weight-label);
-    letter-spacing: 0.08em;
-    line-height: 1.4;
-}
-
-.statusDot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--editorial-green);
 }
 
 .actions {

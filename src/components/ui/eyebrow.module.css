@@ -1,0 +1,11 @@
+@layer components {
+    .eyebrow {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--editorial-muted);
+        font-size: var(--editorial-text-eyebrow);
+        font-weight: var(--editorial-weight-heading);
+        letter-spacing: 0.01em;
+        line-height: 1.2;
+    }
+}

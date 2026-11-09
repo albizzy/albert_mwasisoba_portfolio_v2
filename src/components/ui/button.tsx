@@ -25,6 +25,8 @@ const buttonVariants = cva(
                     'rounded-full border-2 border-editorial-ink bg-editorial-ink text-editorial-surface font-semibold shadow-[4px_4px_0_var(--editorial-yellow)] duration-200 hover:bg-editorial-ink hover:text-editorial-surface hover:shadow-[2px_2px_0_var(--editorial-yellow)] hover:translate-x-0.5 hover:translate-y-0.5',
                 editorialGreen:
                     'rounded-full border-2 border-editorial-ink bg-editorial-ink text-editorial-surface font-semibold shadow-[4px_4px_0_var(--editorial-green)] duration-200 hover:bg-editorial-ink hover:text-editorial-surface hover:shadow-[2px_2px_0_var(--editorial-green)] hover:translate-x-0.5 hover:translate-y-0.5',
+                editorialOutline:
+                    'rounded-full border-2 border-editorial-ink bg-editorial-surface text-editorial-ink font-semibold shadow-[4px_4px_0_var(--editorial-line)] duration-200 hover:bg-editorial-paper hover:text-editorial-ink hover:shadow-[2px_2px_0_var(--editorial-line)] hover:translate-x-0.5 hover:translate-y-0.5',
             },
             size: {
                 default: 'h-9 px-4 py-2 has-[>svg]:px-3',

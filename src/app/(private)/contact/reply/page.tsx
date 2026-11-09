@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-import {
-    CorrespondenceHero,
-    CorrespondencePage,
-    CorrespondencePanel,
-} from '@/components/content/correspondence'
+import { PageShell } from '@/components/layout'
+import { PageHeader } from '@/components/content/sections'
+import { Highlight } from '@/components/ui/highlight'
+import { Panel } from '@/components/ui/panel'
+import { Tag } from '@/components/ui/tag'
+import { TextLink } from '@/components/ui/text-link'
 import { routes } from '@/config'
 import { ReplyForm } from '@/features/contact/components/reply-form'
 import { createPageMetadata, withSiteName } from '@/lib/metadata'
@@ -20,29 +20,28 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function ReplyPage() {
     return (
-        <CorrespondencePage variant="private">
-            <Link href={routes.home} className={styles.backLink}>
-                <ArrowLeft size={16} aria-hidden="true" />
-                Back to portfolio
-            </Link>
-            <CorrespondenceHero
-                eyebrow="Private correspondence"
-                title="Direct"
-                highlight="reply."
-                tone="blue"
-                lead="A private line to follow up and continue the conversation."
-                note={{
-                    label: 'Private thread',
-                    text: 'Delivered directly to my inbox.',
-                }}
-            />
-            <CorrespondencePanel
-                tab="Private thread"
-                tone="blue"
-                label="Private reply"
+        <PageShell as="main" width="narrow" fullHeight>
+            <TextLink
+                href={routes.home}
+                variant="action"
+                className={styles.backLink}
             >
+                <ArrowLeft aria-hidden="true" />
+                Back to portfolio
+            </TextLink>
+            <PageHeader
+                eyebrow="Private correspondence"
+                title={
+                    <>
+                        Direct <Highlight tone="blue">reply.</Highlight>
+                    </>
+                }
+                lead="A private line to follow up and continue the conversation."
+                meta={<Tag dot>Delivered directly to my inbox</Tag>}
+            />
+            <Panel tab="Private thread" aria-label="Private reply">
                 <ReplyForm />
-            </CorrespondencePanel>
-        </CorrespondencePage>
+            </Panel>
+        </PageShell>
     )
 }

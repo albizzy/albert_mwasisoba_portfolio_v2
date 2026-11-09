@@ -1,13 +1,12 @@
 import { ArrowUpRight, ScanLine } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { GithubBrandIcon } from '@/components/ui/brand-icons'
+import { Eyebrow } from '@/components/ui/eyebrow'
+import { Tag } from '@/components/ui/tag'
 import { caseStudy } from '@/config'
 import { toSequenceLabel } from '@/helpers'
-import { caveat } from '@/lib/fonts'
 import { ArchitectureAccordion } from './architecture-accordion'
 import styles from './case-studies.module.css'
-import { cn } from '@/lib/utils'
-import { Typography } from '@/components/ui/typography'
 
 export function CaseStudies() {
     const { notes, stack, repository, auditUrl } = caseStudy
@@ -25,12 +24,7 @@ export function CaseStudies() {
                 </div>
                 <div className={styles.sheet}>
                     <div className={styles.context}>
-                        <Typography
-                            as={'p'}
-                            className={cn(styles.eyebrow, caveat.className)}
-                        >
-                            Under the Hood
-                        </Typography>
+                        <Eyebrow>Under the Hood</Eyebrow>
                         <h2 id="case-studies-title" tabIndex={-1}>
                             How I built
                             <br />
@@ -48,15 +42,13 @@ export function CaseStudies() {
                             aria-label="Project stack and licence"
                         >
                             {stack.map((badge) => (
-                                <li key={badge.label}>
-                                    {badge.status && (
-                                        <span
-                                            className={styles.statusDot}
-                                            aria-hidden="true"
-                                        />
-                                    )}
+                                <Tag
+                                    as="li"
+                                    key={badge.label}
+                                    dot={badge.status}
+                                >
                                     {badge.label}
-                                </li>
+                                </Tag>
                             ))}
                         </ul>
                         <div className={styles.actions}>

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import {
-    CorrespondenceHero,
-    CorrespondencePage,
-    CorrespondencePanel,
-} from '@/components/content/correspondence'
+import { PageShell } from '@/components/layout'
+import { PageHeader } from '@/components/content/sections'
+import { Highlight } from '@/components/ui/highlight'
+import { Panel } from '@/components/ui/panel'
+import { Tag } from '@/components/ui/tag'
 import { getMeetingTypes } from '@/features/scheduling/config'
 import { Scheduler } from '@/features/scheduling/scheduler'
 import { createPageMetadata, withSiteName } from '@/lib/metadata'
@@ -17,29 +17,27 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function SchedulePage() {
     return (
-        <CorrespondencePage>
-            <CorrespondenceHero
+        <PageShell>
+            <PageHeader
                 eyebrow="Book a session"
-                title="Let’s"
-                highlight="talk."
-                tone="pink"
                 titleId="schedule-title"
+                title={
+                    <>
+                        Let’s <Highlight tone="pink">talk.</Highlight>
+                    </>
+                }
                 lead="Grab a slot for an intro chat, role screen, or project scope."
-                note={{
-                    label: 'Quick sync',
-                    text: '15–30 mins. Google Meet or voice.',
-                }}
+                meta={<Tag dot>15–30 mins · Google Meet or voice</Tag>}
             />
 
-            <CorrespondencePanel
+            <Panel
                 tab="Availability"
-                tone="pink"
                 title="Select a format."
                 titleId="meeting-options-title"
                 hint="Pick a call type to view open calendar slots."
             >
                 <Scheduler meetings={getMeetingTypes()} />
-            </CorrespondencePanel>
-        </CorrespondencePage>
+            </Panel>
+        </PageShell>
     )
 }

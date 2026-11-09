@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils'
 
 const toneClasses = {
     default: 'bg-section-default text-section-default-foreground',
+    paper: 'bg-editorial-paper text-editorial-ink',
     muted: 'bg-section-muted text-section-muted-foreground',
     accent: 'bg-section-accent text-section-accent-foreground',
     primary: 'bg-section-primary text-section-primary-foreground',
@@ -97,7 +98,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
             <Component
                 ref={ref}
                 className={cn(
-                    'relative isolate w-full overflow-hidden py-18 md:py-24 lg:py-28',
+                    'relative isolate w-full overflow-hidden py-[var(--section-padding-y)]',
                     toneClassName,
                     bordered && 'border-t border-editorial-line',
                     className

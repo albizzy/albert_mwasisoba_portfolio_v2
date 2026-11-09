@@ -1,0 +1,21 @@
+@layer components {
+    .shell {
+        position: relative;
+        padding: var(--page-padding-top) var(--section-padding-x)
+            var(--section-padding-y);
+        color: var(--editorial-ink);
+    }
+
+    .shell[data-full-height] {
+        min-height: 100dvh;
+    }
+
+    .inner {
+        width: min(100%, var(--container-max));
+        margin-inline: auto;
+    }
+
+    .inner[data-width='narrow'] {
+        width: min(100%, var(--container-narrow));
+    }
+}

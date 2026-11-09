@@ -1,14 +1,10 @@
 'use client'
 
-import { Section } from '@/components/content/sections'
+import { Section, SectionHeading } from '@/components/content/sections'
 import { works } from '@/config'
 import { useWorkOverviewAnimation } from './hooks'
 import { FolderWorkCard } from './folder-work-card'
 import styles from './work-overview.module.css'
-
-import { Typography } from '@/components/ui/typography'
-import { caveat } from '@/lib/fonts'
-import { cn } from '@/lib/utils'
 
 export function WorkOverview() {
     const sectionRef = useWorkOverviewAnimation()
@@ -21,18 +17,14 @@ export function WorkOverview() {
             withDefaultContainer={false}
             className={`${styles.section} overflow-visible`}
         >
-            <div className={styles.heading}>
-                <Typography
-                    as={'p'}
-                    variant={'h5'}
-                    className={cn(styles.eyebrow, caveat.className)}
-                >
-                    Selected projects
-                </Typography>
-                <h2 id="featured-work-title" tabIndex={-1}>
-                    Featured work
-                </h2>
-            </div>
+            <SectionHeading
+                className={styles.heading}
+                eyebrow="Selected projects"
+                title="Featured work"
+                titleId="featured-work-title"
+                size="page"
+                focusable
+            />
             <div className={styles.stack} data-work-stack>
                 {works.map((work, index) => (
                     <FolderWorkCard

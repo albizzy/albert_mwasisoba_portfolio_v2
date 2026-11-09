@@ -1,8 +1,8 @@
 'use client'
 
 import { useActionState, useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { TextLink } from '@/components/ui/text-link'
 import { routes } from '@/config/routes'
 import { siteConfig } from '@/config/site'
 import { getReplyRecipient, submitBrandedReply } from '../actions'
@@ -81,7 +81,7 @@ export function ReplyForm() {
                     email. Links expire after seven days. If a link has expired,
                     reply directly from your inbox.
                 </p>
-                <Link href={routes.home}>Back to the portfolio</Link>
+                <TextLink href={routes.home}>Back to the portfolio</TextLink>
             </div>
         )
 
@@ -131,7 +131,9 @@ export function ReplyForm() {
                     <Button
                         type="submit"
                         disabled={pending}
-                        className={styles.primaryButton}
+                        variant="editorialDark"
+                        size="pill"
+                        className={styles.submit}
                     >
                         {pending ? 'Sending reply…' : 'Send branded reply'}
                     </Button>

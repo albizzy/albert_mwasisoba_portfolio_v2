@@ -322,7 +322,7 @@ export function AppHeader() {
         >
             <div
                 className={
-                    'w-full max-w-7xl mx-auto flex flex-row justify-between items-center px-4 sm:px-6 lg:px-8'
+                    'page-container flex flex-row justify-between items-center'
                 }
             >
                 <AppLogo />
